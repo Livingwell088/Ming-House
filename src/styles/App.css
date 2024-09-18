@@ -1,5 +1,11 @@
 .App {
   text-align: center;
+  /*background-color: #fae3bf;*/
+  background: linear-gradient(to bottom, #fae7c8, #f8d7a4);
+  height: 100%;
+  min-height: 100vh;
+  background-attachment: fixed;
+
 }
 
 .App-logo {
@@ -35,4 +41,43 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+
+
+#title{
+  padding-top: 5%;
+  width: 100vw;
+  /*align-items: center;*/
+  /*align-content: center;*/
+}
+
+#container {
+  padding-top: 5vh;
+  margin: auto;
+  width: 100vw;
+  align-self: center;
+}
+
+#icon{
+  align-items: center;
+  align-content: center;
+  margin-left: auto;
+  margin-right: 5%;
+
+
+  width: 75%;
+  /*height: 55vh;*/
+
+
+}
+
+
+#general{
+  border: 5px solid red;
+}
+
+.button{
+  width: 100%;
 }

@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from './components/photo/logo.svg';
+import Appbar from "./components/Appbar"
+import MenuComponent from "./components/MenuComponent";
+import {Component} from "react";
+import React, { useEffect, useState } from 'react';
+// import logo from './logo.svg';
+import './styles/App.css';
+import {Container, CssBaseline} from "@mui/material";
+import Typography from "@mui/material/Typography";
+// import {Route, Router} from "@mui/icons-material";
+import { BrowserRouter as Router, Routes, Route, link } from "react-router-dom";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+import Home from "./Pages/Home"
+import Menu from "./Pages/MenuPage";
+
+class App extends Component {
+
+    render() {
+        return (
+            <Router>
+                <Appbar />
+
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/menupage" element={<Menu />} />
+                    {/*<Route path="/" element={<Home/>} />*/}
+                </Routes>
+            </Router>
+
+        )
+    }
+
 }
 
 export default App;
