@@ -1,3 +1,4 @@
+
 import * as React from 'react';
 import APIService from '../test'
 import MenuServiceFetch from "../Services/MenuServiceFetch";
@@ -5,6 +6,7 @@ import {Grid} from "@mui/material";
 import {Col, Row} from "react-bootstrap";
 
 import "../styles/menuComponent.css"
+import MenuCard from "./MenuCard";
 
 
 export default class MenuComponent extends React.Component {
@@ -68,6 +70,11 @@ export default class MenuComponent extends React.Component {
             }
 
         }
+
+        newMenu.sort(function(a,b){
+            return a.id - b.id;
+        });
+
         this.setState({menu: newMenu})
 
 
@@ -102,11 +109,11 @@ export default class MenuComponent extends React.Component {
         const {menu, categories, types} = this.state
 
 
-        // console.log(types)
+
         return (
             <div>
                 <Row>
-                    <h2 className="">Menu</h2>
+                    {/*<h2 className="">Menu</h2>*/}
                 <Col xs={3}>
                     <ul id={"foodTypes"}>
                         {
@@ -117,70 +124,19 @@ export default class MenuComponent extends React.Component {
                     </ul>
                 </Col>
                     <Col>
-
                         {
                             this.state.categories.map(current =>
-
-                                <table className="table table-striped" id={"menuTable"}>
-                                <thead>
-                                <tr>
-                                    <th colSpan={6}>{current}</th>
-                                    {/*<th></th>*/}
-                                    {/*<th></th>*/}
-                                    {/*<th></th>*/}
-                                    {/*<th></th>*/}
-                                    {/*<th></th>*/}
-                                </tr>
-                                </thead>
-                                    <tbody>
-                                    {
-                                        menu.filter((type) => type.category === current).map(item =>
-                                        {
-                                            let sizes = item.size.split(",")
-                                            for (let i = 0; i < sizes.length; i++){
-                                                if (sizes[i] === ""){
-                                                    continue
-                                                }
-                                                if (sizes[i][0] !== "("){
-                                                    sizes[i] = "(" + sizes[i] + ")"
-                                                }
-                                            }
-                                            if (sizes.length < 2){
-                                                return <tr id={item.number}>
-                                                    <td>{item.number}</td>
-                                                    <td>{item.name}</td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td className={"size"}>{sizes[0]}</td>
-                                                    <td>{"$" + item.price.split(",")[0]}</td>
-
-                                                </tr>
-                                            }
-
-                                            else if (sizes.length === 2){
-                                                return <tr id={item.number}>
-                                                    <td>{item.number}</td>
-                                                    <td>{item.name}</td>
-                                                    <td className={"size"}>{sizes[0]}</td>
-                                                    <td>{"$" + item.price.split(",")[0]}</td>
-                                                    <td className={"size"}>{sizes[1]}</td>
-                                                    <td>{"$" + item.price.split(",")[1]}</td>
-
-                                                </tr>
-                                            }
-                                            else{
-                                                console.log(item)
-                                            }
-
-                                            }
-
-                                        )
+                                <Row>
+                                    <h2 className={"headers"}>{current}</h2>
+                            {
+                                        menu.filter((type) => type.category === current).map(item => {
+                                            console.log(item.number);
+                                                return <Col className={"col-6"}><MenuCard number={item.number} name={item.name} menu={item}/></Col>
+                                            })
 
 
-                                    }
-                                </tbody>
-
-                                </table>
+                            }
+                                </Row>
                             )
                         }
 
@@ -192,5 +148,6 @@ export default class MenuComponent extends React.Component {
     }
 
 }
+
 
 

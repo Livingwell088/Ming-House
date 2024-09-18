@@ -9,8 +9,7 @@ import '../App';
 import {Container, CssBaseline} from "@mui/material";
 import Typography from "@mui/material/Typography";
 
-const MenuPage = () => {
-
+const MenuPage = (props) => {
 
     // const [groups, setGroups] = useState([]);
     // const [loading, setLoading] = useState(false);
