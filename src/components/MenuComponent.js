@@ -4,7 +4,7 @@ import APIService from '../test'
 import MenuServiceFetch from "../Services/MenuServiceFetch";
 import {Grid} from "@mui/material";
 import {Col, Row} from "react-bootstrap";
-
+import '../styles/fonts.css';
 import "../styles/menuComponent.css"
 import MenuCard from "./MenuCard";
 
@@ -112,10 +112,10 @@ export default class MenuComponent extends React.Component {
 
         return (
             <div>
-                <Row>
-                    {/*<h2 className="">Menu</h2>*/}
-                <Col xs={3}>
-                    <ul id={"foodTypes"}>
+                <Row id={"menuRow"}>
+                <Col xs={1}></Col>
+                <Col xs={2}>
+                    <ul id={"foodTypes"} >
                         {
                             this.state.types.map(current =>
                             <li onClick={() => this.t(current)}>{current}</li>
@@ -123,24 +123,24 @@ export default class MenuComponent extends React.Component {
                         }
                     </ul>
                 </Col>
-                    <Col>
+                <Col xs={9}>
+                    {
+                        this.state.categories.map(current =>
+                            <Row>
+                                <h2 className={"headers spicy-rice-regular"}>{current}</h2>
                         {
-                            this.state.categories.map(current =>
-                                <Row>
-                                    <h2 className={"headers"}>{current}</h2>
-                            {
-                                        menu.filter((type) => type.category === current).map(item => {
-                                            console.log(item.number);
-                                                return <Col className={"col-6"}><MenuCard number={item.number} name={item.name} menu={item}/></Col>
-                                            })
+                                    menu.filter((type) => type.category === current).map(item => {
+                                        // console.log(item.number);
+                                            return <Col className={"col-6"}><MenuCard number={item.number} name={item.name} size={item.size} price={item.price} menu={item}/></Col>
+                                        })
 
 
-                            }
-                                </Row>
-                            )
                         }
+                            </Row>
+                        )
+                    }
 
-                    </Col>
+                </Col>
                 </Row>
 
             </div>

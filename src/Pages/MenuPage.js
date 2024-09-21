@@ -8,6 +8,7 @@ import React, { useEffect, useState } from 'react';
 import '../App';
 import {Container, CssBaseline} from "@mui/material";
 import Typography from "@mui/material/Typography";
+import '../styles/fonts.css';
 
 const MenuPage = (props) => {
 
@@ -40,11 +41,11 @@ const MenuPage = (props) => {
     return (
         <>
             <CssBaseline />
-            <div className="App">
+            <div className="App teko">
                 <main>
                     <div>
 
-                        <Container>
+                        <div id={"cont"}>
 
                             <MenuComponent />
                             {/*{groups.map(group =>*/}
@@ -52,7 +53,7 @@ const MenuPage = (props) => {
                             {/*        {group.name}, {group.size}*/}
                             {/*    </div>*/}
                             {/*)}*/}
-                        </Container>
+                        </div>
                     </div>
                 </main>
                 {/*<header className="App-header">*/}

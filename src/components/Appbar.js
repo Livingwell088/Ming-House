@@ -11,9 +11,8 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import '../styles/appbar.css'
-import {Image, NavLink, Row} from "react-bootstrap";
-
-import logo from './photo/logo.png'
+import {Col, Image, NavLink, Row} from "react-bootstrap";
+import '../styles/fonts.css';
 
 import {
     BrowserRouter as Router,
@@ -25,28 +24,42 @@ import {
 export default function Appbar() {
     return (
         <>
-            <Navbar id='header'>
-                {/*<Row>*/}
-                    <Typography id="headtext" variant='h6' align='left' color='White' paragraph>
-                        217A Chandler St Worcester MA 01609
-                    </Typography>
-                    <Typography id="headtext" variant='h6' align='left' color='White' paragraph>
-                        (508)756-6888
-                    </Typography>
+            <div id='header'>
+                <Row  className={"teko"}>
+                    <Col xs={1}></Col>
+                    <Col xs={3}><p style={{color: "white"}}>217A Chandler St Worcester MA 01609</p></Col>
+                    <Col xs={3}><p style={{color: "white"}}>(508)756-6888</p></Col>
+                    <Col xs={4}>
 
-                <Typography id="headtext" variant='h6' align='left' color='White' paragraph>
-                    Sun: 12:00PM-10:30PM    Tues-Thurs: 11:00AM-10:30PM     Fri-Sat: 11:00AM-11:00PM
-                </Typography>
+                        {/*<p style={{color: "white"}}>Sun: 12:00PM-10:30PM</p>*/}
+                        {/*<p style={{color: "white"}}>Tues-Thurs: 11:00AM-10:30PM</p>*/}
+                        {/*/!*<p style={{color: "white"}}>Fri-Sat: 11:00AM-11:00PM</p>*/}
+                        </Col>
+                    <Col xs={1}></Col>
+                </Row>
+
+
+
+                {/*    <Typography id="headtext" variant='h6' align='left' color='White' paragraph>*/}
+                {/*        217A Chandler St Worcester MA 01609*/}
+                {/*    </Typography>*/}
+                {/*    <Typography id="headtext" variant='h6' align='left' color='White' paragraph>*/}
+                {/*        (508)756-6888*/}
+                {/*    </Typography>*/}
+
+                {/*<Typography id="headtext" variant='h6' align='left' color='White' paragraph>*/}
+                {/*    Sun: 12:00PM-10:30PM    Tues-Thurs: 11:00AM-10:30PM     Fri-Sat: 11:00AM-11:00PM*/}
+                {/*</Typography>*/}
                 {/*</Row>*/}
-            </Navbar>
+            </div>
 
 
-            <Navbar id='navbar1' >
+            <Navbar id='navbar1' className={"teko"}>
                 {/*<Container id='navcontainer' fluid>*/}
                     <Nav id='nav1' className={"align-items-end"}>
 
                         <Navbar.Brand id='logo' as={NavLink} to={'/'}>
-                            <Image src={logo} width='150vm'/>
+                            <Image src={"/images/logo.png"} width='150vm'/>
                         </Navbar.Brand>
 
                         <Nav.Item className={"navitem"}>

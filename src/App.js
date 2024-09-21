@@ -1,9 +1,7 @@
-import logo from './components/photo/logo.svg';
 import Appbar from "./components/Appbar"
 import MenuComponent from "./components/MenuComponent";
 import {Component} from "react";
 import React, { useEffect, useState } from 'react';
-// import logo from './logo.svg';
 import './styles/App.css';
 import {Container, CssBaseline} from "@mui/material";
 import Typography from "@mui/material/Typography";

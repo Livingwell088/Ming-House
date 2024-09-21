@@ -2,11 +2,9 @@ import React, {useState} from "react";
 import {Container, CssBaseline} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import '../styles/App.css';
+import '../styles/fonts.css';
 import {Image, Col, Row, Button} from "react-bootstrap";
-import Box from "@mui/material/Box";
-import general from '../components/photo/general.jpg'
-import dumpling from "../components/photo/dumpling.png"
-// import Button from "@mui/material/Button";
+// import dumpling from "images/dumpling.png"
 
 const Home = () => {
 
@@ -20,28 +18,35 @@ const Home = () => {
             <div className="App">
                 <main>
                     <div style={{
-                        backgroundImage: `url(${dumpling})`,
+                        backgroundImage: `url(/images/dumpling.png)`,
                         backgroundSize: "cover",
                         backgroundRepeat: "no-repeat",
                         width: "100%",
                         height: "100vh",
                         opacity: "80%",
                     }}>
-                        {/*<Image id="cashew" src={dumpling} width='100%' rounded/>*/}
 
                         <Container maxWidth='sm' id={"container"}>
 
-                            <Typography variant='h6' align='left' color='#3c342c' >Welcome to</Typography>
-                            <Typography variant='h2' align='left' color='#3c342c' gutterBottom fontWeight={"bold"} word-wrap={"break-word"}>
+                            <h3 className={"teko fontDark"} style={{textAlign: "left"}}>Welcome to</h3>
+                            <h1 className={"kolker-brush-regular fontDark"}>
                                 Ming
-                                House
-                            </Typography>
+                                House</h1>
+
+                            <p className={"teko fontDark"} style={{textAlign: "left"}}>Located at 217A Chandler St, Worcester MA 01609,
+                                We offer a wide range of delicious Chinese Cuisine.</p>
+
+                            {/*<Typography className={"teko"} variant='h6' align='left' color='#3c342c' >Welcome to</Typography>*/}
+                            {/*<Typography className={"jacques-francois-shadow-regular"} variant='h1' align='left' color='#282c34' gutterBottom fontWeight={"bold"} word-wrap={"break-word"}  >*/}
+                            {/*    Ming*/}
+                            {/*    House*/}
+                            {/*</Typography>*/}
 
 
-                            <Typography variant='h8' align='left' color='#3c342c' paragraph>
-                                Located at 217A Chandler St, Worcester MA 01609,
-                                We offer a wide range of delicious Chinese Cuisine.
-                            </Typography>
+                            {/*<Typography className={"teko"} variant='h8' align='left' color='#282c34' paragraph>*/}
+                            {/*    Located at 217A Chandler St, Worcester MA 01609,*/}
+                            {/*    We offer a wide range of delicious Chinese Cuisine.*/}
+                            {/*</Typography>*/}
 
                             <Row>
                                 <Col xs={3}><Button href="#" className="rounded-pill button">Link</Button></Col>
