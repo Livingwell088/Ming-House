@@ -29,7 +29,7 @@ const Home = () => {
                         <Container maxWidth='sm' id={"container"}>
 
                             <h3 className={"teko fontDark"} style={{textAlign: "left"}}>Welcome to</h3>
-                            <h1 className={"kolker-brush-regular fontDark"}>
+                            <h1 className={"kolker-brush-regular fontDark fontLarge"}>
                                 Ming
                                 House</h1>
 

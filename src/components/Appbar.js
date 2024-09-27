@@ -39,24 +39,11 @@ export default function Appbar() {
                 </Row>
 
 
-
-                {/*    <Typography id="headtext" variant='h6' align='left' color='White' paragraph>*/}
-                {/*        217A Chandler St Worcester MA 01609*/}
-                {/*    </Typography>*/}
-                {/*    <Typography id="headtext" variant='h6' align='left' color='White' paragraph>*/}
-                {/*        (508)756-6888*/}
-                {/*    </Typography>*/}
-
-                {/*<Typography id="headtext" variant='h6' align='left' color='White' paragraph>*/}
-                {/*    Sun: 12:00PM-10:30PM    Tues-Thurs: 11:00AM-10:30PM     Fri-Sat: 11:00AM-11:00PM*/}
-                {/*</Typography>*/}
-                {/*</Row>*/}
             </div>
 
-
+            {/*<Navbar style={{backgroundColor: "#071740", position: "sticky"}} variant="dark" fixed="top">*/}
             <Navbar id='navbar1' className={"teko"}>
-                {/*<Container id='navcontainer' fluid>*/}
-                    <Nav id='nav1' className={"align-items-end"}>
+                    <Nav id='nav1' className={"align-items-center "}>
 
                         <Navbar.Brand id='logo' as={NavLink} to={'/'}>
                             <Image src={"/images/logo.png"} width='150vm'/>

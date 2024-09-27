@@ -1,75 +1,142 @@
 import MenuCard from "./MenuCard";
-import {Button, Modal} from "react-bootstrap";
+import {Button, Col, Form, Modal, Row} from "react-bootstrap";
 import {useState} from "react";
 import Image from 'react-bootstrap/Image';
 import "../styles/menuPopup.css"
+import '../styles/fonts.css';
 
 // import dumpling from "/"
 
 const MenuPopup = (props) => {
 
     const [show, setShow] = useState(false)
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const [count, setCount] = useState(1)
+
 
     let sizes = props.size.split(",")
     let prices = props.price.split(",")
+    let items = []
+
     for (let i = 0; i < sizes.length; i++){
-        if (sizes[i] === ""){
-            sizes[i] += "$" + prices[i]
-        }
-        else if (sizes[i][0] !== "("){
-            sizes[i] = ("(" + sizes[i] + "): $" + prices[i])
-        }
-        else{
-            sizes[i] += ": $" + prices[i]
-        }
+        items.push(i);
     }
-
-
-    if (sizes.length < 2){
-    }
-
-    else if (sizes.length === 2) {
-    }
-
+    const [total, setTotal] = useState(prices[0])
+    
 
     return (
         <>
 
-
             <Modal show={props.show}
-                   onHide={props.close}
+                   onHide={props.onClose}
+                // cancel={props.onClose}
                    backdrop="static"
                    keyboard={false}
                    size="lg"
                    aria-labelledby="contained-modal-title-vcenter"
                    centered
-                   className={"popup"}
-                >
+                   className={"popup teko"}
+                   onClick={e => e.stopPropagation()}
+            >
 
                 <Modal.Header closeButton={true}>
-                    {/*{console.log(show)}*/}
                     <Modal.Title>{props.name}</Modal.Title>
                 </Modal.Header>
 
-                <Modal.Body>
-                    <Image src={"/images/" + props.number + ".png"} className={"menuImg"} rounded />
+                <Modal.Body style={{margin: "auto"}}>
+                    <Image src={"/images/" + props.number + ".png"} className={"menuImg"}
+                           style={{width: "100%",
+                               margin: "auto"}}
+                           rounded />
                 </Modal.Body>
-                {sizes.map(current => {
-                    // console.log(current)
-                    return <Modal.Body className={current}>{current}</Modal.Body>;
 
-                })}
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary">Understood</Button>
+                <Modal.Body>
+                    <Form style={{width: "80%",
+                        margin: "auto"
+                    }}>
+
+                        {
+
+                            items.map(current => {
+
+                            if (current === 0){
+                                return <Form.Check
+                                    id={current}
+                                    name={"options"}
+                                    type={"radio"}
+                                    label={sizes[current] + ": $" + prices[current]}
+                                    value={prices[current]}
+                                    checked={total === prices[current]}
+                                    onChange={() => setTotal(prices[current])}
+                                    defaultChecked
+                                />
+                            }
+                            else{
+                                return <Form.Check
+                                    id={current}
+                                    name={"options"}
+                                    type={"radio"}
+                                    value={prices[current]}
+                                    label={sizes[current] + ": $" + prices[current]}
+                                    checked={total === prices[current]}
+                                    onChange={() => setTotal(prices[current])}
+                                />
+                            }
+
+                        })}
+
+                        {/*<Form.Check*/}
+                        {/*    id={first}*/}
+                        {/*    name={"options"}*/}
+                        {/*    type={"radio"}*/}
+                        {/*    label={first}*/}
+                        {/*    defaultChecked*/}
+                        {/*/>*/}
+                        {/*{sizes.map(current => {*/}
+
+                            {/*return <Form.Check*/}
+                            {/*    id={current}*/}
+                            {/*    name={"options"}*/}
+                            {/*    type={"radio"}*/}
+                            {/*    label={current}*/}
+                            {/*/>*/}
+
+                        {/*})}*/}
+
+
+
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer style={{width: "100%"}} justify-content-between>
+                    {/*<Row style={{width: "100%"}}>*/}
+                        <Button className={"mr-auto"} variant="secondary" onClick={() => {
+                            if (count >= 1){
+                                setCount(count - 1)
+                            }
+                            console.log(total)
+                        }}>
+                            -
+                        </Button>
+                        <h2>{count}</h2>
+                        <Button variant="secondary" onClick={() => {
+                            setCount(count + 1)
+                            console.log(count)
+                        }}>
+                            +
+                        </Button>
+                        <Button variant="primary">Add ${total * count}</Button>
+
+                    {/*</Row>*/}
+
+
+
+
+
+
                 </Modal.Footer>
 
 
             </Modal>
+
         </>
     )
 }

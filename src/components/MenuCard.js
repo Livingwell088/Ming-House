@@ -10,6 +10,7 @@ const MenuCard = (props) => {
 
     const [showPopup, setShowPopup] = useState(false)
     const handleShow = () => setShowPopup(true);
+    const handleClose = () => setShowPopup(false);
 
     const toggleModal = () => {
         setShowPopup(!showPopup)
@@ -42,8 +43,7 @@ const MenuCard = (props) => {
     // console.log(sizes)
 
     return (
-        // <h1>Hello, {props.name}</h1>
-        <Card className={"menuCard"} onClick={toggleModal}>
+        <Card className={"menuCard"}  onClick={handleShow} >
 
             <Card.Title>{props.number + ". " + props.name}</Card.Title>
             <Card.Body className={"cardBody1"}>
@@ -55,8 +55,8 @@ const MenuCard = (props) => {
 
             })}
                     </Col>
-                    <Button className={"addButton square-md"} onClick={toggleModal} rounded>+</Button>
-                    <MenuPopup show={showPopup} close={toggleModal} name={props.name} number={props.number} size={props.size} price={props.price}/>
+                    <Button className={"addButton square-md"} onClick={handleShow} rounded>+</Button>
+                    <MenuPopup show={showPopup} onClose={handleClose} name={props.name} number={props.number} size={props.size} price={props.price}/>
 
                 </Row>
             </Card.Body>
