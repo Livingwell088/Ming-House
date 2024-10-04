@@ -21,8 +21,9 @@ class App extends Component {
 
                 <Routes>
                     <Route path="/" element={<Home />} />
+
+                    {/*<Route path="/menuPage"></Route>*/}
                     <Route path="/menupage" element={<Menu />} />
-                    {/*<Route path="/" element={<Home/>} />*/}
                 </Routes>
             </Router>
 

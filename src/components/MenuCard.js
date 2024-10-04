@@ -12,6 +12,8 @@ const MenuCard = (props) => {
     const handleShow = () => setShowPopup(true);
     const handleClose = () => setShowPopup(false);
 
+    // console.log(props)
+
     const toggleModal = () => {
         setShowPopup(!showPopup)
     };
