@@ -4,6 +4,7 @@ import {useState} from "react";
 import Image from 'react-bootstrap/Image';
 import "../styles/menuPopup.css"
 import '../styles/fonts.css';
+import API from "../api";
 
 // import dumpling from "/"
 
@@ -12,15 +13,26 @@ const MenuPopup = (props) => {
     const [show, setShow] = useState(false)
     const [count, setCount] = useState(1)
 
+    const addToCart = (name, total, amount, quantity, item) => {
+        console.log(name.toString(), total.toString(), amount.toString(), quantity.toString(), item[amount])
 
-    let sizes = props.size.split(",")
-    let prices = props.price.split(",")
-    let items = []
 
-    for (let i = 0; i < sizes.length; i++){
-        items.push(i);
+
+        API.orderAPI.create(
+            name.toString(), total.toString(), amount.toString(), quantity.toString(), item[amount]
+        )
+            .then(r => console.log(r))
+            .catch((error) => console.log(error.message))
     }
-    const [total, setTotal] = useState(prices[0])
+
+    const [total, setTotal] = useState(props.price[0])
+    const [sizeChosen, setSizeChosen] = useState(0)
+
+
+    let sizes = []
+    for (let i = 0; i < props.size.length; i++){
+        sizes.push(i)
+    }
     
 
     return (
@@ -56,51 +68,74 @@ const MenuPopup = (props) => {
 
                         {
 
-                            items.map(current => {
+                            sizes.map(current => {
 
-                            if (current === 0){
-                                return <Form.Check
-                                    id={current}
-                                    name={"options"}
-                                    type={"radio"}
-                                    label={sizes[current] + ": $" + prices[current]}
-                                    value={prices[current]}
-                                    checked={total === prices[current]}
-                                    onChange={() => setTotal(prices[current])}
-                                    defaultChecked
-                                />
-                            }
-                            else{
-                                return <Form.Check
-                                    id={current}
-                                    name={"options"}
-                                    type={"radio"}
-                                    value={prices[current]}
-                                    label={sizes[current] + ": $" + prices[current]}
-                                    checked={total === prices[current]}
-                                    onChange={() => setTotal(prices[current])}
-                                />
-                            }
+                                if (sizes.length === 1){
+                                    if (props.size[current] === ""){
+                                        return <Form.Check
+                                            id={current}
+                                            name={"options"}
+                                            type={"radio"}
+                                            label={"$" + props.price[current]}
+                                            value={props.price[current]}
+                                            checked={total === props.price[current]}
+                                            onChange={() => {
+                                                setTotal(props.price[current])
+                                                setSizeChosen(0)
+                                            }}
+                                            defaultChecked
+                                        />
+                                    }
+                                    else if (props.size[current][0] !== "("){
+                                        return <Form.Check
+                                            id={current}
+                                            name={"options"}
+                                            type={"radio"}
+                                            label={"(" + props.size[current] + ") : $" + props.price[current]}
+                                            value={props.price[current]}
+                                            checked={total === props.price[current]}
+                                            onChange={() => {
+                                                setTotal(props.price[current])
+                                                setSizeChosen(0)
+                                            }}
+                                            defaultChecked
+                                        />
+                                    }
+                                    else{
+                                        return <Form.Check
+                                            id={current}
+                                            name={"options"}
+                                            type={"radio"}
+                                            label={props.size[current] + ": $" + props.price[current]}
+                                            value={props.price[current]}
+                                            checked={total === props.price[current]}
+                                            onChange={() => {
+                                                setTotal(props.price[current])
+                                                setSizeChosen(0)
+                                            }}
+                                            defaultChecked
+                                        />
+                                    }
+                                }
+                                else{
+                                    return <Form.Check
+                                        id={current}
+                                        name={"options"}
+                                        type={"radio"}
+                                        value={props.price[current]}
+                                        label={props.size[current] + ": $" + props.price[current]}
+                                        checked={total === props.price[current]}
+                                        onChange={() => {
+                                            setTotal(props.price[current])
+                                            setSizeChosen(current)
+                                        }}
+                                    />
+                                }
+
+
+
 
                         })}
-
-                        {/*<Form.Check*/}
-                        {/*    id={first}*/}
-                        {/*    name={"options"}*/}
-                        {/*    type={"radio"}*/}
-                        {/*    label={first}*/}
-                        {/*    defaultChecked*/}
-                        {/*/>*/}
-                        {/*{sizes.map(current => {*/}
-
-                            {/*return <Form.Check*/}
-                            {/*    id={current}*/}
-                            {/*    name={"options"}*/}
-                            {/*    type={"radio"}*/}
-                            {/*    label={current}*/}
-                            {/*/>*/}
-
-                        {/*})}*/}
 
 
 
@@ -112,25 +147,20 @@ const MenuPopup = (props) => {
                             if (count >= 1){
                                 setCount(count - 1)
                             }
-                            console.log(total)
                         }}>
                             -
                         </Button>
                         <h2>{count}</h2>
                         <Button variant="secondary" onClick={() => {
                             setCount(count + 1)
-                            console.log(count)
                         }}>
                             +
                         </Button>
-                        <Button variant="primary">Add ${total * count}</Button>
+                        <Button variant="primary" >Add ${total * count}</Button>
 
-                    {/*</Row>*/}
-
-
-
-
-
+                {/*onClick={() => {
+                            addToCart(props.name, total * count, sizeChosen, count, props.item)
+                        }}*/}
 
                 </Modal.Footer>
 

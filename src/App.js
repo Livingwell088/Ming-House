@@ -11,6 +11,7 @@ import { BrowserRouter as Router, Routes, Route, link } from "react-router-dom";
 
 import Home from "./Pages/Home"
 import Menu from "./Pages/MenuPage";
+import Order from "./Pages/CartPage"
 
 class App extends Component {
 
@@ -21,9 +22,8 @@ class App extends Component {
 
                 <Routes>
                     <Route path="/" element={<Home />} />
-
-                    {/*<Route path="/menuPage"></Route>*/}
                     <Route path="/menupage" element={<Menu />} />
+                    <Route path="/cartPage" element={<Order />} />
                 </Routes>
             </Router>
 

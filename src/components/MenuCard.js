@@ -18,31 +18,12 @@ const MenuCard = (props) => {
         setShowPopup(!showPopup)
     };
 
-    let sizes = props.size.split(",")
-    let prices = props.price.split(",")
-    for (let i = 0; i < sizes.length; i++){
-        if (sizes[i] === ""){
-            sizes[i] += "$" + prices[i]
-        }
-        else if (sizes[i][0] !== "("){
-            sizes[i] = ("(" + sizes[i] + "): $" + prices[i])
-        }
-        else{
-            sizes[i] += ": $" + prices[i]
-        }
+    let sizes = []
+    for (let i = 0; i < props.size.length; i++){
+        sizes.push(i)
     }
 
 
-    if (sizes.length < 2){
-        sizes.push("blank");
-    }
-
-    else if (sizes.length === 2) {
-        // console.log(sizes);
-        // console.log(prices)
-    }
-
-    // console.log(sizes)
 
     return (
         <Card className={"menuCard"}  onClick={handleShow} >
@@ -50,15 +31,32 @@ const MenuCard = (props) => {
             <Card.Title>{props.number + ". " + props.name}</Card.Title>
             <Card.Body className={"cardBody1"}>
                 <Row>
-                    <Col>
-            {sizes.map(current => {
-                // console.log(current)
-                return <div className={current}>{current}</div>;
 
-            })}
+                    <Col>
+            {
+                sizes.map(current => {
+
+                    if (sizes.length === 1){
+                        if (props.size[current] === ""){
+                            return <div >{"$" + props.price[current]}</div>;
+                        }
+                        else if (props.size[current][0] !== "("){
+                            return <div >{"(" + props.size[current] + ") : $" + props.price[current]}</div>;
+                        }
+                        else{
+                            return <div >{props.size[current] + ": $" + props.price[current]}</div>;
+                        }
+                    }
+                    else{
+                        return <div >{props.size[current] + ": $" + props.price[current]}</div>;
+                    }
+
+            })
+
+            }
                     </Col>
                     <Button className={"addButton square-md"} onClick={handleShow} rounded>+</Button>
-                    <MenuPopup show={showPopup} onClose={handleClose} name={props.name} number={props.number} size={props.size} price={props.price}/>
+                    <MenuPopup show={showPopup} onClose={handleClose} id={props.id} name={props.name} number={props.number} size={props.size} price={props.price} item={props.menu}/>
 
                 </Row>
             </Card.Body>

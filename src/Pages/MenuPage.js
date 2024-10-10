@@ -19,14 +19,10 @@ const MenuPage = (props) => {
     // const [types, setTypes] = useState([]);
 
 
-
-
-
-
     useEffect( () => {
         API.menuAPI.get()
             .then((data) => {
-                console.log(data)
+                // console.log(data)
                 setMenu(data.data)
             })
             .catch((error) => console.log(error.message))
@@ -39,29 +35,39 @@ const MenuPage = (props) => {
     // let menus = Array.from(menu)
     // console.log(menus)
 
+    const result = Object.groupBy(menus, ({ number }) => number);
 
-    let newMenu = []
-    let newMenuId = []
-    for (let i = 0; i < menus.length; i++) {
-        if (newMenuId.includes(menus[i].number)) {
-            for (let n = 0; n < newMenu.length; n++) {
-                if (newMenu[n].number === menus[i].number) {
-                    newMenu[n].size = newMenu[n].size.concat(",", menus[i].size)
-                    newMenu[n].price = newMenu[n].price.concat(",", menus[i].price)
-                }
-            }
-        }
-    // }
-        else{
-            newMenu.push(menus[i])
-            newMenuId.push(menus[i].number)
-        }
+    // console.log(result.size)
+
+    // const newMenu = JSON.parse(JSON.stringify(result))
+    // console.log(newMenu)
     //
-    }
-
-    newMenu.sort(function(a,b){
-        return a.id - b.id;
-    });
+    // let newMenu = []
+    // let count = 0
+    // for (let i = 0; i < menus.length; i++){
+    //     if (menus[i].number === count)
+    // }
+    // let newMenuId = []
+    // for (let i = 0; i < menus.length; i++) {
+    //     if (newMenuId.includes(menus[i].number)) {
+    //         for (let n = 0; n < newMenu.length; n++) {
+    //             if (newMenu[n].number === menus[i].number) {
+    //                 newMenu[n].size = newMenu[n].size.concat(",", menus[i].size)
+    //                 newMenu[n].price = newMenu[n].price.concat(",", menus[i].price)
+    //             }
+    //         }
+    //     }
+    // // }
+    //     else{
+    //         newMenu.push(menus[i])
+    //         newMenuId.push(menus[i].number)
+    //     }
+    // //
+    // }
+    //
+    // newMenu.sort(function(a,b){
+    //     return a.id - b.id;
+    // });
 
     const categories = ["Appetizer", "Soup", "Chow Mein", "Fried Rice", "Lo Mein", "Mei Fun",
         "Pork", "Poultry", "Beef", "Seafood", "Egg Foo Young", "Sweet And Sour", "Vegetable",
@@ -85,7 +91,7 @@ const MenuPage = (props) => {
 
                         <div id={"cont"}>
 
-                            <MenuComponent menu={newMenu} categories={categories} types={types}/>
+                            <MenuComponent menu={result} categories={categories} types={types}/>
 
 
                             {/*{groups.map(group =>*/}

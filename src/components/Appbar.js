@@ -63,8 +63,8 @@ export default function Appbar() {
 
 
                         <Nav.Item className={"navitem"}>
-                            <Link to="/home">
-                                <p className={"navtext"}>GALLERY</p>
+                            <Link to="/cartPage">
+                                <p className={"navtext"}>CART</p>
                             </Link>
                         </Nav.Item>
                         <Nav.Item className={"navitem"}>

@@ -25,19 +25,39 @@ const API = {
     menuAPI: {
         get: async () => {
             const result = await (Api().get("/menu/getMenu"))
-            //axios.get("http://localhost:8080/menu/getMenu")
-            // let result = await Api().get("/menu/getMenu")
-            //     .then((res) => res)
-
             console.log(result.data)
 
             return result //.data
-        }
+        },
+    },
+    orderAPI: {
+        create: async (orderName, orderPrice, orderAmount, quantity, item) => {
+            let order = {
+                // id: id,
+                orderName: orderName,
+                orderPrice: orderPrice,
+                orderAmount: orderAmount,
+                quantity: quantity,
+                item: item,
+            };
 
-        // get: async () => {
-        //     return (Api().get("/menu/getMenu"))
-        //         .then((result) => result.data);
-        // },
+            console.log({ ...order })
+
+            return await Api().post("/orders/add", { ...order },  {
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                timeout: 10000,
+            })
+
+        },
+        get: async () => {
+            const result = await (Api().get("/orders/getOrders"))
+            console.log(result.data)
+
+            return result //.data
+        },
     }
 }
 

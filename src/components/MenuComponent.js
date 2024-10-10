@@ -25,15 +25,13 @@ const MenuComponent = (props) => {
         }
         else{
             setCategories([type])
-
         }
 
     }
 
 
 
-    console.log(props.menu)
-    // console.log(menu)
+    // console.log(props.menu)
 
     return (
         <div>
@@ -55,12 +53,33 @@ const MenuComponent = (props) => {
                             <Row>
                                 <h2 className={"headers spicy-rice-regular"}>{current}</h2>
                                 {
-                                    props.menu.filter((type) => type.category === current).map(item => {
-                                        // console.log(item)
-                                        return <Col className={"col-6"}><MenuCard number={item.number} name={item.name} size={item.size} price={item.price} menu={item}/></Col>
+
+                                    Object.keys(props.menu).map((item, i) => {
+
+                                        if (current === props.menu[item][0].category){
+                                            // console.log(Object.keys(props.menu[item]).length)
+                                            if (Object.keys(props.menu[item]).length === 1){
+                                                let current = props.menu[item][0]
+                                                return <Col className={"col-6"}><MenuCard id={current.id} number={current.number} name={current.name} size={[current.size]} price={[current.price]} menu={[current]}/></Col>
+
+                                            }
+                                            else{
+                                                let sizes = []
+                                                let prices = []
+                                                let items = []
+                                                for (let n = 0; n < Object.keys(props.menu[item]).length; n++){
+                                                    let current = props.menu[item][n]
+                                                    sizes.push(current.size)
+                                                    prices.push(current.price)
+                                                    items.push(current)
+                                                }
+
+                                                return <Col className={"col-6"}><MenuCard id={items[0].id} number={items[0].number} name={items[0].name} size={sizes} price={prices} menu={items}/></Col>
+
+                                            }
+                                        }
+
                                     })
-
-
                                 }
                             </Row>
                         )
