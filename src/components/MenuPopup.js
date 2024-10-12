@@ -13,20 +13,28 @@ const MenuPopup = (props) => {
     const [show, setShow] = useState(false)
     const [count, setCount] = useState(1)
 
-    const addToCart = (name, total, amount, quantity, item) => {
-        console.log(name.toString(), total.toString(), amount.toString(), quantity.toString(), item[amount])
+
+    // String orderName, Double orderPrice, Integer quantity, Menu item, String specialInstruction
+    const addToCart = (name, total, quantity, item, instructions) => {
+        console.log(name.toString(), total, quantity, item, instructions)
 
 
 
         API.orderAPI.create(
-            name.toString(), total.toString(), amount.toString(), quantity.toString(), item[amount]
+            name.toString(), total, quantity, item, instructions
         )
             .then(r => console.log(r))
             .catch((error) => console.log(error.message))
+
+
+        props.onClose()
     }
 
     const [total, setTotal] = useState(props.price[0])
     const [sizeChosen, setSizeChosen] = useState(0)
+    const [instructions, setInstructions] = useState("")
+
+    const onChange = (event) => setInstructions(event.target.value);
 
 
     let sizes = []
@@ -131,15 +139,15 @@ const MenuPopup = (props) => {
                                         }}
                                     />
                                 }
-
-
-
-
                         })}
 
 
 
                     </Form>
+                </Modal.Body>
+
+                <Modal.Body>
+                    <Form.Control as="textarea" rows={3} className={"specialText"} placeholder="Special Instructions" defaultValue={""} onChange={onChange}/>
                 </Modal.Body>
                 <Modal.Footer style={{width: "100%"}} justify-content-between>
                     {/*<Row style={{width: "100%"}}>*/}
@@ -156,7 +164,10 @@ const MenuPopup = (props) => {
                         }}>
                             +
                         </Button>
-                        <Button variant="primary" >Add ${total * count}</Button>
+                        <Button variant="primary" onClick={() => {
+                            addToCart(props.name, total * count, count, props.item[sizeChosen], instructions)
+                            // console.log(instructions)
+                        }}>Add ${API.priceAPI.price(total * count)}</Button>
 
                 {/*onClick={() => {
                             addToCart(props.name, total * count, sizeChosen, count, props.item)

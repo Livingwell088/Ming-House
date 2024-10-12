@@ -22,6 +22,11 @@ async function checkToken(){
 
 
 const API = {
+    priceAPI: {
+        price: (price) => {
+            return price.toFixed(2);
+        }
+    },
     menuAPI: {
         get: async () => {
             const result = await (Api().get("/menu/getMenu"))
@@ -31,19 +36,21 @@ const API = {
         },
     },
     orderAPI: {
-        create: async (orderName, orderPrice, orderAmount, quantity, item) => {
+
+        // String orderName, Double orderPrice, Integer quantity, Menu item, String specialInstruction
+        create: async (orderName, orderPrice, quantity, item, specialInstruction) => {
             let order = {
                 // id: id,
                 orderName: orderName,
                 orderPrice: orderPrice,
-                orderAmount: orderAmount,
                 quantity: quantity,
                 item: item,
+                specialInstruction: specialInstruction
             };
 
-            console.log({ ...order })
+            console.log({...order})
 
-            return await Api().post("/orders/add", { ...order },  {
+            return await Api().post("/orders/add", {...order}, {
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json",
@@ -57,6 +64,29 @@ const API = {
             console.log(result.data)
 
             return result //.data
+        },
+        edit: async (id, orderName, orderPrice, quantity, item, specialInstruction) => {
+            let order = {
+                id: id,
+                orderName: orderName,
+                orderPrice: orderPrice,
+                quantity: quantity,
+                item: item,
+                specialInstruction: specialInstruction
+            };
+
+            console.log({...order})
+
+            return await Api().put("/orders/" + id, {...order}, {
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                timeout: 10000,
+            })
+        },
+        delete: async (id) => {
+            return await Api().delete("/orders/" + id);
         },
     }
 }

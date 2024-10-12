@@ -1,10 +1,21 @@
 import {useEffect, useState} from "react";
 import API from "../api";
+import CartItem from "../components/CartItem";
+import MenuPopup from "../components/MenuPopup";
 
 
 const CartPage = (props) => {
     const [cart, setCart] = useState([]);
 
+
+    const updateCart = () => {
+        setCart([]);
+        setTimeout(() => {
+            API.orderAPI.get()
+                .then((res) => setCart(res.data))
+                .catch((error) => console.log(error.message))
+        })
+    };
 
     useEffect( () => {
 
@@ -14,56 +25,25 @@ const CartPage = (props) => {
                 setCart(data.data)
             })
             .catch((error) => console.log(error.message))
-
-
-
-
-        // let order = {
-        //     id: id,
-        //     orderName: orderName,
-        //     orderPrice: orderPrice,
-        //     orderAmount: orderAmount,
-        //     quantity: quantity,
-        //     item: item,
-        // };
-
-
-        // let id = "1"
-        // let orderName = "Test"
-        // let orderPrice = 3.95
-        // let orderAmount = 2
-        // let quantity = 2
-        //
-        // let item = {
-        //     "id": "10",
-        //     // "number": "9",
-        //     // "name": "Crab Rangoon",
-        //     // "size": "(Sm 6)",
-        //     // "category": "Appetizer",
-        //     // "price": "5.95",
-        //     // "spicy": "0"
-        // }
-        //
-        // API.orderAPI.create(
-        //     id,
-        //     orderName,
-        //     orderPrice,
-        //     orderAmount,
-        //     quantity,
-        //     item,
-        // ).then(r => console.log(r))
-        //     .catch((error) => console.log(error))
-        //
-
-
     }, [])
 
 
-    return (<>
-        <div>{cart.map((item) => {
-            return item.id
-        })}</div>
-    </>)
+
+
+    return <div className="App teko">
+        <main>
+
+            <div>{cart.map((item) => {
+                return <><CartItem id={item.id} name={item.orderName} price={item.orderPrice} item={item.item} order={item} updateCart={updateCart} ></CartItem>
+                </>
+
+
+            })}
+
+            </div>
+
+        </main>
+    </div>
 
 
 }
