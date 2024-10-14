@@ -4,7 +4,7 @@ import MenuPopup from "./MenuPopup";
 import "../styles/CartItem.css"
 import Image from "react-bootstrap/Image";
 import API from "../api";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 
 const CartItem = (props) => {
@@ -38,10 +38,21 @@ const CartItem = (props) => {
 
     }
 
+    const update = () => {
+        props.updateCart();
+    }
+
+
+    const [menu, setMenu] = useState([])
+
+
+
     const [showPopup, setShowPopup] = useState(false)
     const handleShow = () => setShowPopup(true);
     const handleClose = () => setShowPopup(false);
 
+
+    // console.log(props)
 
 
     return <div className={"cartCard"}>
@@ -72,11 +83,10 @@ const CartItem = (props) => {
                 Edit
             </Button></Col>
         </Row>
-
-        <MenuPopup show={showPopup} onClose={handleClose} id={props.order.item.id} name={props.order.item.name} number={props.order.item.number} size={[props.order.item.size]} price={[props.order.item.price]} item={props.order.item} quantity={props.quantity}/>
-
+        <MenuPopup show={showPopup} onClose={handleClose} id={props.id} item={props.full} quantity={props.order.quantity} do={"Edit"} update={update} size={(props.item.price)}/>
 
     </div>
+
 }
 
 

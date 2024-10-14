@@ -30,10 +30,17 @@ const API = {
     menuAPI: {
         get: async () => {
             const result = await (Api().get("/menu/getMenu"))
-            console.log(result.data)
+            // console.log(result.data)
 
             return result //.data
         },
+        getByNumber: async (number) => {
+
+            const result = await (Api().get("/menu/numbers/" + number))
+            // console.log(result.data)
+
+            return result;
+        }
     },
     orderAPI: {
 
