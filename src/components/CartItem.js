@@ -10,15 +10,19 @@ import {useEffect, useState} from "react";
 const CartItem = (props) => {
 
     const minus = (item) => {
+
+        console.log("Minus")
         let current = item;
 
+        console.log(current)
+
         if (current.quantity === 1){
-            API.orderAPI.delete(current.id)
+            API.cartAPI.delete(current.orderName, current.orderPrice, current.quantity, current.item, current.cartId, current.specialInstruction)
                 .then(r => props.updateCart())
                 .catch((error) => console.log(error.message))
         }
         else{
-            API.orderAPI.edit(current.id, current.orderName, (current.item.price * (current.quantity - 1)), current.quantity - 1, current.item, current.specialInstruction)
+            API.cartAPI.delete(current.orderName, current.orderPrice, current.quantity, current.item, current.cartId, current.specialInstruction)
                 .then(r => {
                     props.updateCart();
                 })
@@ -29,17 +33,23 @@ const CartItem = (props) => {
     const plus = (item) => {
         let current = item;
 
-        API.orderAPI.edit(current.id, current.orderName, (current.item.price * (current.quantity + 1)), current.quantity + 1, current.item, current.specialInstruction)
-            .then(r => {
-                props.updateCart();
-            })
+
+        API.cartAPI.create(
+            current.orderName, current.item.price, 1, current.item, sessionStorage.getItem("sessionId").toString(), current.specialInstruction)
+            .then(r => props.updateCart())
             .catch((error) => console.log(error.message))
+
+        // console.log(current)
+
 
 
     }
 
     const update = () => {
+        console.log("Cart Item Update")
         props.updateCart();
+        console.log(props)
+
     }
 
 

@@ -50,12 +50,12 @@ export default function Appbar() {
                         </Navbar.Brand>
 
                         <Nav.Item className={"navitem"}>
-                            <Link to={'/'}>
+                            <Link to={'/'} style={{textDecoration: "none"}}>
                                 <p className={"navtext"}>ABOUT US</p>
                             </Link>
                         </Nav.Item>
                         <Nav.Item className={"navitem"}>
-                            <Link to="/menupage">
+                            <Link to="/menupage" style={{textDecoration: "none"}}>
                                 <p className={"navtext"}>MENU</p>
                             </Link>
                         </Nav.Item>
@@ -63,12 +63,12 @@ export default function Appbar() {
 
 
                         <Nav.Item className={"navitem"}>
-                            <Link to="/cartPage">
+                            <Link to="/cartPage" style={{textDecoration: "none"}}>
                                 <p className={"navtext"}>CART</p>
                             </Link>
                         </Nav.Item>
                         <Nav.Item className={"navitem"}>
-                            <Link to="/home">
+                            <Link to="/home" style={{textDecoration: "none"}}>
                                 <p className={"navtext"}>CONTACT US</p>
                             </Link>
                         </Nav.Item>

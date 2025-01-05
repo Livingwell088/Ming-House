@@ -42,20 +42,97 @@ const API = {
             return result;
         }
     },
-    orderAPI: {
+    cartAPI: {
 
-        // String orderName, Double orderPrice, Integer quantity, Menu item, String specialInstruction
-        create: async (orderName, orderPrice, quantity, item, specialInstruction) => {
-            let order = {
+        // String cartName, Double cartPrice, Integer quantity, Menu item, String specialInstruction
+        create: async (cartName, cartPrice, quantity, item, cartId, specialInstruction) => {
+            let cart = {
                 // id: id,
-                orderName: orderName,
-                orderPrice: orderPrice,
+                orderName: cartName,
+                orderPrice: cartPrice,
                 quantity: quantity,
                 item: item,
+                cartId: cartId,
                 specialInstruction: specialInstruction
             };
 
-            console.log({...order})
+            // console.log({...cart})
+
+            return await Api().post("/carts/add", {...cart}, {
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                timeout: 10000,
+            })
+
+        },
+        get: async (cartId) => {
+            const result = await (Api().get("/carts/getCarts/" + cartId))
+            // console.log(result.data)
+
+            return result //.data
+        },
+        edit: async (id, cartName, cartPrice, quantity, item, specialInstruction, cartId) => {
+            let cart = {
+                id: id,
+                orderName: cartName,
+                orderPrice: cartPrice,
+                quantity: quantity,
+                item: item,
+                cartId: cartId,
+                specialInstruction: specialInstruction
+            };
+
+            // console.log({...cart})
+
+            return await Api().put("/carts/" + cartId, {...cart}, {
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                timeout: 10000,
+            })
+        },
+        // delete: async (id) => {
+        //     return await Api().delete("/carts/" + id);
+        // },
+
+        delete: async (cartName, cartPrice, quantity, item, cartId, specialInstruction) => {
+            let cart = {
+                // id: id,
+                orderName: cartName,
+                orderPrice: cartPrice,
+                quantity: quantity,
+                item: item,
+                cartId: cartId,
+                specialInstruction: specialInstruction
+            };
+
+            return await Api().post("/carts/delete", {...cart}, {
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                timeout: 10000,
+            })
+        },
+        generate: async () => {
+
+            const result = await (Api().get("/carts/generate"))
+
+            return result
+        }
+    },
+
+    orderAPI: {
+        create: async (orderName, orderPrice, orderItems) => {
+
+            let order = {
+                orderName: orderName,
+                orderPrice: orderPrice,
+                orderItems: orderItems
+            }
 
             return await Api().post("/orders/add", {...order}, {
                 headers: {
@@ -68,33 +145,10 @@ const API = {
         },
         get: async () => {
             const result = await (Api().get("/orders/getOrders"))
-            console.log(result.data)
+            // console.log(result.data)
 
             return result //.data
-        },
-        edit: async (id, orderName, orderPrice, quantity, item, specialInstruction) => {
-            let order = {
-                id: id,
-                orderName: orderName,
-                orderPrice: orderPrice,
-                quantity: quantity,
-                item: item,
-                specialInstruction: specialInstruction
-            };
-
-            console.log({...order})
-
-            return await Api().put("/orders/" + id, {...order}, {
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                },
-                timeout: 10000,
-            })
-        },
-        delete: async (id) => {
-            return await Api().delete("/orders/" + id);
-        },
+        }
     }
 }
 

@@ -1,9 +1,10 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Container, CssBaseline} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import '../styles/App.css';
 import '../styles/fonts.css';
 import {Image, Col, Row, Button} from "react-bootstrap";
+import API from "../api";
 // import dumpling from "images/dumpling.png"
 
 const Home = () => {
@@ -11,6 +12,26 @@ const Home = () => {
     const [groups, setGroups] = useState([]);
     const [loading, setLoading] = useState(false);
 
+    useEffect( () => {
+
+        const generate = async () => {
+            const sessionId = window.sessionStorage.getItem('sessionId');
+            console.log(sessionId)
+            if (sessionId === null){
+                await API.cartAPI.generate()
+                    .then(r => {
+                        console.log(r)
+                        sessionStorage.setItem("sessionId", r.data)
+                    })
+                    .catch((error) => console.log(error.message))
+            }
+            console.log(sessionStorage.getItem("sessionId"))
+
+        }
+
+        generate()
+
+    }, [])
 
     return (
         <>

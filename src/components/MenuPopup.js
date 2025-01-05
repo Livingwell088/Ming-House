@@ -16,11 +16,11 @@ const MenuPopup = (props) => {
 
     // String orderName, Double orderPrice, Integer quantity, Menu item, String specialInstruction
     const addToCart = (name, total, quantity, item, instructions, todo, id) => {
-        // console.log(name.toString(), total, quantity, item, instructions)
+        // console.log(name.toString(), total, quantity, item, sessionStorage.getItem("sessionId").toString(), instructions)
 
         if (todo === "Add"){
-            API.orderAPI.create(
-                name.toString(), total, quantity, item, instructions
+            API.cartAPI.create(
+                name.toString(), total, quantity, item, sessionStorage.getItem("sessionId").toString(), instructions
             )
                 .then(r => console.log(r))
                 .catch((error) => console.log(error.message))
@@ -30,8 +30,9 @@ const MenuPopup = (props) => {
         }
         else{
 
-            API.orderAPI.edit(
-                id, name.toString(), total, quantity, item, instructions
+            console.log(name.toString(), total, quantity, item, sessionStorage.getItem("sessionId").toString(), instructions)
+            API.cartAPI.edit(
+                id, name.toString(), total, quantity, item, instructions, sessionStorage.getItem("sessionId").toString()
             )
                 .then(r => console.log(r))
                 .catch((error) => console.log(error.message))
@@ -48,6 +49,9 @@ const MenuPopup = (props) => {
     const [sizeChosen, setSizeChosen] = useState(0)
     const [instructions, setInstructions] = useState("")
 
+    // const [quantity, setQuantity] = useState(0)
+
+
     const onChange = (event) => setInstructions(event.target.value);
 
 
@@ -58,16 +62,14 @@ const MenuPopup = (props) => {
 
     useEffect(() => {
         if (props.do === "Edit"){
-            console.log("Entered")
+            // console.log("Entered")
             setTotal(props.size)
+            props.update()
+            setCount(props.quantity)
         }
-    }, [total]);
+    }, [props.quantity]);
 
-    // console.log(total)
-
-    // console.log(total)
-
-    console.log(props)
+    // console.log(props)
 
 
     return (
@@ -201,13 +203,7 @@ const MenuPopup = (props) => {
                                 id = props.id;
                             }
                             addToCart(props.item[0].name, total * count, count, props.item[sizeChosen], instructions, props.do, id)
-                            // console.log(instructions)
                         }}>Add ${API.priceAPI.price(total * count)}</Button>
-
-                    {/*{onClick={() => {*/}
-                    {/*    addToCart(props.name, total * count, count, props.item[sizeChosen], instructions)*/}
-                    {/*    // console.log(instructions)*/}
-                    {/*}}}*/}
 
                 </Modal.Footer>
 
