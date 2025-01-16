@@ -5,6 +5,7 @@ import MenuPopup from "../components/MenuPopup";
 import CartTotal from "../components/CartTotal";
 import {Button, Col, Row} from "react-bootstrap";
 import '../styles/fonts.css';
+import LoginModal from "../components/LoginModal";
 
 
 const CartPage = (props) => {
@@ -12,12 +13,22 @@ const CartPage = (props) => {
     const [fullMenu, setFullMenu] = useState([[]])
     const [subtotal, setSubtotal] = useState(0.0)
 
+    const [orderType, setOrderType] = useState(" Select One")
 
 
+
+    const [showPopup, setShowPopup] = useState(false)
+    const handleShow = () => setShowPopup(true);
+    const handleClose = () => setShowPopup(false);
 
 
     const testing = async () => {
-        await API.cartAPI.get(sessionStorage.getItem("sessionId"))
+        let currentData = window.sessionStorage.getItem("sessionId")
+
+        if (window.sessionStorage.getItem("loggedIn") === "true"){
+            currentData = window.sessionStorage.getItem("username")
+        }
+        await API.cartAPI.get(currentData)
             .then((data) => data.data)
             .then(async (data) => {
                 // console.log(data)
@@ -57,10 +68,41 @@ const CartPage = (props) => {
         await testing()
     }
 
+    const checkIfLogged = () => {
+
+        if (sessionStorage.getItem("loggedIn") === "false"){
+
+            console.log("NOT LOGGED IN")
+
+            if (orderType !== " Select One"){
+                handleShow()
+
+            }
+            else{
+                alert("Select an Order Type")
+            }
+        }
+        else {
+            console.log("LOGGED IN")
+
+            API.orderAPI.create("orderName", 10.25, "PickUp", "Address", window.sessionStorage.getItem("username"), cart)
+                .then(r => {
+                    console.log("Order Placed")
+                    console.log(r.data)
+                })
+                .catch((error) => console.log(error.message))
+        }
+    }
+
     const makeOrder = async () => {
-        await API.orderAPI.create("Test", 10.0, cart)
-            .then(r => console.log(r))
-            .catch((error) => console.log(error.message))
+
+        // console.log(orderType);
+
+        checkIfLogged()
+
+        // await API.orderAPI.create("Test", 10.0, cart)
+        //     .then(r => console.log(r))
+        //     .catch((error) => console.log(error.message))
     }
 
 
@@ -91,7 +133,7 @@ const CartPage = (props) => {
             <main>
                 <div>
                     <Row>
-                        <Col xs={9}>
+                        <Col xs={8}>
 
                             {cart.map((item, index) => {
 
@@ -101,12 +143,14 @@ const CartPage = (props) => {
 
                             })}
                         </Col>
-                        <Col xs={3}>
-                            <CartTotal subtotal={subtotal}></CartTotal>
+                        <Col xs={4}>
+                            <CartTotal id={"cartTotal"} orderType={orderType} onChange={(type) => setOrderType(type)} subtotal={subtotal}></CartTotal>
                         </Col>
                     </Row>
 
                     <Button onClick={makeOrder}>Place Order</Button>
+
+                    <LoginModal show={showPopup} onClose={handleClose}></LoginModal>
 
                 </div>
 

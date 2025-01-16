@@ -18,9 +18,17 @@ const MenuPopup = (props) => {
     const addToCart = (name, total, quantity, item, instructions, todo, id) => {
         // console.log(name.toString(), total, quantity, item, sessionStorage.getItem("sessionId").toString(), instructions)
 
+        console.log(props)
+
+        let addTo = sessionStorage.getItem("sessionId").toString()
+
+        if (sessionStorage.getItem("loggedIn") === "true"){
+            addTo = sessionStorage.getItem("username").toString()
+        }
+
         if (todo === "Add"){
             API.cartAPI.create(
-                name.toString(), total, quantity, item, sessionStorage.getItem("sessionId").toString(), instructions
+                name.toString(), total, quantity, item, addTo, instructions
             )
                 .then(r => console.log(r))
                 .catch((error) => console.log(error.message))
@@ -30,9 +38,9 @@ const MenuPopup = (props) => {
         }
         else{
 
-            console.log(name.toString(), total, quantity, item, sessionStorage.getItem("sessionId").toString(), instructions)
+            // console.log(name.toString(), total, quantity, item, sessionStorage.getItem("sessionId").toString(), instructions)
             API.cartAPI.edit(
-                id, name.toString(), total, quantity, item, instructions, sessionStorage.getItem("sessionId").toString()
+                id, name.toString(), total, quantity, item, instructions, addTo
             )
                 .then(r => console.log(r))
                 .catch((error) => console.log(error.message))

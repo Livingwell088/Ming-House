@@ -20,8 +20,24 @@ import {
     Route,
     Link,
 } from "react-router-dom";
+import {useEffect, useState} from "react";
 
 export default function Appbar() {
+
+    const [user, setUser] = useState("")
+    const [show, setShow] = useState("false")
+
+    const [log, setLog] = useState(window.sessionStorage.getItem("loggedIn"))
+
+    useEffect(() => {
+        console.log("Session Change")
+        if (window.sessionStorage.getItem("loggedIn") === "true"){
+            setShow("true")
+            setUser(window.sessionStorage.getItem("username"))
+        }
+    }, []);
+
+
     return (
         <>
             <div id='header'>
@@ -35,7 +51,9 @@ export default function Appbar() {
                         {/*<p style={{color: "white"}}>Tues-Thurs: 11:00AM-10:30PM</p>*/}
                         {/*/!*<p style={{color: "white"}}>Fri-Sat: 11:00AM-11:00PM</p>*/}
                         </Col>
-                    <Col xs={1}></Col>
+                    <Col xs={1}>
+                        {show && <p>{user}</p>}
+                    </Col>
                 </Row>
 
 
@@ -73,6 +91,7 @@ export default function Appbar() {
                             </Link>
                         </Nav.Item>
                     </Nav>
+
             </Navbar>
         </>
     );

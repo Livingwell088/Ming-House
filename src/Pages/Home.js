@@ -25,6 +25,10 @@ const Home = () => {
                     })
                     .catch((error) => console.log(error.message))
             }
+
+            if (window.sessionStorage.getItem('loggedIn') === null){
+                window.sessionStorage.setItem('loggedIn', "false")
+            }
             console.log(sessionStorage.getItem("sessionId"))
 
         }

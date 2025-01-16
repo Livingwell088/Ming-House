@@ -11,7 +11,7 @@ const CartItem = (props) => {
 
     const minus = (item) => {
 
-        console.log("Minus")
+        // console.log("Minus")
         let current = item;
 
         console.log(current)
@@ -35,7 +35,7 @@ const CartItem = (props) => {
 
 
         API.cartAPI.create(
-            current.orderName, current.item.price, 1, current.item, sessionStorage.getItem("sessionId").toString(), current.specialInstruction)
+            current.orderName, current.item.price, 1, current.item, current.cartId, current.specialInstruction)
             .then(r => props.updateCart())
             .catch((error) => console.log(error.message))
 
@@ -46,9 +46,9 @@ const CartItem = (props) => {
     }
 
     const update = () => {
-        console.log("Cart Item Update")
+        // console.log("Cart Item Update")
         props.updateCart();
-        console.log(props)
+        // console.log(props)
 
     }
 

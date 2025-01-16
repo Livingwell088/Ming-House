@@ -10,27 +10,42 @@ const CartItem = (props) => {
 
     // console.log(props)
 
-    const [orderType, setOrderType] = useState(" Select One")
+    const [orderType, setOrderType] = useState(props.orderType)
     const [deliverAddress, setAddress] = useState(" Enter Your Address")
 
     const [showPopup, setShowPopup] = useState(false)
     const handleShow = () => setShowPopup(true);
     const handleClose = () => setShowPopup(false);
 
+    useEffect(() => {
+        setOrderType(props.orderType)
+    }, [props.orderType]);
+
 
     return <div className={"cartTotal"}>
 
 
-        <div>
-            Order Type:
-            <a className={"orderTypeLink"} onClick={handleShow}>
-                {orderType}
-            </a>
-            <OrderTypePopup show={showPopup} onClose={handleClose} test={(type) => setOrderType(type)}></OrderTypePopup>
 
-            {(orderType === " Pickup") && <div>
-                Pickup At: Ming House 217A Chandler St, Worcester MA 01609
-            </div>}
+        <Card className={"totalCard"}>
+
+            Ming House:
+            217A Chandler St, Worcester MA 01609
+
+            <br />
+
+            <div>
+                Order Type:
+                <a className={"orderTypeLink"} onClick={handleShow}>
+                    {orderType}
+                </a>
+            </div>
+
+
+            <OrderTypePopup show={showPopup} onClose={handleClose} test={(type) => props.onChange(type)}></OrderTypePopup>
+
+            {/*{(orderType === " Pickup") && <div>*/}
+            {/*    Pickup At: Ming House 217A Chandler St, Worcester MA 01609*/}
+            {/*</div>}*/}
 
 
             {(orderType === " Delivery") && <div>
@@ -38,7 +53,9 @@ const CartItem = (props) => {
 
             </a>
             </div>}
-        </div>
+        </Card>
+
+        <br />
 
         <Card className={"totalCard"}>
 
