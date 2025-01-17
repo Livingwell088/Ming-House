@@ -6,6 +6,7 @@ import CartTotal from "../components/CartTotal";
 import {Button, Col, Row} from "react-bootstrap";
 import '../styles/fonts.css';
 import LoginModal from "../components/LoginModal";
+import "../styles/cartPage.css"
 
 
 const CartPage = (props) => {
@@ -119,11 +120,20 @@ const CartPage = (props) => {
     if (cart.length === 0){
         return <div className="App teko">
             <main>
-                <div>
-
-                    <h3>No Items in Cart</h3>
-                    <h4>Browse Menu</h4>
-                </div>
+                <h1>
+                    YOUR CART
+                </h1>
+                <Row>
+                    <Col xs={8}>
+                        <h3>No Items in Cart</h3>
+                        <h4>Browse <a className={"Link"} href={"/menuPage"}>
+                            Menu
+                        </a></h4>
+                    </Col>
+                    <Col xs={4}>
+                        <CartTotal id={"cartTotal"} orderType={orderType} onChange={(type) => setOrderType(type)} subtotal={subtotal}></CartTotal>
+                    </Col>
+                </Row>
             </main>
         </div>
     }
@@ -131,6 +141,10 @@ const CartPage = (props) => {
     else{
         return <div className="App teko">
             <main>
+                <h1>
+                    YOUR CART
+                </h1>
+
                 <div>
                     <Row>
                         <Col xs={8}>

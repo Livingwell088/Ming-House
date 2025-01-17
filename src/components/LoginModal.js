@@ -48,6 +48,20 @@ const LoginModal = (props) => {
         setInputs({"username": "", "password": "", "passwordConfirm": "", "firstName": "", "lastName": "", "email": ""})
     }
 
+    const handleGuest = () => {
+
+        const current = window.sessionStorage.getItem("sessionId")
+        API.userAPI.create(current, "", current, current, current)
+            .then(r => console.log(r))
+            .catch((error) => console.log(error.message))
+
+        window.sessionStorage.setItem("loggedIn", "true")
+        window.sessionStorage.setItem("username", current)
+
+        props.onClose()
+
+    }
+
     const handleLogIn = () => {
         // console.log(inputs)
 
@@ -160,7 +174,12 @@ const LoginModal = (props) => {
                     }}>
                         <p>Sign Up</p></a>
 
+                    <hr />
+
+
+                    <Button onClick={handleGuest}> Continue as Guest</Button>
                 </form>}
+
 
 
 

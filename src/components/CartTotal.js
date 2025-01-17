@@ -28,10 +28,12 @@ const CartItem = (props) => {
 
         <Card className={"totalCard"}>
 
-            Ming House:
-            217A Chandler St, Worcester MA 01609
+            <div>
+                Ming House:
+                217A Chandler St, Worcester MA 01609
+            </div>
 
-            <br />
+            {/*<br />*/}
 
             <div>
                 Order Type:
@@ -43,16 +45,17 @@ const CartItem = (props) => {
 
             <OrderTypePopup show={showPopup} onClose={handleClose} test={(type) => props.onChange(type)}></OrderTypePopup>
 
-            {/*{(orderType === " Pickup") && <div>*/}
-            {/*    Pickup At: Ming House 217A Chandler St, Worcester MA 01609*/}
-            {/*</div>}*/}
-
-
             {(orderType === " Delivery") && <div>
                 Deliver to: <a> {deliverAddress}
 
             </a>
             </div>}
+
+            <div>
+                Order Time:
+            </div>
+
+
         </Card>
 
         <br />
