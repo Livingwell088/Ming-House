@@ -16,7 +16,7 @@ const Home = () => {
 
         const generate = async () => {
             const sessionId = window.sessionStorage.getItem('sessionId');
-            console.log(sessionId)
+            // console.log(sessionId)
             if (sessionId === null){
                 await API.cartAPI.generate()
                     .then(r => {

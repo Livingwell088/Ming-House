@@ -54,10 +54,13 @@
 }
 
 #navbar1 {
-    background: linear-gradient(to bottom, #fcefda, #fae3bf);
+    /*background: linear-gradient(to right, #fcefda, #fae3bf);*/
+    background-color: transparent;
     /*background-color: #fcefda;*/
+
     padding: 0;
     border-bottom: 0;
+    /*1px #ec4c45;*!*/
 }
 
 #navcontainer {

@@ -164,7 +164,7 @@ const CartPage = (props) => {
 
                     <Button onClick={makeOrder}>Place Order</Button>
 
-                    <LoginModal show={showPopup} onClose={handleClose}></LoginModal>
+                    <LoginModal show={showPopup} onClose={handleClose} loginScreen={true}></LoginModal>
 
                 </div>
 

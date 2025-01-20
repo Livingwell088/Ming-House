@@ -1,5 +1,5 @@
 import {Button, Col, Modal, Row} from "react-bootstrap";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import API from "../api";
 
 
@@ -7,7 +7,7 @@ const LoginModal = (props) => {
 
     const [username, setUsername] = useState("")
     const [title, setTitle] = useState("Login")
-    const [log, setLog] = useState(true)
+    const [loginScreen, setLoginScreen] = useState(props.loginScreen)
     // const onChange = (event) => setInstructions(event.target.value);
 
 
@@ -22,6 +22,16 @@ const LoginModal = (props) => {
     const [passwordMatch, setMatch] = useState(false)
 
     const [passReq, setPassReq] = useState(false)
+
+    useEffect(() => {
+        setLoginScreen(props.loginScreen)
+    }, [props.loginScreen]);
+
+
+    const closeModal = () => {
+        clearStates()
+        props.onClose()
+    }
 
     const handleChange = (event) => {
         const name = event.target.name;
@@ -46,6 +56,7 @@ const LoginModal = (props) => {
 
     const clearStates = () => {
         setInputs({"username": "", "password": "", "passwordConfirm": "", "firstName": "", "lastName": "", "email": ""})
+        setLoginScreen(props.loginScreen)
     }
 
     const handleGuest = () => {
@@ -58,12 +69,13 @@ const LoginModal = (props) => {
         window.sessionStorage.setItem("loggedIn", "true")
         window.sessionStorage.setItem("username", current)
 
-        props.onClose()
+        // props.onClose()
+        closeModal()
 
     }
 
     const handleLogIn = () => {
-        // console.log(inputs)
+        // console.loginScreen(inputs)
 
         API.userAPI.validate(inputs.username, inputs.password)
             .then(r => {
@@ -73,8 +85,10 @@ const LoginModal = (props) => {
 
 
 
-                    clearStates()
-                    props.onClose()
+                    // clearStates()
+                    // props.onClose()
+
+                    closeModal()
                 }
                 else if (r.data === "Incorrect Password"){
                     alert("Incorrect Password")
@@ -119,10 +133,9 @@ const LoginModal = (props) => {
 
         <Modal
             show={props.show}
-            onHide={props.onClose}
+            onHide={closeModal}
             backdrop="static"
             keyboard={false}
-            // size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered
             className={"popup teko"}
@@ -134,7 +147,7 @@ const LoginModal = (props) => {
             </Modal.Header>
             <Modal.Body>
 
-                {log && <form>
+                {loginScreen && <form>
                     <label
                         style={{width: "60%"}}
                     >
@@ -169,7 +182,7 @@ const LoginModal = (props) => {
                     <Button onClick={handleLogIn}>Log In</Button>
 
                     <a onClick={() => {
-                        setLog(!log)
+                        setLoginScreen(!loginScreen)
                         setTitle("Sign Up")
                     }}>
                         <p>Sign Up</p></a>
@@ -183,7 +196,7 @@ const LoginModal = (props) => {
 
 
 
-                {!log && <form>
+                {!loginScreen && <form>
 
                     <Row>
                         <Col>
@@ -293,7 +306,7 @@ const LoginModal = (props) => {
                     <Button onClick={handleSignUp}>Sign Up</Button>
 
                     <a onClick={() => {
-                        setLog(!log)
+                        setLoginScreen(!loginScreen)
                         setTitle("Login")
                     }}>
                         <p>Sign Up</p></a>

@@ -3,7 +3,8 @@
 .App {
   text-align: center;
   /*background-color: #3c342c;*/
-  background: linear-gradient(to bottom, #fae7c8, #f8d7a4);
+  /*background: linear-gradient(to right, #fae7c8, #f8d7a4);*/
+  background-color: transparent;
 
   height: 100%;
   min-height: 100vh;
