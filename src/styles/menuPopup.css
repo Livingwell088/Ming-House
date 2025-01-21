@@ -14,3 +14,16 @@
     border: #661a06 2px solid !important;
     color: #661a06 !important;
 }
+
+
+.popover {
+    background-color: #f8d7a4 !important;
+    color: #661a06 !important;
+    border: #661a06 2px solid !important;
+}
+
+.popoverHeader {
+    background-color: #f8d7a4 !important;
+    color: #661a06 !important;
+    /*border: #661a06 2px solid !important;*/
+}

@@ -4,14 +4,18 @@ import Button from "@mui/material/Button";
 import {useEffect, useState} from "react";
 import API from "../api";
 import LoginModal from "./LoginModal";
+import '../styles/fonts.css';
+import "../styles/menuPopup.css"
 
 
 const UserPopover = (props) => {
 
     const [log, setLog] = useState(window.sessionStorage.getItem("loggedIn"))
     const [username, setUsername] = useState(window.sessionStorage.getItem("username"))
+
     const [user, setUser] = useState({})
     const [guest, setGuest] = useState(true)
+    const [loggedGuest, setLoggedGuest] = useState(false)
 
 
     const [showPopup, setShowPopup] = useState(false)
@@ -21,17 +25,17 @@ const UserPopover = (props) => {
 
 
     const clickLogin = () => {
+        // document.body.click()
+
         setShowLogin(true)
         handleShow()
-        console.log(showLogin)
-
-
     }
 
     const clickSignUp = () => {
+        // document.body.click()
+
         setShowLogin(false)
         handleShow()
-        console.log(showLogin)
 
     }
 
@@ -40,21 +44,32 @@ const UserPopover = (props) => {
         setUsername(window.sessionStorage.getItem("username"))
 
 
+        // console.log(log)
+        // console.log(username)
+
         await API.userAPI.getUser(username)
             .then(async r => {
+
+                // console.log(r.data)
                 await setUser(r.data)
 
                 if (log === "true") {
 
                     if (user.firstName === user.lastName && user.email === user.usernameId && user.firstName === user.email) {
                         setGuest(true)
+                        setLoggedGuest(true)
                     } else if (user === {}) {
                         setGuest(true)
+                        setLoggedGuest(true)
                     } else {
                         setGuest(false)
                     }
                 }
+                else{
+                    setGuest(true)
+                }
             })
+            .then( () => console.log(guest))
             .catch((error) => console.log(error))
 
         // console.log(user)
@@ -62,25 +77,36 @@ const UserPopover = (props) => {
 
     }
 
-    // useEffect(() => {
-    //     console.log(window.sessionStorage.getItem("loggedIn"))
-    // }, []);
+    const handleSignOut = () => {
+        window.sessionStorage.removeItem("username")
+        window.sessionStorage.setItem("loggedIn", "false")
+    }
 
-    const popover = (<Popover>
-        <Popover.Header>
+    // const hidePopover = () => {
+    //     this.refs.overlay.handleHide()
+    // }
+
+
+    const popover = (<Popover className={"popover"}>
+        <Popover.Header className={"popoverHeader teko"}>
             <h3>Hello, {user.firstName || "Customer"}</h3>
         </Popover.Header>
 
-        <Popover.Body>
+        <Popover.Body className={"teko"}>
             {guest &&
                 <div>
                     <Button onClick={clickLogin}>Login</Button>
                     <p>Don't have an account? <a onClick={clickSignUp}> Sign Up for one. </a> </p>
 
                     <LoginModal  show={showPopup} onClose={handleClose} loginScreen={showLogin}></LoginModal>
-                </div>
 
-                // <p>Log in to your account or Sign Up</p>
+                </div>
+            }
+
+            {!guest &&
+                <div>
+                    <Button onClick={handleSignOut}>Sign Out</Button>
+                </div>
             }
 
         </Popover.Body>
@@ -89,12 +115,13 @@ const UserPopover = (props) => {
 
     return <>
 
-        <OverlayTrigger overlay={popover} placement={"bottom"} trigger={"click"}>
+        <OverlayTrigger overlay={popover} placement={"bottom"} trigger={"click"} rootClose>
             <a onClick={getUser}>
                 <p className={"navtext"}>User</p>
             </a>
 
         </OverlayTrigger>
+
 
     </>
 

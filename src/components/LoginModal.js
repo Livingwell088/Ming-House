@@ -1,6 +1,8 @@
 import {Button, Col, Modal, Row} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import API from "../api";
+import "../styles/menuPopup.css"
+
 
 
 const LoginModal = (props) => {
