@@ -7,6 +7,8 @@ import {Button, Col, Row} from "react-bootstrap";
 import '../styles/fonts.css';
 import LoginModal from "../components/LoginModal";
 import "../styles/cartPage.css"
+import CartLeft from "../components/CartLeft";
+import {Navigate, redirect, useHref, useNavigate} from "react-router-dom";
 
 
 const CartPage = (props) => {
@@ -15,12 +17,17 @@ const CartPage = (props) => {
     const [subtotal, setSubtotal] = useState(0.0)
 
     const [orderType, setOrderType] = useState(" Select One")
+    const [orderTime, setOrderTime] = useState(" Time")
+    // const [page, setPage] = useState("Cart")
 
 
 
     const [showPopup, setShowPopup] = useState(false)
     const handleShow = () => setShowPopup(true);
     const handleClose = () => setShowPopup(false);
+
+    const navigate = useNavigate();
+
 
 
     const testing = async () => {
@@ -84,26 +91,30 @@ const CartPage = (props) => {
             }
         }
         else {
-            console.log("LOGGED IN")
+            // console.log("LOGGED IN")
 
-            API.orderAPI.create("orderName", 10.25, "PickUp", "Address", window.sessionStorage.getItem("username"), cart)
-                .then(r => {
-                    console.log("Order Placed")
-                    console.log(r.data)
-                })
-                .catch((error) => console.log(error.message))
+            navigate('/checkoutPage', {state: {orderType: orderType, subtotal: subtotal, orderTime: orderTime}});
+            // redirect("/checkoutPage")
+
+            // return <Navigate to={"/checkoutPage"} replace />
+            // window.location = "/checkoutPage"
+
+            // API.orderAPI.create("orderName", 10.25, "PickUp", "Address", window.sessionStorage.getItem("username"), cart)
+            //     .then(r => {
+            //         console.log("Order Placed")
+            //         console.log(r.data)
+            //     })
+            //     .catch((error) => console.log(error.message))
         }
     }
 
     const makeOrder = async () => {
 
-        // console.log(orderType);
+        // console.log("Make Order");
 
         checkIfLogged()
 
-        // await API.orderAPI.create("Test", 10.0, cart)
-        //     .then(r => console.log(r))
-        //     .catch((error) => console.log(error.message))
+
     }
 
 
@@ -117,61 +128,39 @@ const CartPage = (props) => {
 
 
 
-    if (cart.length === 0){
-        return <div className="App teko">
-            <main>
-                <h1>
-                    YOUR CART
-                </h1>
-                <Row>
-                    <Col xs={8}>
-                        <h3>No Items in Cart</h3>
-                        <h4>Browse <a className={"Link"} href={"/menuPage"}>
-                            Menu
-                        </a></h4>
-                    </Col>
-                    <Col xs={4}>
-                        <CartTotal id={"cartTotal"} orderType={orderType} onChange={(type) => setOrderType(type)} subtotal={subtotal}></CartTotal>
-                    </Col>
-                </Row>
-            </main>
-        </div>
-    }
+    return <div className="App teko">
+        <main>
+            <h1>YOUR CART</h1>
+            <Row>
+                <Col xs={1}></Col>
+                <Col xs={7}>
+                    <CartLeft cart={cart} fullMenu={fullMenu} updateCart={() => updateCart}></CartLeft>
+                </Col>
 
-    else{
-        return <div className="App teko">
-            <main>
-                <h1>
-                    YOUR CART
-                </h1>
-
-                <div>
-                    <Row>
-                        <Col xs={8}>
-
-                            {cart.map((item, index) => {
-
-                                return <><CartItem id={item.id} name={item.orderName} price={item.orderPrice} item={item.item} order={item} updateCart={updateCart} full={fullMenu[index]}></CartItem>
-                                </>
-
-
-                            })}
-                        </Col>
-                        <Col xs={4}>
-                            <CartTotal id={"cartTotal"} orderType={orderType} onChange={(type) => setOrderType(type)} subtotal={subtotal}></CartTotal>
-                        </Col>
-                    </Row>
-
-                    <Button onClick={makeOrder}>Place Order</Button>
-
+                <Col xs={4}>
+                    <CartTotal id={"cartTotal"} orderType={orderType} onChange={(type) => setOrderType(type)} orderTime={orderTime} handleChangeTime={(time) => setOrderTime(time)} subtotal={subtotal} makeOrder={() => makeOrder}  ></CartTotal>
                     <LoginModal show={showPopup} onClose={handleClose} loginScreen={true}></LoginModal>
 
-                </div>
+                </Col>
+            </Row>
+        </main>
 
-                {/*<CartTotal cart={cart}></CartTotal>*/}
-            </main>
-        </div>
-    }
+        {/*{page === "Checkout" && <main>*/}
+        {/*    <h1>CHECKOUT</h1>*/}
+        {/*    <Row>*/}
+        {/*        <Col xs={8}>*/}
+        {/*            /!*<CartLeft cart={cart} fullMenu={fullMenu} updateCart={() => updateCart}></CartLeft>*!/*/}
+        {/*        </Col>*/}
+
+        {/*        <Col xs={4}>*/}
+        {/*            <CartTotal id={"cartTotal"} orderType={orderType} onChange={(type) => setOrderType(type)} subtotal={subtotal} makeOrder={() => makeOrder}  ></CartTotal>*/}
+        {/*            <LoginModal show={showPopup} onClose={handleClose} loginScreen={true}></LoginModal>*/}
+
+        {/*        </Col>*/}
+        {/*    </Row>*/}
+        {/*</main>}*/}
+
+    </div>
 
 
 

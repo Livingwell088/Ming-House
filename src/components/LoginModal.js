@@ -1,7 +1,8 @@
-import {Button, Col, Modal, Row} from "react-bootstrap";
+import {Button, Col, FloatingLabel, Modal, Row} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import API from "../api";
 import "../styles/menuPopup.css"
+import Form from 'react-bootstrap/Form';
 
 
 
@@ -13,12 +14,6 @@ const LoginModal = (props) => {
     // const onChange = (event) => setInstructions(event.target.value);
 
 
-    // const [firstName, setFirstName] = useState("")
-    // const [lastName, setlastName] = useState("")
-    // const [email, setemail] = useState("")
-    // const [password, setpassword] = useState("")
-    // const [passwordConfirm, setpasswordConfirm] = useState("")
-
     const [inputs, setInputs] = useState({"username": "", "password": "", "passwordConfirm": "", "firstName": "", "lastName": "", "email": ""})
 
     const [passwordMatch, setMatch] = useState(false)
@@ -29,6 +24,9 @@ const LoginModal = (props) => {
         setLoginScreen(props.loginScreen)
     }, [props.loginScreen]);
 
+    const handleRefresh = () => {
+        window.location.reload()
+    }
 
     const closeModal = () => {
         clearStates()
@@ -73,6 +71,7 @@ const LoginModal = (props) => {
 
         // props.onClose()
         closeModal()
+        handleRefresh()
 
     }
 
@@ -91,6 +90,7 @@ const LoginModal = (props) => {
                     // props.onClose()
 
                     closeModal()
+                    handleRefresh()
                 }
                 else if (r.data === "Incorrect Password"){
                     alert("Incorrect Password")
@@ -129,6 +129,8 @@ const LoginModal = (props) => {
         API.userAPI.create(inputs.username, inputs.password, inputs.firstName, inputs.lastName, inputs.email)
             .then(r => console.log(r))
             .catch((error) => console.log(error.message))
+
+        handleRefresh()
     }
 
     return <>
@@ -150,10 +152,13 @@ const LoginModal = (props) => {
             <Modal.Body>
 
                 {loginScreen && <form>
-                    <label
+
+                    <FloatingLabel
+                        label={"Username"}
+                        controlId={"floatingInput"}
                         style={{width: "60%"}}
                     >
-                        <input
+                        <Form.Control
                             type="text"
                             name="username"
                             value={inputs.username || ""}
@@ -161,13 +166,16 @@ const LoginModal = (props) => {
                             placeholder={"Username"}
                             style={{width: "100%"}}
                         />
-                    </label>
+                    </FloatingLabel>
 
                     <br />
-                    <br />
 
-                    <label style={{width: "60%"}}>
-                        <input
+                    <FloatingLabel
+                        label={"Password"}
+                        controlId={"floatingPassword"}
+                        style={{width: "60%"}}
+                    >
+                        <Form.Control
                             type="password"
                             name="password"
                             value={inputs.password || ""}
@@ -175,8 +183,7 @@ const LoginModal = (props) => {
                             placeholder={"Password"}
                             style={{width: "100%"}}
                         />
-
-                    </label>
+                    </FloatingLabel>
 
                     <br />
                     <br />
@@ -198,44 +205,55 @@ const LoginModal = (props) => {
 
 
 
+
                 {!loginScreen && <form>
 
                     <Row>
                         <Col>
-                            <label style={{width: "90%"}}>
-                                <input type="text"
-                                       name="firstName"
-                                       value={inputs.firstName || ""}
-                                       onChange={handleChange}
-                                       placeholder={"First Name"}
-                                       style={{width: "100%"}}
+                            <FloatingLabel
+                                label={"First Name"}
+                                controlId={"floatingInput"}
+                                style={{width: "90%"}}
+                            >
+                                <Form.Control
+                                    type="text"
+                                    name="firstName"
+                                    value={inputs.firstName || ""}
+                                    onChange={handleChange}
+                                    placeholder={"First Name"}
+                                    style={{width: "100%"}}
                                 />
-
-                            </label>
+                            </FloatingLabel>
                         </Col>
 
                         <Col>
-                            <label style={{width: "90%"}}>
-                                <input type="text"
-                                       name="lastName"
-                                       value={inputs.lastName || ""}
-                                       onChange={handleChange}
-                                       placeholder={"Last Name"}
-                                       style={{width: "100%"}}
+                            <FloatingLabel
+                                label={"Last Name"}
+                                controlId={"floatingInput"}
+                                style={{width: "90%"}}
+                            >
+                                <Form.Control
+                                    type="text"
+                                    name="lastName"
+                                    value={inputs.lastName || ""}
+                                    onChange={handleChange}
+                                    placeholder={"Last Name"}
+                                    style={{width: "100%"}}
                                 />
-
-                            </label>
+                            </FloatingLabel>
                         </Col>
                     </Row>
 
-
-                    {/*<br />*/}
                     <br />
 
                     <Row>
                         <Col>
-                            <label style={{width: "90%"}}>
-                                <input
+                            <FloatingLabel
+                                label={"Email"}
+                                controlId={"floatingInput"}
+                                style={{width: "90%"}}
+                            >
+                                <Form.Control
                                     type="text"
                                     name="email"
                                     value={inputs.email || ""}
@@ -243,7 +261,8 @@ const LoginModal = (props) => {
                                     placeholder={"Email"}
                                     style={{width: "100%"}}
                                 />
-                            </label>
+                            </FloatingLabel>
+
                         </Col>
                         <Col></Col>
                     </Row>
@@ -254,16 +273,20 @@ const LoginModal = (props) => {
 
                     <Row>
                         <Col>
-                            <label style={{width: "90%"}}>
-                                <input type="text"
-                                       name="username"
-                                       value={inputs.username || ""}
-                                       onChange={handleChange}
-                                       placeholder={"Username"}
-                                       style={{width: "100%"}}
+                            <FloatingLabel
+                                label={"Username"}
+                                controlId={"floatingInput"}
+                                style={{width: "90%"}}
+                            >
+                                <Form.Control
+                                    type="text"
+                                    name="username"
+                                    value={inputs.username || ""}
+                                    onChange={handleChange}
+                                    placeholder={"Username"}
+                                    style={{width: "100%"}}
                                 />
-
-                            </label>
+                            </FloatingLabel>
                         </Col>
 
                         <Col></Col>
@@ -273,29 +296,37 @@ const LoginModal = (props) => {
 
                     <Row>
                         <Col>
-                            <label style={{width: "90%"}}>
-                                <input type="password"
-                                       name="password"
-                                       value={inputs.password || ""}
-                                       onChange={handleChange}
-                                       placeholder={"Password"}
-                                       style={{width: "100%"}}
+                            <FloatingLabel
+                                label={"Password"}
+                                controlId={"floatingPassword"}
+                                style={{width: "90%"}}
+                            >
+                                <Form.Control
+                                    type="password"
+                                    name="password"
+                                    value={inputs.password || ""}
+                                    onChange={handleChange}
+                                    placeholder={"Password"}
+                                    style={{width: "100%"}}
                                 />
-
-                            </label>
+                            </FloatingLabel>
                         </Col>
 
                         <Col>
-                            <label style={{width: "90%"}}>
-                                <input type="password"
-                                       name="passwordConfirm"
-                                       value={inputs.passwordConfirm || ""}
-                                       onChange={handleChange}
-                                       placeholder={"Confirm Password"}
-                                       style={{width: "100%"}}
+                            <FloatingLabel
+                                label={"Confirm Password"}
+                                controlId={"floatingPassword"}
+                                style={{width: "90%"}}
+                            >
+                                <Form.Control
+                                    type="password"
+                                    name="passwordConfirm"
+                                    value={inputs.passwordConfirm || ""}
+                                    onChange={handleChange}
+                                    placeholder={"Confirm Password"}
+                                    style={{width: "100%"}}
                                 />
-
-                            </label>
+                            </FloatingLabel>
                         </Col>
                     </Row>
 

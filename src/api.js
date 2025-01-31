@@ -20,6 +20,71 @@ async function checkToken(){
     return apiToken;
 }
 
+const dayHours = {0: {"open" : "12:00", "close": "22:30"},
+    1: {"open" : "11:00", "close": "22:30"},
+    2: {"open" : "11:00", "close": "22:30"},
+    3: {"open" : "11:00", "close": "22:30"},
+    4: {"open" : "11:00", "close": "22:30"},
+    5: {"open" : "11:00", "close": "23:00"},
+    6: {"open" : "11:00", "close": "23:00"},
+
+}
+
+const isBetweenHours = (start, end, current) => {
+
+    const startHour = parseInt(start.split(":")[0])
+    const endHour = parseInt(end.split(":")[0])
+    const currentHour = parseInt(current.split(":")[0])
+
+    const startMin = parseInt(start.split(":")[1])
+    const endMin = parseInt(end.split(":")[1])
+    const currentMin = parseInt(current.split(":")[1])
+
+    if (endHour < currentHour){
+        return false
+    }
+    else {
+        if (currentHour === endHour){
+            if (endMin - currentMin < 30){
+                return false
+            }
+        }
+
+    }
+
+    return true
+}
+
+const addToTimes = (current, end, want) => {
+
+    const wantHour = parseInt(want.split(":")[0])
+    const endHour = parseInt(end.split(":")[0])
+    const currentHour = parseInt(current.split(":")[0])
+
+    const wantMin = parseInt(want.split(":")[1])
+    const endMin = parseInt(end.split(":")[1])
+    const currentMin = parseInt(current.split(":")[1])
+
+    if (currentHour > wantHour || endHour < wantHour){
+        return false
+    }
+    else {
+        if (wantHour === endHour){
+            // console.log(want)
+            // console.log(current)
+            if (endMin - wantMin < 30){
+                return false
+            }
+        }
+        else if (currentHour === wantHour){
+            if (wantMin - currentMin < 20){
+                return false
+            }
+        }
+    }
+    return true
+
+}
 
 const API = {
     priceAPI: {
@@ -230,6 +295,54 @@ const API = {
                 },
                 timeout: 10000,
             })
+        }
+    },
+    timeAPI: {
+        get: () => {
+            const date = new Date();
+            const currentTime = date.getHours()
+                + ':' + date.getMinutes()
+
+            const hours = ["ASAP"]
+
+            const todaysHour = dayHours[(date.getDay())]
+
+            if (isBetweenHours(todaysHour.open, todaysHour.close, currentTime)){
+
+                let current = date.getHours()
+
+                while (current <= parseInt(todaysHour.close.split(":")[0])){
+                    // console.log(current + ":00")
+                    // console.log(current + ":30")
+
+                    if (addToTimes(currentTime, todaysHour.close, current + ":00")){
+                        if (current > 12){
+                            hours.push((current - 12) + ":00 PM")
+                        }
+                        else{
+                            hours.push(current + ":00 AM")
+                        }
+
+                    }
+                    if (addToTimes(currentTime, todaysHour.close, current + ":30")){
+                        if (current > 12){
+                            hours.push((current - 12) + ":30 PM")
+                        }
+                        else{
+                            hours.push(current + ":30 AM")
+                        }
+
+
+                    }
+
+                    current++
+                }
+            }
+
+
+            // console.log(hours)
+
+            return hours;
         }
     }
 }

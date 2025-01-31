@@ -31,6 +31,8 @@ export default function Appbar() {
     const [log, setLog] = useState(window.sessionStorage.getItem("loggedIn"))
 
 
+
+
     const handleUser = () => {
         if (window.sessionStorage.getItem("loggedIn") === "false" || null){
             console.log("Not Logged In")

@@ -23,6 +23,10 @@ const UserPopover = (props) => {
     const handleShow = () => setShowPopup(true);
     const handleClose = () => setShowPopup(false);
 
+    const handleRefresh = () => {
+        window.location.reload()
+    }
+
 
     const clickLogin = () => {
         // document.body.click()
@@ -80,11 +84,10 @@ const UserPopover = (props) => {
     const handleSignOut = () => {
         window.sessionStorage.removeItem("username")
         window.sessionStorage.setItem("loggedIn", "false")
+
+        handleRefresh()
     }
 
-    // const hidePopover = () => {
-    //     this.refs.overlay.handleHide()
-    // }
 
 
     const popover = (<Popover className={"popover"}>

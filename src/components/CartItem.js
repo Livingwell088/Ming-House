@@ -1,8 +1,9 @@
 import Card from "react-bootstrap/Card";
-import {Button, Col, Row} from "react-bootstrap";
+import {Button, Col, InputGroup, Row} from "react-bootstrap";
 import MenuPopup from "./MenuPopup";
 import "../styles/CartItem.css"
 import Image from "react-bootstrap/Image";
+import Form from "react-bootstrap/Form";
 import API from "../api";
 import {useEffect, useState} from "react";
 
@@ -70,29 +71,51 @@ const CartItem = (props) => {
             <Col xs={2}><Image src={"/images/" + props.item.number + ".png"} className={"menuImg"}
                                style={{height: "75%",
                                    margin: "auto"}}
-                               rounded /></Col>
-            <Col style={{textAlign: "left"}}>
-                <h5>{props.name}</h5>
-                <p>{props.item.size}</p>
+                               rounded />
             </Col>
-            <Col >
-                    {/*className={"d-flex align-items-center"}*/}
-                <Row>
-                    <Button style={{width: "15%"}} variant="secondary" onClick={() => minus(props.order)} >
-                        -
-                    </Button>
-                    <h5 style={{width: "15%"}}>{props.order.quantity}</h5>
-                    <Button variant="secondary" style={{width: "15%"}} onClick={() => plus(props.order)}>
-                        +
-                    </Button>
-                </Row>
 
-                <Row><h5>{API.priceAPI.price(props.price)}</h5></Row>
-            </Col>
-            <Col><Button style={{width: "15%"}} variant="secondary" onClick={handleShow} >
-                Edit
-            </Button></Col>
+                <Col xs={8} style={{textAlign: "left"}}>
+                    <Row>
+                        <h5>{props.item.number}. {props.name} <span style={{fontSize: "15px"}}>{props.item.size}</span> </h5>
+                    </Row>
+                    <Row>
+                        <p>{props.item.specialInstruction}</p>
+                    </Row>
+                </Col>
+
+                <Col >
+                    {/*style={{justifyContent: "end"}}*/}
+                    <Row className="float-right" style={{marginLeft: "auto", width: "100%"}}>
+                        <div style={{display:"flex", alignItems: "center"}}>
+
+
+                            {/*<InputGroup className="order-last order-sm-first">*/}
+
+                                <Button type="button" className={"btn rounded-circle"} style={{width: "15%", height: "auto", textAlign:"center"}} variant="outline-primary" onClick={() => minus(props.order)} >
+                                    -
+                                </Button>
+                                <h5 style={{width: "15%"}}>{props.order.quantity}</h5>
+                                {/*<Form.Control type={"number"} value={props.order.quantity} />*/}
+                                <Button type="button" className={"btn rounded-circle"} variant="outline-primary" style={{width: "15%"}} onClick={() => plus(props.order)}>
+                                    +
+                                </Button>
+
+                            {/*</InputGroup>*/}
+                        </div>
+
+                    </Row>
+
+                    <Row><h5>{API.priceAPI.price(props.price)}</h5></Row>
+                </Col>
+
+
+
+            {/*<Col><Button style={{width: "15%"}} variant="secondary" onClick={handleShow} >*/}
+            {/*    Edit*/}
+            {/*</Button></Col>*/}
         </Row>
+
+
         <MenuPopup show={showPopup} onClose={handleClose} id={props.id} item={props.full} quantity={props.order.quantity} do={"Edit"} update={update} size={(props.item.price)}/>
 
     </div>

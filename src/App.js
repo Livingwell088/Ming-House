@@ -12,6 +12,7 @@ import { BrowserRouter as Router, Routes, Route, link } from "react-router-dom";
 import Home from "./Pages/Home"
 import Menu from "./Pages/MenuPage";
 import Order from "./Pages/CartPage"
+import CheckoutPage from "./Pages/CheckoutPage";
 
 class App extends Component {
 
@@ -24,6 +25,7 @@ class App extends Component {
                     <Route path="/" element={<Home />} />
                     <Route path="/menupage" element={<Menu />} />
                     <Route path="/cartPage" element={<Order />} />
+                    <Route path="/checkoutPage" element={<CheckoutPage />} />
                 </Routes>
             </Router>
 
