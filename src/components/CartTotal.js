@@ -3,14 +3,14 @@ import API from "../api";
 import "../styles/cartTotal.css"
 import Card from "react-bootstrap/Card";
 import OrderTypePopup from "./OrderTypePopup";
-import {Button} from "react-bootstrap";
+import {Button, Col, Row} from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
 import LoginModal from "./LoginModal";
 import TimePickerDropdown from "./TimePickerDropdown";
 
 
 
-const CartItem = (props) => {
+const CartTotal = (props) => {
 
     // console.log(props.orderType)
 
@@ -68,18 +68,21 @@ const CartItem = (props) => {
 
             <OrderTypePopup show={showPopup} onClose={handleClose} test={(type) => props.onChange(type)}></OrderTypePopup>
 
-            {/*{(orderType === " Delivery") && <div>*/}
-            {/*    Deliver to: <a> {deliverAddress}*/}
+            <div style={{display: "flex", gridTemplateColumns: "auto auto", alignItems: "center"}}>
+                {/*<Row>*/}
+                {/*    <Col xs={3} style={{paddingRight: 0}}>*/}
+                {/*        Order Time:*/}
+                {/*    </Col>*/}
+                {/*    <Col >*/}
+                {/*        <TimePickerDropdown orderTime={selectedTime} handleChangeTime={(time) => props.handleChangeTime(time)} />*/}
+                {/*    </Col>*/}
+                {/*</Row>*/}
 
-            {/*</a>*/}
-            {/*</div>}*/}
-
-            <div>
-                Order Time: <TimePickerDropdown orderTime={selectedTime} handleChangeTime={(time) => props.handleChangeTime(time)} />
-
-
-                {/*<Button onClick={clickedTime}>Time</Button>*/}
-
+            {/*    .textData {*/}
+            {/*    display:grid;*/}
+            {/*    grid-template-columns:auto auto;*/}
+            {/*}*/}
+                Order Time:&nbsp;<TimePickerDropdown orderTime={selectedTime} handleChangeTime={(time) => props.handleChangeTime(time)} />
             </div>
 
 
@@ -106,19 +109,15 @@ const CartItem = (props) => {
 
                 </tbody>
             </table>
-            {/*<h2>Subtotal: ${API.priceAPI.price(props.subtotal)}</h2>*/}
-            {/*<h2>Tax: ${API.priceAPI.price(props.subtotal * 0.07)}</h2>*/}
-            {/*<h2>Total: ${API.priceAPI.price(props.subtotal * 1.07)}</h2>*/}
         </Card>
 
         <br />
 
-        <Button onClick={props.makeOrder()}>Place Order</Button>
+        <Button onClick={props.makeOrder()}>{props.page}</Button>
 
-        {/*<LoginModal show={props.showPopup} onClose={props.handleClose} loginScreen={true}></LoginModal>*/}
 
 
     </div>
 }
 
-export default CartItem;
+export default CartTotal;

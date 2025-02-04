@@ -74,39 +74,73 @@ const CartItem = (props) => {
                                rounded />
             </Col>
 
-                <Col xs={8} style={{textAlign: "left"}}>
-                    <Row>
+            <Col xs={10}>
+                <Row>
+                    <Col xs={9} style={{textAlign: "left"}}>
                         <h5>{props.item.number}. {props.name} <span style={{fontSize: "15px"}}>{props.item.size}</span> </h5>
-                    </Row>
-                    <Row>
+                    </Col>
+
+                    <Col xs={1}></Col>
+                    <Col>
+                        <h5>{API.priceAPI.price(props.price)}</h5>
+
+                    </Col>
+                </Row>
+
+
+                <Row>
+                    <Col xs={9}>
                         <p>{props.item.specialInstruction}</p>
-                    </Row>
-                </Col>
+                    </Col>
+                    <Col xs={1}></Col>
+                    <Col>
 
-                <Col >
-                    {/*style={{justifyContent: "end"}}*/}
-                    <Row className="float-right" style={{marginLeft: "auto", width: "100%"}}>
                         <div style={{display:"flex", alignItems: "center"}}>
-
-
-                            {/*<InputGroup className="order-last order-sm-first">*/}
-
-                                <Button type="button" className={"btn rounded-circle"} style={{width: "15%", height: "auto", textAlign:"center"}} variant="outline-primary" onClick={() => minus(props.order)} >
-                                    -
-                                </Button>
-                                <h5 style={{width: "15%"}}>{props.order.quantity}</h5>
-                                {/*<Form.Control type={"number"} value={props.order.quantity} />*/}
-                                <Button type="button" className={"btn rounded-circle"} variant="outline-primary" style={{width: "15%"}} onClick={() => plus(props.order)}>
-                                    +
-                                </Button>
-
-                            {/*</InputGroup>*/}
+                            <Button type="button" className={"btn rounded-circle"} style={{width: "15%", height: "auto", textAlign:"center"}} variant="outline-primary" onClick={() => minus(props.order)} >
+                                -
+                            </Button>
+                            <h5 style={{width: "15%"}}>{props.order.quantity}</h5>
+                            <Button type="button" className={"btn rounded-circle"} variant="outline-primary" style={{width: "15%"}} onClick={() => plus(props.order)}>
+                                +
+                            </Button>
                         </div>
+                    </Col>
+                </Row>
+            </Col>
 
-                    </Row>
+            {/*<Col xs={8} style={{textAlign: "left"}}>*/}
+            {/*    <Row>*/}
+            {/*        <h5>{props.item.number}. {props.name} <span style={{fontSize: "15px"}}>{props.item.size}</span> </h5>*/}
+            {/*    </Row>*/}
+            {/*    <Row>*/}
+            {/*        <p>{props.item.specialInstruction}</p>*/}
+            {/*    </Row>*/}
+            {/*</Col>*/}
 
-                    <Row><h5>{API.priceAPI.price(props.price)}</h5></Row>
-                </Col>
+            {/*<Col >*/}
+            {/*    /!*style={{justifyContent: "end"}}*!/*/}
+            {/*    <Row className="float-right" style={{marginLeft: "auto", width: "100%"}}>*/}
+            {/*        <div style={{display:"flex", alignItems: "center"}}>*/}
+
+
+            {/*            /!*<InputGroup className="order-last order-sm-first">*!/*/}
+
+            {/*                <Button type="button" className={"btn rounded-circle"} style={{width: "15%", height: "auto", textAlign:"center"}} variant="outline-primary" onClick={() => minus(props.order)} >*/}
+            {/*                    -*/}
+            {/*                </Button>*/}
+            {/*                <h5 style={{width: "15%"}}>{props.order.quantity}</h5>*/}
+            {/*                /!*<Form.Control type={"number"} value={props.order.quantity} />*!/*/}
+            {/*                <Button type="button" className={"btn rounded-circle"} variant="outline-primary" style={{width: "15%"}} onClick={() => plus(props.order)}>*/}
+            {/*                    +*/}
+            {/*                </Button>*/}
+
+            {/*            /!*</InputGroup>*!/*/}
+            {/*        </div>*/}
+
+            {/*    </Row>*/}
+
+            {/*    <Row><h5>{API.priceAPI.price(props.price)}</h5></Row>*/}
+            {/*</Col>*/}
 
 
 

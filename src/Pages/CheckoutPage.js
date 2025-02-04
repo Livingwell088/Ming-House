@@ -35,7 +35,7 @@ const CheckoutPage = (props) => {
                 <Col xs={4}>
                     {/*<p>{orderType}</p>*/}
                     {/*<p>{subtotal}</p>*/}
-                    <CartTotal id={"cartTotal"} onChange={(type) => setOrderType(type)} orderType={orderType} orderTime={orderTime} handleChangeTime={(time) => setOrderTime(time)} subtotal={subtotal} makeOrder={() => makeOrder} ></CartTotal>
+                    <CartTotal id={"cartTotal"} page={"Place Order"} onChange={(type) => setOrderType(type)} orderType={orderType} orderTime={orderTime} handleChangeTime={(time) => setOrderTime(time)} subtotal={subtotal} makeOrder={() => makeOrder} ></CartTotal>
                 </Col>
             </Row>
         </main>

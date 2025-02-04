@@ -1,6 +1,7 @@
 import Form from "react-bootstrap/Form";
 import {useEffect, useState} from "react";
 import API from "../api";
+import "../styles/Inputs.css"
 import {click} from "@testing-library/user-event/dist/click";
 
 
@@ -24,15 +25,16 @@ const TimePickerDropdown = (props) => {
     }, []);
 
 
-    return <>
-        <Form.Select value={selectedTime} onChange={handleSelectedTimeChange}>
+    return <div >
+        {/*style={{width: "80%"}}*/}
+        <Form.Select id={"dropDown"} value={selectedTime} onChange={handleSelectedTimeChange}>
             <option>Select A Time</option>
 
             {hours.map(current => {
                 return <option value={current}>{current}</option>
             })}
         </Form.Select>
-    </>
+    </div>
 
 
 

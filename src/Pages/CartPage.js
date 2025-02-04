@@ -138,7 +138,7 @@ const CartPage = (props) => {
                 </Col>
 
                 <Col xs={4}>
-                    <CartTotal id={"cartTotal"} orderType={orderType} onChange={(type) => setOrderType(type)} orderTime={orderTime} handleChangeTime={(time) => setOrderTime(time)} subtotal={subtotal} makeOrder={() => makeOrder}  ></CartTotal>
+                    <CartTotal id={"cartTotal"} page={"Go To Checkout"} orderType={orderType} onChange={(type) => setOrderType(type)} orderTime={orderTime} handleChangeTime={(time) => setOrderTime(time)} subtotal={subtotal} makeOrder={() => makeOrder}  ></CartTotal>
                     <LoginModal show={showPopup} onClose={handleClose} loginScreen={true}></LoginModal>
 
                 </Col>
