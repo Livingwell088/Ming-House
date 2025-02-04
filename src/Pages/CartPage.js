@@ -91,20 +91,10 @@ const CartPage = (props) => {
             }
         }
         else {
-            // console.log("LOGGED IN")
+            console.log(cart)
 
-            navigate('/checkoutPage', {state: {orderType: orderType, subtotal: subtotal, orderTime: orderTime}});
-            // redirect("/checkoutPage")
+            navigate('/checkoutPage', {state: {orderType: orderType, subtotal: subtotal, orderTime: orderTime, cart: cart}});
 
-            // return <Navigate to={"/checkoutPage"} replace />
-            // window.location = "/checkoutPage"
-
-            // API.orderAPI.create("orderName", 10.25, "PickUp", "Address", window.sessionStorage.getItem("username"), cart)
-            //     .then(r => {
-            //         console.log("Order Placed")
-            //         console.log(r.data)
-            //     })
-            //     .catch((error) => console.log(error.message))
         }
     }
 

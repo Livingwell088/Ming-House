@@ -7,50 +7,23 @@ import Form from "react-bootstrap/Form";
 const CheckoutLeft = (props) => {
 
 
-    const [inputs, setInputs] = useState({"username": "", "password": "", "passwordConfirm": "", "firstName": "", "lastName": "", "email": ""})
-    const [currentUser, setCurrentUser] = useState({})
+    const [user, setUser] = useState(props.user)
 
-    const [user, setUser] = useState({})
-    const [fields, setFields] = useState({"phoneNumber": "", "address": ""})
+    const [fields, setFields] = useState(props.fields)
     const [orderType, setOrderType] = useState(props.orderType)
 
     const [dropdown, setDropdown] = useState("Time")
 
-    const handleChangeUser = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
 
-        setUser(values => ({...values, [name]: value}))
 
-    }
 
-    const handleChangeField = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
-
-        setFields(values => ({...values, [name]: value}))
-    }
-
-    const getUser = async () => {
-        let username = (window.sessionStorage.getItem("username"))
-
-        await API.userAPI.getUser(username)
-            .then(r => r.data)
-            .then(r => setUser(r))
-            .catch((error) => console.log(error))
-    }
 
     useEffect(() => {
         setOrderType(props.orderType)
-    }, [props.orderType]);
+        setUser(props.user)
+        setFields(props.fields)
+    }, [props.orderType, props.user, props.fields]);
 
-
-    useEffect(() => {
-        getUser()
-
-        // console.log(test)
-
-    }, [currentUser]);
 
     return <>
 
@@ -69,7 +42,7 @@ const CheckoutLeft = (props) => {
                             type={"text"}
                             name={"firstName"}
                             value={user.firstName || ""}
-                            onChange={handleChangeUser}
+                            onChange={props.handleChangeUser}
                             placeholder={"First Name"}
                             required
                         />
@@ -88,7 +61,7 @@ const CheckoutLeft = (props) => {
                             type={"text"}
                             name={"lastName"}
                             value={user.lastName || ""}
-                            onChange={handleChangeUser}
+                            onChange={props.handleChangeUser}
                             placeholder={"Last Name"}
                             required
                         />
@@ -111,7 +84,7 @@ const CheckoutLeft = (props) => {
                             type={"text"}
                             name={"email"}
                             value={user.email || ""}
-                            onChange={handleChangeUser}
+                            onChange={props.handleChangeUser}
                             placeholder={"Email"}
                             required
                         />
@@ -132,7 +105,7 @@ const CheckoutLeft = (props) => {
                             type={"text"}
                             name={"phoneNumber"}
                             value={fields.phoneNumber || ""}
-                            onChange={handleChangeField}
+                            onChange={props.handleChangeFields}
                             placeholder={"Phone Number"}
                             required
                         />
@@ -153,7 +126,7 @@ const CheckoutLeft = (props) => {
                                 type={"text"}
                                 name={"address"}
                                 value={fields.address || ""}
-                                onChange={handleChangeField}
+                                onChange={props.handleChangeFields}
                                 placeholder={"Address"}
                                 required
                             />
@@ -163,16 +136,7 @@ const CheckoutLeft = (props) => {
             </Row>
 
 
-
-
-
-
-
-
-
         </form>
-
-        <Button onClick={() => console.log(user)}></Button>
 
 
     </>
