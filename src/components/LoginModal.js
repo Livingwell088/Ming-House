@@ -19,6 +19,8 @@ const LoginModal = (props) => {
     const [passwordMatch, setMatch] = useState(false)
 
     const [passReq, setPassReq] = useState(false)
+    const [validated, setValidated] = useState(false);
+
 
     useEffect(() => {
         setLoginScreen(props.loginScreen)
@@ -62,7 +64,7 @@ const LoginModal = (props) => {
     const handleGuest = () => {
 
         const current = window.sessionStorage.getItem("sessionId")
-        API.userAPI.create(current, "", current, current, current)
+        API.userAPI.create(current, "", "", "", "", true)
             .then(r => console.log(r))
             .catch((error) => console.log(error.message))
 
@@ -75,43 +77,53 @@ const LoginModal = (props) => {
 
     }
 
-    const handleLogIn = () => {
+    const handleLogIn = (event) => {
         // console.loginScreen(inputs)
 
-        API.userAPI.validate(inputs.username, inputs.password)
-            .then(r => {
-                if (r.data === "Match"){
-                    window.sessionStorage.setItem("username", inputs.username)
-                    window.sessionStorage.setItem("loggedIn", "true")
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+
+        else{
+            console.log("Check Valid")
+            setValidated(true)
 
 
+            API.userAPI.validate(inputs.username, inputs.password)
+                .then(r => {
+                    if (r.data === "Match"){
+                        window.sessionStorage.setItem("username", inputs.username)
+                        window.sessionStorage.setItem("loggedIn", "true")
 
-                    // clearStates()
-                    // props.onClose()
 
-                    closeModal()
-                    handleRefresh()
-                }
-                else if (r.data === "Incorrect Password"){
-                    alert("Incorrect Password")
-                }
-                else{
-                    alert("Username/Email Do Not Exist")
-                }
-            })
-            .then(() => {
+                        closeModal()
+                        handleRefresh()
+                    }
+                    else if (r.data === "Incorrect Password"){
+                        alert("Incorrect Password")
+                    }
+                    else{
+                        alert("Username/Email Do Not Exist")
+                    }
+                })
+                .then(() => {
+                    clearStates()
 
-                if (window.sessionStorage.getItem("loggedIn") === "true"){
-                    console.log("Should be CartLogin")
-                    API.cartAPI.cartLogin(window.sessionStorage.getItem("sessionId"), window.sessionStorage.getItem("username"))
-                        .then(r => console.log(r))
-                        .catch((error) => console.log(error.message))
+                    if (window.sessionStorage.getItem("loggedIn") === "true"){
+                        console.log("Should be CartLogin")
+                        API.cartAPI.cartLogin(window.sessionStorage.getItem("sessionId"), window.sessionStorage.getItem("username"))
+                            .then(r => console.log(r))
+                            .catch((error) => console.log(error.message))
 
-                    // window.sessionStorage.setItem("sessionId", window.sessionStorage.getItem("username"))
-                }
+                        // window.sessionStorage.setItem("sessionId", window.sessionStorage.getItem("username"))
+                    }
 
-            })
-            .catch((error) => console.log(error.message))
+                })
+                .catch((error) => console.log(error.message))
+
+        }
 
 
     }
@@ -119,19 +131,21 @@ const LoginModal = (props) => {
     const handleSignUp = () => {
         console.log(inputs)
         console.log(passwordMatch)
-
         if (inputs.password !== inputs.passwordConfirm){
             alert("Passwords Must Match!")
             clearStates()
         }
 
 
-        API.userAPI.create(inputs.username, inputs.password, inputs.firstName, inputs.lastName, inputs.email)
+        API.userAPI.create(inputs.username, inputs.password, inputs.firstName, inputs.lastName, inputs.email, false)
             .then(r => console.log(r))
             .catch((error) => console.log(error.message))
 
         handleRefresh()
     }
+
+
+
 
     return <>
 
@@ -151,7 +165,9 @@ const LoginModal = (props) => {
             </Modal.Header>
             <Modal.Body>
 
-                {loginScreen && <form>
+                {loginScreen &&
+                    <Form noValidate validated={validated}
+                >
 
                     <FloatingLabel
                         label={"Username"}
@@ -165,8 +181,14 @@ const LoginModal = (props) => {
                             onChange={handleChange}
                             placeholder={"Username"}
                             style={{width: "100%"}}
+                            required
                         />
+                        <Form.Control.Feedback type="invalid">
+                            Please Enter Your Username.
+                        </Form.Control.Feedback>
                     </FloatingLabel>
+
+
 
                     <br />
 
@@ -182,7 +204,11 @@ const LoginModal = (props) => {
                             onChange={handleChange}
                             placeholder={"Password"}
                             style={{width: "100%"}}
+                            required
                         />
+                        <Form.Control.Feedback type="invalid">
+                            Please Enter Your Password.
+                        </Form.Control.Feedback>
                     </FloatingLabel>
 
                     <br />
@@ -200,7 +226,7 @@ const LoginModal = (props) => {
 
 
                     <Button onClick={handleGuest}> Continue as Guest</Button>
-                </form>}
+                </Form>}
 
 
 
@@ -240,6 +266,7 @@ const LoginModal = (props) => {
                                     placeholder={"Last Name"}
                                     style={{width: "100%"}}
                                 />
+
                             </FloatingLabel>
                         </Col>
                     </Row>
@@ -359,4 +386,41 @@ const LoginModal = (props) => {
 
 export default LoginModal;
 
-
+// import { useState } from 'react';
+// import Button from 'react-bootstrap/Button';
+// import Col from 'react-bootstrap/Col';
+// import Form from 'react-bootstrap/Form';
+// import InputGroup from 'react-bootstrap/InputGroup';
+// import Row from 'react-bootstrap/Row';
+//
+// function FormExample() {
+//     const [validated, setValidated] = useState(false);
+//
+//     const handleSubmit = (event) => {
+//         const form = event.currentTarget;
+//         if (form.checkValidity() === false) {
+//             event.preventDefault();
+//             event.stopPropagation();
+//         }
+//
+//         setValidated(true);
+//     };
+//
+//     return (
+//         <Form noValidate validated={validated} onSubmit={handleSubmit}>
+//                 <Form.Group md="4" controlId="validationCustom01">
+//                     <Form.Label>First name</Form.Label>
+//                     <Form.Control
+//                         required
+//                         type="text"
+//                         placeholder="First name"
+//                         defaultValue="Mark"
+//                     />
+//                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+//                 </Form.Group>
+//             <Button type="submit">Submit form</Button>
+//         </Form>
+//     );
+// }
+//
+// export default FormExample;

@@ -243,14 +243,15 @@ const API = {
     },
 
     userAPI: {
-        create: async(usernameId, password, firstName, lastName, email) => {
+        create: async(usernameId, password, firstName, lastName, email, isGuest) => {
 
             let user = {
                 usernameId: usernameId,
                 password: password,
                 firstName: firstName,
                 lastName: lastName,
-                email: email
+                email: email,
+                guest: isGuest
             }
 
             return await Api().post("/users/add", {...user}, {

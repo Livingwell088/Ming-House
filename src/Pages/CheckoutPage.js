@@ -15,7 +15,7 @@ const CheckoutPage = (props) => {
     const [subtotal, setSubtotal] = useState(location.state.subtotal)
     const [orderTime, setOrderTime] = useState(location.state.orderTime)
     const [cart, setCart] = useState(location.state.cart)
-    console.log(cart)
+    // console.log(cart)
 
 
     const [user, setUser] = useState({})
@@ -58,9 +58,11 @@ const CheckoutPage = (props) => {
     const makeOrder = () => {
         console.log("Making Order")
 
-        API.orderAPI.create("Test Order", API.priceAPI.price(subtotal * 1.07), orderType, fields.address, window.sessionStorage.getItem("username"), cart)
-            .then(r => console.log(r.data))
-            .catch((error) => console.log(error))
+
+
+        // API.orderAPI.create("Test Order", API.priceAPI.price(subtotal * 1.07), orderType, fields.address, window.sessionStorage.getItem("username"), cart)
+        //     .then(r => console.log(r.data))
+        //     .catch((error) => console.log(error))
     }
 
 

@@ -59,21 +59,22 @@ const UserPopover = (props) => {
 
                 if (log === "true") {
 
-                    if (user.firstName === user.lastName && user.email === user.usernameId && user.firstName === user.email) {
-                        setGuest(true)
-                        setLoggedGuest(true)
-                    } else if (user === {}) {
-                        setGuest(true)
-                        setLoggedGuest(true)
-                    } else {
-                        setGuest(false)
-                    }
+                    // if (user.firstName === user.lastName && user.email === user.usernameId && user.firstName === user.email) {
+                    //     setGuest(true)
+                    //     setLoggedGuest(true)
+                    // } else if (user === {}) {
+                    //     setGuest(true)
+                    //     setLoggedGuest(true)
+                    // } else {
+                    //     setGuest(false)
+                    // }
+                    setGuest(user.guest)
                 }
                 else{
                     setGuest(true)
                 }
             })
-            .then( () => console.log(guest))
+            // .then( () => console.log(guest))
             .catch((error) => console.log(error))
 
         // console.log(user)
