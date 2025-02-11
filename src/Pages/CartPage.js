@@ -9,6 +9,8 @@ import LoginModal from "../components/LoginModal";
 import "../styles/cartPage.css"
 import CartLeft from "../components/CartLeft";
 import {Navigate, redirect, useHref, useNavigate} from "react-router-dom";
+import ErrorAlert from "../components/ErrorAlert";
+import {Error} from "@mui/icons-material";
 
 
 const CartPage = (props) => {
@@ -28,6 +30,10 @@ const CartPage = (props) => {
 
     const navigate = useNavigate();
 
+
+    const [showError, setShowError] = useState(false)
+    const [errorHeading, setErrorHeading] = useState("")
+    const [errorContent, setErrorContent] = useState("")
 
 
     const testing = async () => {
@@ -87,7 +93,12 @@ const CartPage = (props) => {
 
             }
             else{
-                alert("Select an Order Type")
+                setErrorHeading("Error")
+                setErrorContent("Please select an order type: Pickup or Delivery")
+                setShowError(true)
+
+                // alert("Select an Order Type")
+                // return <ErrorAlert />
             }
         }
         else {
@@ -120,6 +131,7 @@ const CartPage = (props) => {
 
     return <div className="App teko">
         <main>
+            {showError && <ErrorAlert heading={errorHeading} content={errorContent} onClose={() => setShowError(false)} />}
             <h1>YOUR CART</h1>
             <Row>
                 <Col xs={1}></Col>

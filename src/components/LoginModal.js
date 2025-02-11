@@ -21,6 +21,8 @@ const LoginModal = (props) => {
     const [passReq, setPassReq] = useState(false)
     const [validated, setValidated] = useState(false);
 
+    // const [showAlert]
+
 
     useEffect(() => {
         setLoginScreen(props.loginScreen)
@@ -32,6 +34,7 @@ const LoginModal = (props) => {
 
     const closeModal = () => {
         clearStates()
+        setValidated(false)
         props.onClose()
     }
 
@@ -102,10 +105,10 @@ const LoginModal = (props) => {
                         handleRefresh()
                     }
                     else if (r.data === "Incorrect Password"){
-                        alert("Incorrect Password")
+                        // alert("Incorrect Password")
                     }
                     else{
-                        alert("Username/Email Do Not Exist")
+                        // alert("Username/Email Do Not Exist")
                     }
                 })
                 .then(() => {
@@ -128,20 +131,30 @@ const LoginModal = (props) => {
 
     }
 
-    const handleSignUp = () => {
-        console.log(inputs)
-        console.log(passwordMatch)
-        if (inputs.password !== inputs.passwordConfirm){
-            alert("Passwords Must Match!")
-            clearStates()
+    const handleSignUp = (event) => {
+
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        else{
+            setValidated(true)
+
+
+            if (inputs.password !== inputs.passwordConfirm){
+                alert("Passwords Must Match!")
+                clearStates()
+            }
+
+
+            API.userAPI.create(inputs.username, inputs.password, inputs.firstName, inputs.lastName, inputs.email, false)
+                .then(r => console.log(r))
+                .then(() => handleRefresh)
+                .catch((error) => console.log(error.message))
+
         }
 
-
-        API.userAPI.create(inputs.username, inputs.password, inputs.firstName, inputs.lastName, inputs.email, false)
-            .then(r => console.log(r))
-            .catch((error) => console.log(error.message))
-
-        handleRefresh()
     }
 
 
@@ -165,9 +178,7 @@ const LoginModal = (props) => {
             </Modal.Header>
             <Modal.Body>
 
-                {loginScreen &&
-                    <Form noValidate validated={validated}
-                >
+                {loginScreen && <Form noValidate validated={validated}>
 
                     <FloatingLabel
                         label={"Username"}
@@ -232,7 +243,7 @@ const LoginModal = (props) => {
 
 
 
-                {!loginScreen && <form>
+                {!loginScreen && <Form noValidate validated={validated}>
 
                     <Row>
                         <Col>
@@ -248,6 +259,7 @@ const LoginModal = (props) => {
                                     onChange={handleChange}
                                     placeholder={"First Name"}
                                     style={{width: "100%"}}
+                                    required
                                 />
                             </FloatingLabel>
                         </Col>
@@ -265,7 +277,11 @@ const LoginModal = (props) => {
                                     onChange={handleChange}
                                     placeholder={"Last Name"}
                                     style={{width: "100%"}}
+                                    required
                                 />
+                                <Form.Control.Feedback type="invalid">
+                                    Name Needed.
+                                </Form.Control.Feedback>
 
                             </FloatingLabel>
                         </Col>
@@ -287,6 +303,7 @@ const LoginModal = (props) => {
                                     onChange={handleChange}
                                     placeholder={"Email"}
                                     style={{width: "100%"}}
+                                    required
                                 />
                             </FloatingLabel>
 
@@ -312,6 +329,7 @@ const LoginModal = (props) => {
                                     onChange={handleChange}
                                     placeholder={"Username"}
                                     style={{width: "100%"}}
+                                    required
                                 />
                             </FloatingLabel>
                         </Col>
@@ -335,6 +353,7 @@ const LoginModal = (props) => {
                                     onChange={handleChange}
                                     placeholder={"Password"}
                                     style={{width: "100%"}}
+                                    required
                                 />
                             </FloatingLabel>
                         </Col>
@@ -352,6 +371,7 @@ const LoginModal = (props) => {
                                     onChange={handleChange}
                                     placeholder={"Confirm Password"}
                                     style={{width: "100%"}}
+                                    required
                                 />
                             </FloatingLabel>
                         </Col>
@@ -370,7 +390,7 @@ const LoginModal = (props) => {
                         setTitle("Login")
                     }}>
                         <p>Sign Up</p></a>
-                </form>}
+                </Form>}
 
 
 
