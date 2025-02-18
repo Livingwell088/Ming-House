@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import API from "../api";
 import "../styles/menuPopup.css"
 import Form from 'react-bootstrap/Form';
+import ErrorAlert from "./ErrorAlert";
 
 
 
@@ -21,7 +22,9 @@ const LoginModal = (props) => {
     const [passReq, setPassReq] = useState(false)
     const [validated, setValidated] = useState(false);
 
-    // const [showAlert]
+    const [showError, setShowError] = useState(false)
+    const [errorHeading, setErrorHeading] = useState("")
+    const [errorContent, setErrorContent] = useState("")
 
 
     useEffect(() => {
@@ -44,24 +47,10 @@ const LoginModal = (props) => {
 
         setInputs(values => ({...values, [name]: value}))
 
-        // if (!(inputs.password.includes("^[A-Za-z]*$") && inputs.password.includes("/[^0-9]/g") && inputs.password.length >= 8)){
-        //     setPassReq(true)
-        // }
-        // else{
-        //     setPassReq(false)
-        // }
-
-        // if ((inputs.password === inputs.passwordConfirm) && inputs.password !== ""){ //  && inputs.passwordConfirm !== ""
-        //     setMatch(true)
-        // }
-        // else{
-        //     setMatch(false)
-        // }
     }
 
     const clearStates = () => {
         setInputs({"username": "", "password": "", "passwordConfirm": "", "firstName": "", "lastName": "", "email": ""})
-        setLoginScreen(props.loginScreen)
     }
 
     const handleGuest = () => {
@@ -105,10 +94,16 @@ const LoginModal = (props) => {
                         handleRefresh()
                     }
                     else if (r.data === "Incorrect Password"){
-                        // alert("Incorrect Password")
+                        setErrorHeading("Error")
+                        setErrorContent("Incorrect Username or Password")
+                        setShowError(true)
+
                     }
                     else{
-                        // alert("Username/Email Do Not Exist")
+                        setErrorHeading("Error")
+                        setErrorContent("Username Does Not Exist. You Can Create An Account By Pressing Sign Up Below.")
+                        setShowError(true)
+
                     }
                 })
                 .then(() => {
@@ -134,12 +129,14 @@ const LoginModal = (props) => {
     const handleSignUp = (event) => {
 
         const form = event.currentTarget;
-        if (form.checkValidity() === false) {
+        if (form.checkValidity() === false || inputs.password !== inputs.passwordConfirm) {
             event.preventDefault();
+            setValidated(true)
             event.stopPropagation();
         }
         else{
             setValidated(true)
+
 
 
             if (inputs.password !== inputs.passwordConfirm){
@@ -147,18 +144,23 @@ const LoginModal = (props) => {
                 clearStates()
             }
 
-
-            API.userAPI.create(inputs.username, inputs.password, inputs.firstName, inputs.lastName, inputs.email, false)
-                .then(r => console.log(r))
-                .then(() => handleRefresh)
-                .catch((error) => console.log(error.message))
+            else{
+                API.userAPI.create(inputs.username, inputs.password, inputs.firstName, inputs.lastName, inputs.email, false)
+                    .then(r => console.log(r))
+                    .then(() => handleRefresh)
+                    .catch((error) => console.log(error.message))
+            }
 
         }
 
     }
 
+    const passwordIsValid = inputs.password.length >= 8;
 
+    const validSignUp = () => {
 
+        return inputs.username !== "" && inputs.password !== "" && inputs.firstName !== "" && inputs.lastName !== "" && inputs.email !== "" && inputs.passwordConfirm !== "";
+    }
 
     return <>
 
@@ -177,8 +179,10 @@ const LoginModal = (props) => {
                 <Modal.Title>{title}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
+                {showError && <ErrorAlert heading={errorHeading} content={errorContent} onClose={() => setShowError(false)} />}
 
-                {loginScreen && <Form noValidate validated={validated}>
+
+                {loginScreen && <Form validated={validated}>
 
                     <FloatingLabel
                         label={"Username"}
@@ -243,7 +247,8 @@ const LoginModal = (props) => {
 
 
 
-                {!loginScreen && <Form noValidate validated={validated}>
+                {!loginScreen && <Form validated={validated}
+                >
 
                     <Row>
                         <Col>
@@ -261,6 +266,10 @@ const LoginModal = (props) => {
                                     style={{width: "100%"}}
                                     required
                                 />
+
+                                <Form.Control.Feedback type="invalid">
+                                    First Name Required
+                                </Form.Control.Feedback>
                             </FloatingLabel>
                         </Col>
 
@@ -280,7 +289,7 @@ const LoginModal = (props) => {
                                     required
                                 />
                                 <Form.Control.Feedback type="invalid">
-                                    Name Needed.
+                                    Last Name Required
                                 </Form.Control.Feedback>
 
                             </FloatingLabel>
@@ -297,7 +306,7 @@ const LoginModal = (props) => {
                                 style={{width: "90%"}}
                             >
                                 <Form.Control
-                                    type="text"
+                                    type="email"
                                     name="email"
                                     value={inputs.email || ""}
                                     onChange={handleChange}
@@ -305,6 +314,10 @@ const LoginModal = (props) => {
                                     style={{width: "100%"}}
                                     required
                                 />
+
+                                <Form.Control.Feedback type="invalid">
+                                    Valid Email Required
+                                </Form.Control.Feedback>
                             </FloatingLabel>
 
                         </Col>
@@ -331,6 +344,10 @@ const LoginModal = (props) => {
                                     style={{width: "100%"}}
                                     required
                                 />
+
+                                <Form.Control.Feedback type="invalid">
+                                    Username Required
+                                </Form.Control.Feedback>
                             </FloatingLabel>
                         </Col>
 
@@ -353,8 +370,14 @@ const LoginModal = (props) => {
                                     onChange={handleChange}
                                     placeholder={"Password"}
                                     style={{width: "100%"}}
+                                    isInvalid={(inputs.password === "0")}
+                                    // isValid={false}
                                     required
                                 />
+
+                                <Form.Control.Feedback type="invalid">
+                                    Password Required
+                                </Form.Control.Feedback>
                             </FloatingLabel>
                         </Col>
 
@@ -373,7 +396,11 @@ const LoginModal = (props) => {
                                     style={{width: "100%"}}
                                     required
                                 />
+                                <Form.Control.Feedback type="invalid">
+                                    Confirm Password Required
+                                </Form.Control.Feedback>
                             </FloatingLabel>
+
                         </Col>
                     </Row>
 
@@ -381,15 +408,13 @@ const LoginModal = (props) => {
 
                     <br />
 
-                    {passReq && <p> Password do no Match</p>}
-
-                    <Button onClick={handleSignUp}>Sign Up</Button>
+                    <Button onClick={handleSignUp} disabled={!(inputs.username !== "" && inputs.password !== "" && inputs.firstName !== "" && inputs.lastName !== "" && inputs.email !== "" && inputs.passwordConfirm !== "")}>Sign Up</Button>
 
                     <a onClick={() => {
                         setLoginScreen(!loginScreen)
                         setTitle("Login")
                     }}>
-                        <p>Sign Up</p></a>
+                        <p>Back to Log In</p></a>
                 </Form>}
 
 
