@@ -69,19 +69,17 @@ const LoginModal = (props) => {
 
     }
 
+
     const handleLogIn = (event) => {
-        // console.loginScreen(inputs)
-
+        event.preventDefault()
         const form = event.currentTarget;
+
         if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
-
-        else{
-            console.log("Check Valid")
+            event.stopPropagation()
             setValidated(true)
-
+        }
+        else{
+            setValidated(true)
 
             API.userAPI.validate(inputs.username, inputs.password)
                 .then(r => {
@@ -122,8 +120,6 @@ const LoginModal = (props) => {
                 .catch((error) => console.log(error.message))
 
         }
-
-
     }
 
     const handleSignUp = (event) => {
@@ -182,7 +178,7 @@ const LoginModal = (props) => {
                 {showError && <ErrorAlert heading={errorHeading} content={errorContent} onClose={() => setShowError(false)} />}
 
 
-                {loginScreen && <Form validated={validated}>
+                {loginScreen && <Form noValidate validated={validated} onSubmit={handleLogIn}>
 
                     <FloatingLabel
                         label={"Username"}
@@ -229,7 +225,8 @@ const LoginModal = (props) => {
                     <br />
                     <br />
 
-                    <Button onClick={handleLogIn}>Log In</Button>
+                    {/*onClick={handleLogIn}*/}
+                    <Button variant={"primary"} type={"submit"}>Log In</Button>
 
                     <a onClick={() => {
                         setLoginScreen(!loginScreen)
