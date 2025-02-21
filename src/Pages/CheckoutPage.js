@@ -19,7 +19,7 @@ const CheckoutPage = (props) => {
 
 
     const [user, setUser] = useState({})
-    const [fields, setFields] = useState({"phoneNumber": "", "address": ""})
+    const [fields, setFields] = useState({"phoneNumber": "", "address": "", "instruction": ""})
 
 
     const handleChangeUser = (event) => {
@@ -74,7 +74,7 @@ const CheckoutPage = (props) => {
             <Row>
                 <Col xs={1}></Col>
                 <Col xs={7}>
-                    <CheckoutLeft orderType={orderType} user={user} handleChangeUser={handleChangeUser} fields={fields} handleChangeFields={handleChangeField} />
+                    <CheckoutLeft orderType={orderType} user={user} handleChangeUser={handleChangeUser} fields={fields} handleChangeFields={handleChangeField} cart={cart} />
                 </Col>
                 <Col xs={4}>
                     {/*<p>{orderType}</p>*/}

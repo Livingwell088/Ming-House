@@ -29,6 +29,7 @@ const CheckoutLeft = (props) => {
 
         <form>
 
+            <h2 style={{textAlign: "left"}}>Your Information</h2>
             <Row>
                 <Col xs={5}>
                     <FloatingLabel
@@ -135,8 +136,46 @@ const CheckoutLeft = (props) => {
                 </Col>
             </Row>
 
+            <Row>
+                <Col>
+                    <FloatingLabel
+                        className={"floatingLabel"}
+                        label={"Special Instructions"}
+                        controlId={"floatingTextarea"}
+                        style={{width: "75%"}}
+                    >
+
+                        <Form.Control
+                            className={"textInput"}
+                            as={"textarea"}
+                            name={"instruction"}
+                            value={fields.instruction || ""}
+                            onChange={props.handleChangeFields}
+                            placeholder={"Special Instructions"}
+                            style={{ height: '100px' }}
+                            required
+                        />
+                    </FloatingLabel>
+
+                </Col>
+            </Row>
 
         </form>
+
+        <div style={{textAlign: "left"}}>
+            <h2>Your Cart</h2>
+
+            <ul>
+                {props.cart.map((item, index) => {
+                    // console.log(item.specialInstruction);
+                    return <li key={index}>{item.quantity} x {item.item.name} {item.item.size} ... ${API.priceAPI.price(item.orderPrice)}
+                        {item.specialInstruction !== "" && <ul>
+                            <li key={("ins" + index.toString())}>{item.specialInstruction}</li>
+                        </ul>}
+                    </li>
+                })}
+            </ul>
+        </div>
 
 
     </>

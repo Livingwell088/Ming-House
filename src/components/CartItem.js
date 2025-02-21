@@ -87,11 +87,17 @@ const CartItem = (props) => {
                     </Col>
                 </Row>
 
+                {props.order.specialInstruction !== "" &&
+                    <Row style={{textAlign: "left", margin: "0"}}>
+                    <p>{props.order.specialInstruction}</p>
+                </Row>}
+
 
                 <Row>
-                    <Col xs={9}>
-                        <p>{props.item.specialInstruction}</p>
+                    <Col xs={2}>
+                        <Button variant="secondary" onClick={handleShow}>Edit/Modify</Button>
                     </Col>
+                    <Col></Col>
                     <Col xs={1}></Col>
                     <Col>
 
