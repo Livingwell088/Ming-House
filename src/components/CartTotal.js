@@ -113,7 +113,8 @@ const CartTotal = (props) => {
 
         <br />
 
-        <Button onClick={props.makeOrder()}>{props.page}</Button>
+        {props.page === "Go To Checkout" && <Button onClick={props.makeOrder()}>{props.page}</Button>}
+        {props.page === "Place Order" && <Button form='CheckoutForm' variant={"primary"} type="submit">{props.page}</Button>}
 
 
 

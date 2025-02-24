@@ -18,10 +18,8 @@ const CartPage = (props) => {
     const [fullMenu, setFullMenu] = useState([[]])
     const [subtotal, setSubtotal] = useState(0.0)
 
-    const [orderType, setOrderType] = useState(" Select One")
+    const [orderType, setOrderType] = useState(window.sessionStorage.getItem('orderType'));
     const [orderTime, setOrderTime] = useState(" Time")
-    // const [page, setPage] = useState("Cart")
-
 
 
     const [showPopup, setShowPopup] = useState(false)
@@ -34,6 +32,11 @@ const CartPage = (props) => {
     const [showError, setShowError] = useState(false)
     const [errorHeading, setErrorHeading] = useState("")
     const [errorContent, setErrorContent] = useState("")
+
+    const onChangeOrderType = (type) => {
+        window.sessionStorage.setItem("orderType", type);
+        setOrderType(type);
+    }
 
 
     const testing = async () => {
@@ -127,6 +130,12 @@ const CartPage = (props) => {
 
     }, [cart, subtotal, fullMenu])
 
+    useEffect(() => {
+        if (window.sessionStorage.getItem("orderType") === null){
+            window.sessionStorage.setItem("orderType", " Select One")
+        }
+    }, []);
+
 
 
     return <div className="App teko">
@@ -140,7 +149,7 @@ const CartPage = (props) => {
                 </Col>
 
                 <Col xs={4}>
-                    <CartTotal id={"cartTotal"} page={"Go To Checkout"} orderType={orderType} onChange={(type) => setOrderType(type)} orderTime={orderTime} handleChangeTime={(time) => setOrderTime(time)} subtotal={subtotal} makeOrder={() => makeOrder}  ></CartTotal>
+                    <CartTotal id={"cartTotal"} page={"Go To Checkout"} orderType={orderType} onChange={(type) => onChangeOrderType(type)} orderTime={orderTime} handleChangeTime={(time) => setOrderTime(time)} subtotal={subtotal} makeOrder={() => makeOrder}  ></CartTotal>
                     <LoginModal show={showPopup} onClose={handleClose} loginScreen={true}></LoginModal>
 
                 </Col>

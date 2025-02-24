@@ -3,6 +3,7 @@ import API from "../api";
 import {Button, Col, Dropdown, FloatingLabel, Row} from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import "../styles/Checkout.css"
+import "../styles/Inputs.css"
 
 
 const CheckoutLeft = (props) => {
@@ -15,20 +16,20 @@ const CheckoutLeft = (props) => {
 
     const [dropdown, setDropdown] = useState("Time")
 
-
-
+    const [validated, setValidated] = useState(props.validated || false)
 
 
     useEffect(() => {
         setOrderType(props.orderType)
         setUser(props.user)
         setFields(props.fields)
-    }, [props.orderType, props.user, props.fields]);
+        setValidated(props.validated)
+    }, [props.orderType, props.user, props.fields, props.validated]);
 
 
     return <>
 
-        <form>
+        <Form id={"CheckoutForm"} noValidate validated={validated} onSubmit={props.submitButton}>
 
             <h2 style={{textAlign: "left"}}>Your Information</h2>
             <Row>
@@ -120,11 +121,13 @@ const CheckoutLeft = (props) => {
                 <Col>
                     {(orderType === " Delivery") &&
                         <FloatingLabel
+                            className={"floatingLabel"}
                             label={"Address"}
                             controlId={"floatingInput"}
                             style={{width: "75%"}}
                         >
                             <Form.Control
+                                className={"textInput"}
                                 type={"text"}
                                 name={"address"}
                                 value={fields.address || ""}
@@ -154,14 +157,15 @@ const CheckoutLeft = (props) => {
                             onChange={props.handleChangeFields}
                             placeholder={"Special Instructions"}
                             style={{ height: '100px' }}
-                            required
                         />
                     </FloatingLabel>
 
                 </Col>
             </Row>
 
-        </form>
+            {/*<Button variant={"primary"} type={"submit"}>Test</Button>*/}
+
+        </Form>
 
         <div style={{textAlign: "left"}}>
             <h2>Your Cart</h2>
