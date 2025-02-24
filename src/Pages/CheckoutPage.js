@@ -15,7 +15,7 @@ const CheckoutPage = (props) => {
 
     const [orderType, setOrderType] = useState(window.sessionStorage.getItem('orderType'));
     const [subtotal, setSubtotal] = useState(0)
-    const [orderTime, setOrderTime] = useState(" Time")
+    const [orderTime, setOrderTime] = useState(window.sessionStorage.getItem('orderTime'));
     const [cart, setCart] = useState([])
     // console.log(cart)
 
@@ -66,7 +66,6 @@ const CheckoutPage = (props) => {
         const value = event.target.value;
 
         setUser(values => ({...values, [name]: value}))
-        console.log(name, value, user)
 
     }
 
@@ -89,6 +88,17 @@ const CheckoutPage = (props) => {
     const [showError, setShowError] = useState(false)
     const [errorHeading, setErrorHeading] = useState("")
     const [errorContent, setErrorContent] = useState("")
+
+
+    const onChangeOrderType = (type) => {
+        window.sessionStorage.setItem("orderType", type);
+        setOrderType(type);
+    }
+
+    const onChangeOrderTime = (time) => {
+        window.sessionStorage.setItem("orderTime", time);
+        setOrderTime(time);
+    }
 
     useEffect(() => {
         getUser()
@@ -149,7 +159,7 @@ const CheckoutPage = (props) => {
                 <Col xs={4}>
                     {/*<p>{orderType}</p>*/}
                     {/*<p>{subtotal}</p>*/}
-                    <CartTotal id={"cartTotal"} page={"Place Order"} onChange={(type) => setOrderType(type)} orderType={orderType} orderTime={orderTime} handleChangeTime={(time) => setOrderTime(time)} subtotal={subtotal} makeOrder={() => makeOrder} ></CartTotal>
+                    <CartTotal id={"cartTotal"} page={"Place Order"} onChange={(type) => onChangeOrderType(type)} orderType={orderType} orderTime={orderTime} handleChangeTime={(time) => onChangeOrderTime(time)} subtotal={subtotal} makeOrder={() => makeOrder} ></CartTotal>
                 </Col>
             </Row>
         </main>
