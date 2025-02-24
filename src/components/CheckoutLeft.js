@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import API from "../api";
 import {Button, Col, Dropdown, FloatingLabel, Row} from "react-bootstrap";
 import Form from "react-bootstrap/Form";
+import "../styles/Checkout.css"
 
 
 const CheckoutLeft = (props) => {

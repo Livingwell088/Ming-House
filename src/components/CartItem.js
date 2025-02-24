@@ -97,7 +97,7 @@ const CartItem = (props) => {
                     <Col xs={2}>
                         <Button variant="secondary" onClick={handleShow}>Edit/Modify</Button>
                     </Col>
-                    <Col></Col>
+                    <Col xs={7}></Col>
                     <Col xs={1}></Col>
                     <Col>
 
@@ -156,7 +156,7 @@ const CartItem = (props) => {
         </Row>
 
 
-        <MenuPopup show={showPopup} onClose={handleClose} id={props.id} item={props.full} quantity={props.order.quantity} do={"Edit"} update={update} size={(props.item.price)}/>
+        <MenuPopup show={showPopup} onClose={handleClose} id={props.id} item={props.full} quantity={props.order.quantity} do={"Edit"} update={update} size={(props.item.price)} instructions={props.order.specialInstruction}/>
 
     </div>
 

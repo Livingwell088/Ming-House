@@ -182,6 +182,15 @@ const API = {
                 timeout: 10000,
             })
         },
+        deleteById: async (id) => {
+            return await Api().post("/carts/deleteById/" + id, {
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                timeout: 10000,
+            })
+        },
         generate: async () => {
 
             const result = await (Api().get("/carts/generate"))

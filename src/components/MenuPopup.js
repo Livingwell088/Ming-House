@@ -38,12 +38,24 @@ const MenuPopup = (props) => {
         }
         else{
 
-            // console.log(name.toString(), total, quantity, item, sessionStorage.getItem("sessionId").toString(), instructions)
-            API.cartAPI.edit(
-                id, name.toString(), total, quantity, item, instructions, addTo
-            )
-                .then(r => console.log(r))
-                .catch((error) => console.log(error.message))
+            if (quantity === 0){
+                API.cartAPI.deleteById(id)
+                    .then(r => console.log(r))
+                    .catch((error) => console.log(error.message))
+                // console.log("Attempt to delete")
+                // console.log(id, name.toString(), props.quantity * props.item.price, props.quantity, props.item, props.instructions, props.addTo)
+                // API.cartAPI.delete()
+            }
+            else{
+                // console.log(name.toString(), total, quantity, item, sessionStorage.getItem("sessionId").toString(), instructions)
+                API.cartAPI.edit(
+                    id, name.toString(), total, quantity, item, instructions, addTo
+                )
+                    .then(r => console.log(r))
+                    .catch((error) => console.log(error.message))
+
+            }
+
 
             props.update()
             props.onClose()
@@ -55,7 +67,7 @@ const MenuPopup = (props) => {
     //
     const [total, setTotal] = useState(props.item[0].price)
     const [sizeChosen, setSizeChosen] = useState(0)
-    const [instructions, setInstructions] = useState("")
+    const [instructions, setInstructions] = useState(props.instructions || "")
 
     // const [quantity, setQuantity] = useState(0)
 
@@ -187,8 +199,9 @@ const MenuPopup = (props) => {
                 </Modal.Body>
 
                 <Modal.Body>
-                    <Form.Control as="textarea" rows={3} className={"specialText"} placeholder="Special Instructions" defaultValue={""} onChange={onChange}/>
+                    <Form.Control as="textarea" rows={3} className={"specialText"} placeholder="Special Instructions" value={instructions} onChange={onChange}/>
                 </Modal.Body>
+
                 <Modal.Footer style={{width: "100%"}} justify-content-between>
                     {/*<Row style={{width: "100%"}}>*/}
                         <Button className={"mr-auto"} variant="secondary" onClick={() => {
