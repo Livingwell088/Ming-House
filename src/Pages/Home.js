@@ -7,10 +7,8 @@ import {Image, Col, Row, Button} from "react-bootstrap";
 import API from "../api";
 // import dumpling from "images/dumpling.png"
 
-const Home = () => {
+const Home = (props) => {
 
-    const [groups, setGroups] = useState([]);
-    const [loading, setLoading] = useState(false);
 
     useEffect( () => {
 

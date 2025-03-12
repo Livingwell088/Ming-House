@@ -96,7 +96,7 @@ const CartPage = (props) => {
 
             console.log("NOT LOGGED IN")
 
-            if (orderType !== " Select One"){
+            if (orderType !== "Select One"){
                 handleShow()
 
             }
@@ -110,7 +110,7 @@ const CartPage = (props) => {
             }
         }
         else {
-            console.log(cart)
+            // console.log(cart)
 
             navigate('/checkoutPage', {state: {orderType: orderType, subtotal: subtotal, orderTime: orderTime, cart: cart}});
 
@@ -137,13 +137,13 @@ const CartPage = (props) => {
 
     useEffect(() => {
         if (window.sessionStorage.getItem("orderType") === null){
-            window.sessionStorage.setItem("orderType", " Select One")
+            window.sessionStorage.setItem("orderType", "Select One")
         }
     }, []);
 
     useEffect(() => {
         if (window.sessionStorage.getItem("orderTime") === null){
-            window.sessionStorage.setItem("orderTime", " Time")
+            window.sessionStorage.setItem("orderTime", "Time")
         }
     })
 

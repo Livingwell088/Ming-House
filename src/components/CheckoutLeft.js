@@ -33,12 +33,12 @@ const CheckoutLeft = (props) => {
 
             <h2 style={{textAlign: "left"}}>Your Information</h2>
             <Row>
-                <Col xs={5}>
+                <Col xs={4}>
                     <FloatingLabel
                         className={"floatingLabel"}
                         label={"First Name"}
                         controlId={"floatingInput"}
-                        style={{width: "75%"}}
+                        style={{width: "100%"}}
                     >
                         <Form.Control
                             className={"textInput"}
@@ -51,13 +51,13 @@ const CheckoutLeft = (props) => {
                         />
                     </FloatingLabel>
                 </Col>
-                <Col xs={2}></Col>
-                <Col xs={5}>
+                <Col xs={1}></Col>
+                <Col xs={4}>
                     <FloatingLabel
                         className={"floatingLabel"}
                         label={"Last Name"}
                         controlId={"floatingInput"}
-                        style={{width: "75%"}}
+                        style={{width: "100%"}}
                     >
                         <Form.Control
                             className={"textInput"}
@@ -70,6 +70,8 @@ const CheckoutLeft = (props) => {
                         />
                     </FloatingLabel>
                 </Col>
+
+                <Col xs={3}></Col>
             </Row>
 
 
@@ -80,7 +82,7 @@ const CheckoutLeft = (props) => {
                         className={"floatingLabel"}
                         label={"Email"}
                         controlId={"floatingInput"}
-                        style={{width: "75%"}}
+                        style={{width: "100%"}}
                     >
                         <Form.Control
                             className={"textInput"}
@@ -93,6 +95,7 @@ const CheckoutLeft = (props) => {
                         />
                     </FloatingLabel>
                 </Col>
+                <Col xs={3}></Col>
             </Row>
 
             <Row>
@@ -101,7 +104,7 @@ const CheckoutLeft = (props) => {
                         className={"floatingLabel"}
                         label={"Phone Number"}
                         controlId={"floatingInput"}
-                        style={{width: "75%"}}
+                        style={{width: "100%"}}
                     >
                         <Form.Control
                             className={"textInput"}
@@ -114,37 +117,112 @@ const CheckoutLeft = (props) => {
                         />
                     </FloatingLabel>
                 </Col>
+                <Col xs={3}></Col>
             </Row>
 
 
             <Row>
                 <Col>
-                    {(orderType === " Delivery") &&
-                        <FloatingLabel
-                            className={"floatingLabel"}
-                            label={"Address"}
-                            controlId={"floatingInput"}
-                            style={{width: "75%"}}
-                        >
-                            <Form.Control
-                                className={"textInput"}
-                                type={"text"}
-                                name={"address"}
-                                value={fields.address || ""}
-                                onChange={props.handleChangeFields}
-                                placeholder={"Address"}
-                                required
-                            />
-                        </FloatingLabel>
+                    {(orderType === "Delivery") &&
+                        <div>
+                            <h2 style={{textAlign: "left", marginTop: "2%"}}>Delivery Address</h2>
+                            <Row>
+                                <Col>
+                                    <FloatingLabel
+                                        className={"floatingLabel"}
+                                        label={"Address"}
+                                        controlId={"floatingInput"}
+                                        style={{width: "100%"}}
+                                    >
+                                        <Form.Control
+                                            className={"textInput"}
+                                            type={"text"}
+                                            name={"address"}
+                                            value={fields.address || ""}
+                                            onChange={props.handleChangeFields}
+                                            placeholder={"Address"}
+                                            required
+                                        />
+                                    </FloatingLabel>
+                                </Col>
+                                <Col xs={3}></Col>
+                            </Row>
+
+                            <Row>
+                                <Col>
+                                    <FloatingLabel
+                                        className={"floatingLabel"}
+                                        label={"City/Town"}
+                                        controlId={"floatingInput"}
+                                        style={{width: "100%"}}
+                                    >
+                                        <Form.Control
+                                            className={"textInput"}
+                                            type={"text"}
+                                            name={"City/Town"}
+                                            value={"Worcester"}
+                                            onChange={props.handleChangeFields}
+                                            placeholder={"Address"}
+                                            disabled
+                                        />
+                                    </FloatingLabel>
+                                </Col>
+                                <Col>
+                                    <FloatingLabel
+                                        className={"floatingLabel"}
+                                        label={"State"}
+                                        controlId={"floatingInput"}
+                                        style={{width: "100%"}}
+                                    >
+                                        <Form.Control
+                                            className={"textInput"}
+                                            type={"text"}
+                                            name={"State"}
+                                            value={"MA"}
+                                            onChange={props.handleChangeFields}
+                                            placeholder={"Address"}
+                                            disabled
+                                        />
+                                    </FloatingLabel>
+                                </Col>
+                                <Col>
+                                    <FloatingLabel
+                                        className={"floatingLabel"}
+                                        label={"Zip Code"}
+                                        controlId={"floatingInput"}
+                                        style={{width: "100%"}}
+                                    >
+                                        <Form.Control
+                                            className={"textInput"}
+                                            type={"text"}
+                                            name={"zipcode"}
+                                            value={fields.zipcode || ""}
+                                            onChange={props.handleChangeFields}
+                                            placeholder={"Zip Code"}
+                                            required
+                                        />
+                                    </FloatingLabel>
+
+                                </Col>
+                                <Col xs={3}></Col>
+                            </Row>
+
+
+                        </div>
+
+
+
+
                     }
                 </Col>
             </Row>
 
             <Row>
+                <h2 style={{textAlign: "left", marginTop: "2%"}}>Special Instructions</h2>
                 <Col>
                     <FloatingLabel
                         className={"floatingLabel"}
-                        label={"Special Instructions"}
+                        label={"Please leave any special instructions. We will try to accommodate."}
                         controlId={"floatingTextarea"}
                         style={{width: "75%"}}
                     >
@@ -155,7 +233,7 @@ const CheckoutLeft = (props) => {
                             name={"instruction"}
                             value={fields.instruction || ""}
                             onChange={props.handleChangeFields}
-                            placeholder={"Special Instructions"}
+                            placeholder={"Please leave any special instructions. We will try to accommodate."}
                             style={{ height: '100px' }}
                         />
                     </FloatingLabel>
@@ -167,19 +245,60 @@ const CheckoutLeft = (props) => {
 
         </Form>
 
-        <div style={{textAlign: "left"}}>
+        <div style={{textAlign: "left", marginTop: "2%"}}>
             <h2>Your Cart</h2>
 
-            <ul>
-                {props.cart.map((item, index) => {
-                    // console.log(item.specialInstruction);
-                    return <li key={index}>{item.quantity} x {item.item.name} {item.item.size} ... ${API.priceAPI.price(item.orderPrice)}
-                        {item.specialInstruction !== "" && <ul>
-                            <li key={("ins" + index.toString())}>{item.specialInstruction}</li>
-                        </ul>}
-                    </li>
-                })}
-            </ul>
+            <Row>
+                <Col>
+                    <table style={{width: "100%"}}>
+                        <tbody>
+                        {props.cart.map((item, index) => {
+                            if (item.specialInstruction !== ""){
+                                return <><tr>
+                                    <td>{item.quantity} x</td>
+                                    <td>{item.item.name} {item.item.size}</td>
+                                    <td className={"tablePrice"}>${API.priceAPI.price(item.orderPrice)}</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>&nbsp;&nbsp;&nbsp;&nbsp;{item.specialInstruction}</td>
+                                    <td></td>
+                                </tr>
+                                </>
+                            }
+                            else{
+                                return <tr>
+                                    <td>{item.quantity} x</td>
+                                    <td>{item.item.name} {item.item.size}</td>
+                                    <td className={"tablePrice"}>${API.priceAPI.price(item.orderPrice)}</td>
+                                </tr>
+                            }
+
+
+
+                        })
+                        }
+                        </tbody>
+
+                    </table>
+                </Col>
+                <Col xs={3}></Col>
+            </Row>
+
+
+
+
+
+            {/*<ul>*/}
+            {/*    {props.cart.map((item, index) => {*/}
+            {/*        // console.log(item.specialInstruction);*/}
+            {/*        return <li key={index}>{item.quantity} x {item.item.name} {item.item.size} ... ${API.priceAPI.price(item.orderPrice)}*/}
+            {/*            {item.specialInstruction !== "" && <ul>*/}
+            {/*                <li key={("ins" + index.toString())}>{item.specialInstruction}</li>*/}
+            {/*            </ul>}*/}
+            {/*        </li>*/}
+            {/*    })}*/}
+            {/*</ul>*/}
         </div>
 
 

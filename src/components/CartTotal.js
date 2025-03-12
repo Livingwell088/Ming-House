@@ -59,7 +59,7 @@ const CartTotal = (props) => {
             {/*<br />*/}
 
             <div>
-                Order Type:
+                Order Type: &nbsp;
                 <a className={"orderTypeLink"} onClick={handleShow}>
                     {orderType}
                 </a>
@@ -98,13 +98,23 @@ const CartTotal = (props) => {
                     <td>Subtotal: </td>
                     <td className={"tablePrice"}>${API.priceAPI.price(props.subtotal)}</td>
                 </tr>
+                {orderType === "Delivery" && <tr>
+                    <td>Delivery Fee:</td>
+                    <td className={"tablePrice"}>$2.00</td>
+                </tr>}
+
                 <tr>
                     <td>Tax: </td>
-                    <td className={"tablePrice"}>${API.priceAPI.price(props.subtotal * 0.07)}</td>
+                    {orderType === "Pickup" && <td className={"tablePrice"}>${API.priceAPI.price(props.subtotal * 0.07)}</td>}
+                    {orderType === "Delivery" && <td className={"tablePrice"}>${API.priceAPI.price((props.subtotal + 2) * 0.07)}</td>}
+
                 </tr>
                 <tr>
                     <td><h4>Total: </h4></td>
-                    <td className={"tablePrice"}><h4>${API.priceAPI.price(props.subtotal * 1.07)}</h4></td>
+                    {/*<td className={"tablePrice"}><h4>${API.priceAPI.price(props.subtotal * 1.07)}</h4></td>*/}
+                    {orderType === "Pickup" && <td className={"tablePrice"}>${API.priceAPI.price(props.subtotal * 1.07)}</td>}
+                    {orderType === "Delivery" && <td className={"tablePrice"}>${API.priceAPI.price((props.subtotal + 2) * 1.07)}</td>}
+
                 </tr>
 
                 </tbody>

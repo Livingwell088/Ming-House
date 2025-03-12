@@ -1,15 +1,20 @@
 import {Col, Row} from "react-bootstrap";
 import CartTotal from "../components/CartTotal";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import CheckoutLeft from "../components/CheckoutLeft";
 import API from "../api";
 import ErrorAlert from "../components/ErrorAlert";
+import ConfirmationModal from "../components/ConfirmationModal";
+import LoginModal from "../components/LoginModal";
+
 
 
 const CheckoutPage = (props) => {
 
     const location = useLocation();
+    const navigate = useNavigate();
+
 
     // console.log(location.state.orderType)
 
@@ -18,6 +23,9 @@ const CheckoutPage = (props) => {
     const [orderTime, setOrderTime] = useState(window.sessionStorage.getItem('orderTime'));
     const [cart, setCart] = useState([])
     // console.log(cart)
+
+
+    const [placedOrder, setPlacedOrder] = useState({})
 
     const testing = async () => {
         let currentData = window.sessionStorage.getItem("sessionId")
@@ -58,7 +66,7 @@ const CheckoutPage = (props) => {
 
 
     const [user, setUser] = useState({})
-    const [fields, setFields] = useState({"phoneNumber": "", "address": "", "instruction": ""})
+    const [fields, setFields] = useState({"phoneNumber": "", "address": "", "instruction": "", "zipcode": ""})
     const [validated, setValidated] = useState(false)
 
     const handleChangeUser = (event) => {
@@ -107,34 +115,82 @@ const CheckoutPage = (props) => {
 
     }, []);
 
+    // useEffect(() => {
+    //     console.log(placedOrder)
+    // }, [placedOrder])
 
-    const makeOrder = (event) => {
+    const [showPopup, setShowPopup] = useState(false)
+    const handleShow = () => setShowPopup(true);
+    const handleClose = () => setShowPopup(false);
+
+
+
+
+    const makeOrder = async (event) => {
         console.log("Making Order")
 
         event.preventDefault()
         const form = event.currentTarget;
-        if (form.checkValidity() === false || orderType === " Select One" || orderTime === " Time") {
+        if (form.checkValidity() === false || orderType === "Select One" || orderTime === "Time") {
             event.stopPropagation()
             setValidated(true)
 
-            if (orderTime === " Select One"){
+
+            if (orderType === "Select One") {
                 setErrorHeading("Error")
                 setErrorContent("Select an Order Type")
                 setShowError(true)
-            }
-            else if (orderTime === " Time"){
+            } else if (orderTime === "Time") {
                 setErrorHeading("Error")
                 setErrorContent("Select a Time for the Order.")
                 setShowError(true)
-            }
-            else {
+            } else {
                 setErrorHeading("Error")
                 setErrorContent("Make sure all required fields are provided")
                 setShowError(true)
             }
-        }
-        else{
+        } else {
             setValidated(true)
+
+            let currentAddress = ""
+
+            if (orderType === "Delivery") {
+                currentAddress = fields.address + ", Worcester MA, " + fields.zipcode;
+            }
+            // const placing = await API.orderAPI.create("Ordering", subtotal, orderType, window.sessionStorage.getItem("username"), currentAddress, fields.phoneNumber, fields.instruction, orderTime, cart)
+
+
+            // let order = {
+            //     orderName: "Ordering",
+            //     orderPrice: subtotal,
+            //     orderType: orderType,
+            //     user: user,
+            //     address: currentAddress,
+            //     phoneNumber: fields.phoneNumber,
+            //     specialInstruction: fields.specialInstruction,
+            //     orderTime: orderTime,
+            //     datePlaced: "Date Placed",
+            //     timePlaced: "Time Placed",
+            //     items: cart
+            // }
+            // setPlacedOrder(order)
+            // setShowPopup(true)
+
+            // navigate("/")
+
+            await API.orderAPI.create("Ordering", subtotal, orderType, window.sessionStorage.getItem("username"), currentAddress, fields.phoneNumber, fields.instruction, orderTime, cart)
+                .then(res => res.data)
+                .then(async r => {
+                    // console.log(r)
+                    setPlacedOrder(r)
+                    // console.log(r)
+                    setShowPopup(true)
+                })
+                // .then(() => {
+                //     console.log(placedOrder)
+                //     setShowPopup(true)
+                // })
+                .catch((error) => console.log(error))
         }
 
 
@@ -157,11 +213,11 @@ const CheckoutPage = (props) => {
                     <CheckoutLeft orderType={orderType} user={user} handleChangeUser={handleChangeUser} fields={fields} handleChangeFields={handleChangeField} cart={cart} validated={validated} submitButton={makeOrder} />
                 </Col>
                 <Col xs={4}>
-                    {/*<p>{orderType}</p>*/}
-                    {/*<p>{subtotal}</p>*/}
                     <CartTotal id={"cartTotal"} page={"Place Order"} onChange={(type) => onChangeOrderType(type)} orderType={orderType} orderTime={orderTime} handleChangeTime={(time) => onChangeOrderTime(time)} subtotal={subtotal} makeOrder={() => makeOrder} ></CartTotal>
                 </Col>
             </Row>
+
+            <ConfirmationModal cart={placedOrder.items || []} order={placedOrder} show={showPopup} onClose={handleClose} />
         </main>
 
     </div>

@@ -25,7 +25,7 @@ const MenuPopup = (props) => {
                 <Row>
                     <Col>
                         <Card onClick={() => {
-                            props.test(" Pickup")
+                            props.test("Pickup")
                             props.onClose()
                         }}>
                             <Card.Body>
@@ -37,7 +37,7 @@ const MenuPopup = (props) => {
                     <Col>
                         <Card>
                             <Card.Body onClick={() => {
-                                props.test(" Delivery")
+                                props.test("Delivery")
                                 props.onClose()
                             }}>
                                 Delivery

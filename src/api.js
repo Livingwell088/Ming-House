@@ -30,6 +30,7 @@ const dayHours = {0: {"open" : "12:00", "close": "22:30"},
 
 }
 
+
 const isBetweenHours = (start, end, current) => {
 
     const startHour = parseInt(start.split(":")[0])
@@ -85,6 +86,9 @@ const addToTimes = (current, end, want) => {
     return true
 
 }
+
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
 
 const API = {
     priceAPI: {
@@ -211,8 +215,14 @@ const API = {
     },
 
     orderAPI: {
-        create: async (orderName, orderPrice, orderType, address, username, orderItems) => {
+        create: async (orderName, orderPrice, orderType, username, address, phoneNumber, specialInstruction, orderTime, orderItems) => {
 
+            const date = new Date();
+            const currentDate = months[date.getMonth()] + " " + date.getDate() + " " + date.getFullYear();
+            const currentTime = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
+
+            // console.log(currentDate)
+            // console.log(currentTime)
             let user = {}
 
             await API.userAPI.getUser(username)
@@ -229,8 +239,13 @@ const API = {
                 orderName: orderName,
                 orderPrice: orderPrice,
                 orderType: orderType,
-                address: address,
                 user: user,
+                address: address,
+                phoneNumber: phoneNumber,
+                specialInstruction: specialInstruction,
+                orderTime: orderTime,
+                datePlaced: currentDate,
+                timePlaced: currentTime,
                 items: orderItems
             }
 
