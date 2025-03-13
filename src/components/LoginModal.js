@@ -293,7 +293,7 @@ const LoginModal = (props) => {
                     <br />
 
                     {/*onClick={handleLogIn}*/}
-                    <Button variant={"primary"} type={"submit"}>Log In</Button>
+                    <Button className={"mingButton"} variant={"primary"} type={"submit"}>Log In</Button>
 
                     <a onClick={() => {
                         setLoginScreen(!loginScreen)
@@ -304,7 +304,7 @@ const LoginModal = (props) => {
                     <hr />
 
 
-                    <Button onClick={handleGuest}> Continue as Guest</Button>
+                    <Button className={"mingButton"} onClick={handleGuest}> Continue as Guest</Button>
                 </Form>}
 
 
@@ -474,7 +474,7 @@ const LoginModal = (props) => {
                     <br />
 
                     {/*disabled={!(inputs.username !== "" && inputs.password !== "" && inputs.firstName !== "" && inputs.lastName !== "" && inputs.email !== "" && inputs.passwordConfirm !== "")}*/}
-                    <Button variant={"primary"} type={"submit"} >Sign Up</Button>
+                    <Button className={"mingButton"} variant={"primary"} type={"submit"} >Sign Up</Button>
 
                     <a onClick={() => {
                         setLoginScreen(!loginScreen)

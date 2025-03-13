@@ -51,7 +51,7 @@ const MenuComponent = (props) => {
                     {
                         categories.map(current =>
                             <Row>
-                                <h2 className={"headers spicy-rice-regular"}>{current}</h2>
+                                <h3 className={"headers trade-winds-regular"} style={{color: "rgb(238, 121, 89)"}}>{current}</h3>
                                 {
 
                                     Object.keys(props.menu).map((item, i) => {

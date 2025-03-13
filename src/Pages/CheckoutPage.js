@@ -1,7 +1,7 @@
 import {Col, Row} from "react-bootstrap";
 import CartTotal from "../components/CartTotal";
 import {useLocation, useNavigate} from "react-router-dom";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import CheckoutLeft from "../components/CheckoutLeft";
 import API from "../api";
 import ErrorAlert from "../components/ErrorAlert";
@@ -181,10 +181,10 @@ const CheckoutPage = (props) => {
             await API.orderAPI.create("Ordering", subtotal, orderType, window.sessionStorage.getItem("username"), currentAddress, fields.phoneNumber, fields.instruction, orderTime, cart)
                 .then(res => res.data)
                 .then(async r => {
-                    // console.log(r)
                     setPlacedOrder(r)
-                    // console.log(r)
                     setShowPopup(true)
+
+                    navigate("/", {state: {placedOrder: r, confirm: true}})
                 })
                 // .then(() => {
                 //     console.log(placedOrder)
@@ -203,7 +203,7 @@ const CheckoutPage = (props) => {
 
     return <div className={"App teko"}>
         <main>
-            <h1>Checkout</h1>
+            <h1 className={"dancing-script fontDark"} style={{marginBottom: "2%"}}>Checkout</h1>
 
             {showError && <ErrorAlert heading={errorHeading} content={errorContent} onClose={() => setShowError(false)} />}
 
@@ -217,7 +217,6 @@ const CheckoutPage = (props) => {
                 </Col>
             </Row>
 
-            <ConfirmationModal cart={placedOrder.items || []} order={placedOrder} show={showPopup} onClose={handleClose} />
         </main>
 
     </div>

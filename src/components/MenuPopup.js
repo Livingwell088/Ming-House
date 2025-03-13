@@ -204,7 +204,7 @@ const MenuPopup = (props) => {
 
                 <Modal.Footer style={{width: "100%"}} justify-content-between>
                     {/*<Row style={{width: "100%"}}>*/}
-                        <Button className={"mr-auto"} variant="secondary" onClick={() => {
+                        <Button className={"mr-auto mingButtonOutline"} variant="secondary" onClick={() => {
                             if (count >= 1){
                                 setCount(count - 1)
                             }
@@ -212,13 +212,13 @@ const MenuPopup = (props) => {
                             -
                         </Button>
                         <h2>{count}</h2>
-                        <Button variant="secondary" onClick={() => {
+                        <Button className={"mingButtonOutline"} variant="secondary" onClick={() => {
                             setCount(count + 1)
                         }}>
                             +
                         </Button>
 
-                        <Button variant="primary" onClick={() => {
+                        <Button className={"mingButton"} variant="primary" onClick={() => {
                             let id = null;
                             if (props.do === "Edit") {
                                 id = props.id;

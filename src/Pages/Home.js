@@ -5,10 +5,33 @@ import '../styles/App.css';
 import '../styles/fonts.css';
 import {Image, Col, Row, Button} from "react-bootstrap";
 import API from "../api";
+import ConfirmationModal from "../components/ConfirmationModal";
+import {useLocation, useNavigate} from "react-router-dom";
 // import dumpling from "images/dumpling.png"
 
 const Home = (props) => {
+    const location = useLocation();
+    const navigate = useNavigate();
 
+
+    const [showPopup, setShowPopup] = useState(false)
+    const handleShow = () => setShowPopup(true);
+    const handleClose = () => {
+        setShowPopup(false);
+        navigate("/")
+    }
+    const [placedOrder, setPlacedOrder] = useState({})
+
+    useEffect(() => {
+        if (location.state) {
+            setShowPopup(location.state.confirm)
+            setPlacedOrder(location.state.placedOrder)
+        }
+        // else{
+        //     setShowPopup(false)
+        //     navigate("/")
+        // }
+    }, [location]);
 
     useEffect( () => {
 
@@ -77,6 +100,7 @@ const Home = (props) => {
                                 {/*<Col xs={3}><Button href="#" className="rounded-pill button">Link</Button></Col>*/}
                                 {/*<Col xs={3}></Col>*/}
                             </Row>
+                            <ConfirmationModal order={placedOrder} show={showPopup} onClose={handleClose} />
 
                         </Container>
                     </div>

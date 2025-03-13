@@ -1,4 +1,4 @@
-import {OverlayTrigger, Popover} from "react-bootstrap";
+import {OverlayTrigger, Popover, Row} from "react-bootstrap";
 import * as React from "react";
 import Button from "@mui/material/Button";
 import {useEffect, useState} from "react";
@@ -96,24 +96,53 @@ const UserPopover = (props) => {
             <h3>Hello, {user.firstName || "Customer"}</h3>
         </Popover.Header>
 
-        <Popover.Body className={"teko"}>
-            {guest &&
-                <div>
-                    <Button onClick={clickLogin}>Login</Button>
-                    <p>Don't have an account? <a onClick={clickSignUp}> Sign Up for one. </a> </p>
+        {/*<Popover.Body className={"teko"} >*/}
+        {/*    {guest &&*/}
+        {/*        <div>*/}
+        {/*            <Button className={"mingButton btn"} variant={"primary"} style={{color: "white"}} onClick={clickLogin}>Login</Button>*/}
+        {/*            <p>Don't have an account? <a onClick={clickSignUp}> Sign Up for one. </a> </p>*/}
 
-                    <LoginModal  show={showPopup} onClose={handleClose} loginScreen={showLogin}></LoginModal>
+        {/*            <LoginModal  show={showPopup} onClose={handleClose} loginScreen={showLogin}></LoginModal>*/}
 
-                </div>
-            }
+        {/*        </div>*/}
+        {/*    }*/}
 
-            {!guest &&
-                <div>
-                    <Button onClick={handleSignOut}>Sign Out</Button>
-                </div>
-            }
+        {/*    {!guest &&*/}
+        {/*        <div>*/}
+        {/*            /!*<Button className={"mingButton"} variant={"primary"} onClick={handleSignOut}>Sign Out</Button>*!/*/}
+        {/*            <Row className={"popRow"} style={{width: "100%"}}><a onClick={handleSignOut}><h5 style={{margin: 0}}>Sign Out</h5></a></Row>*/}
 
-        </Popover.Body>
+        {/*        </div>*/}
+        {/*    }*/}
+
+        {/*</Popover.Body>*/}
+
+        {guest && <div className={"teko"} style={{textAlign: "center"}}>
+            <Popover.Body style={{paddingBottom: 0}}>
+                <Button className={"mingButton btn"} variant={"primary"} style={{color: "white", width: "80%"}} onClick={clickLogin}>Login</Button>
+            </Popover.Body>
+
+            <Popover.Body>
+                <p>Don't have an account? <a onClick={clickSignUp}> Sign Up for one. </a> </p>
+            </Popover.Body>
+            <LoginModal  show={showPopup} onClose={handleClose} loginScreen={showLogin}></LoginModal>
+
+        </div>}
+
+        {!guest && <div className={"teko"} style={{textAlign: "center"}}>
+
+            <Popover.Body className={"popRow"}>
+                <a ><h5 style={{margin: 0}}>See Previous Orders</h5></a>
+            </Popover.Body>
+
+            <Popover.Body >
+                {/*<a onClick={handleSignOut}><h5 style={{margin: 0}}>Sign Out</h5></a>*/}
+                <Button className={"mingButton btn"} variant={"primary"} style={{color: "white", width: "80%"}} onClick={handleSignOut}>Sign Out</Button>
+
+            </Popover.Body>
+        </div>}
+
+
     </Popover>)
     // <UserPopover />
 

@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import API from "../api";
 import CartItem from "../components/CartItem";
 import MenuPopup from "../components/MenuPopup";
@@ -110,9 +110,16 @@ const CartPage = (props) => {
             }
         }
         else {
-            // console.log(cart)
 
-            navigate('/checkoutPage', {state: {orderType: orderType, subtotal: subtotal, orderTime: orderTime, cart: cart}});
+            if (cart.length === 0){
+                setErrorHeading("Error")
+                setErrorContent("Cart is Empty. Cannot Move to Checkout with An Empty Cart.")
+                setShowError(true)
+            }
+            else{
+                navigate('/checkoutPage', {state: {orderType: orderType, subtotal: subtotal, orderTime: orderTime, cart: cart}});
+
+            }
 
         }
     }
@@ -152,7 +159,7 @@ const CartPage = (props) => {
     return <div className="App teko">
         <main>
             {showError && <ErrorAlert heading={errorHeading} content={errorContent} onClose={() => setShowError(false)} />}
-            <h1>YOUR CART</h1>
+            <h1 className={"dancing-script fontDark"} style={{marginBottom: "2%"}}>Your Cart</h1>
             <Row>
                 <Col xs={1}></Col>
                 <Col xs={7}>

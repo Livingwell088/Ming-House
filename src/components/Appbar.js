@@ -108,7 +108,7 @@ export default function Appbar() {
                             </Link>
                         </Nav.Item>
                         <Nav.Item className={"navitem"}>
-                            <Link to="/home" style={{textDecoration: "none"}}>
+                            <Link to="/contactPage" style={{textDecoration: "none"}}>
                                 <p className={"navtext"}>CONTACT US</p>
                             </Link>
                         </Nav.Item>

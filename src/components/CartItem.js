@@ -95,18 +95,18 @@ const CartItem = (props) => {
 
                 <Row>
                     <Col xs={2}>
-                        <Button variant="secondary" onClick={handleShow}>Edit/Modify</Button>
+                        <Button className={"mingButton"} variant="secondary" onClick={handleShow}>Edit/Modify</Button>
                     </Col>
                     <Col xs={7}></Col>
                     <Col xs={1}></Col>
-                    <Col>
+                    <Col xs={2}>
 
-                        <div style={{display:"flex", alignItems: "center"}}>
-                            <Button type="button" className={"btn rounded-circle"} style={{width: "15%", height: "auto", textAlign:"center"}} variant="outline-primary" onClick={() => minus(props.order)} >
+                        <div style={{display:"flex", alignItems: "center", width: "100%", textAlign: "center", verticalAlign: "center", margin: "auto"}}>
+                            <Button type="button" className={"btn btn-circle mingButtonOutline"} style={{width: "40%", height: "auto", textAlign:"center"}} variant="outline-primary" onClick={() => minus(props.order)} >
                                 -
                             </Button>
-                            <h5 style={{width: "15%"}}>{props.order.quantity}</h5>
-                            <Button type="button" className={"btn rounded-circle"} variant="outline-primary" style={{width: "15%"}} onClick={() => plus(props.order)}>
+                            <h5 style={{width: "20%", margin: "0"}}>{props.order.quantity}</h5>
+                            <Button type="button" className={"btn btn-circle mingButtonOutline"} variant="outline-primary" style={{width: "40%", height: "auto", textAlign:"center"}} onClick={() => plus(props.order)}>
                                 +
                             </Button>
                         </div>

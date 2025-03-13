@@ -87,6 +87,7 @@ const MenuPage = (props) => {
             <CssBaseline />
             <div className="App teko">
                 <main>
+                    <h1 className={"dancing-script fontDark"}>Menu</h1>
                     <div>
 
                         <div id={"cont"}>
