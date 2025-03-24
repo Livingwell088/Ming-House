@@ -132,7 +132,7 @@ const UserPopover = (props) => {
         {!guest && <div className={"teko"} style={{textAlign: "center"}}>
 
             <Popover.Body className={"popRow"}>
-                <a ><h5 style={{margin: 0}}>See Previous Orders</h5></a>
+                <a href={"/ordersPage"}><h5 style={{margin: 0}}>See Previous Orders</h5></a>
             </Popover.Body>
 
             <Popover.Body >

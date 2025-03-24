@@ -263,6 +263,12 @@ const API = {
             // console.log(result.data)
 
             return result //.data
+        },
+        getOrderByUser: async (usernameId) => {
+            const result = await (Api().get("/orders/getOrder/" + usernameId))
+            // console.log(result.data)
+
+            return result //.data
         }
     },
 

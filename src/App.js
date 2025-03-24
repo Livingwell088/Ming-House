@@ -14,6 +14,7 @@ import Menu from "./Pages/MenuPage";
 import Order from "./Pages/CartPage"
 import CheckoutPage from "./Pages/CheckoutPage";
 import ContactPage from "./Pages/ContactPage";
+import OrdersPage from "./Pages/OrdersPage";
 
 class App extends Component {
 
@@ -28,6 +29,7 @@ class App extends Component {
                     <Route path="/cartPage" element={<Order />} />
                     <Route path="/checkoutPage" element={<CheckoutPage />} />
                     <Route path="/contactPage" element={<ContactPage />} />
+                    <Route path="/ordersPage" element={<OrdersPage /> } />
                 </Routes>
             </Router>
 
