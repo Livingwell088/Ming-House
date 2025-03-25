@@ -1,8 +1,9 @@
 import {CssBaseline} from "@mui/material";
 import React from "react";
-import {Col, Row} from "react-bootstrap";
+import {Button, Col, Row} from "react-bootstrap";
 import '../styles/App.css';
 import '../styles/fonts.css';
+import API from "../api";
 
 
 const ContactPage = (props) => {
@@ -58,27 +59,27 @@ const ContactPage = (props) => {
                             </tr>
                             <tr>
                                 <td><h5><strong>Monday:</strong></h5></td>
-                                <td style={{textAlign: "right"}}><h5>12:00 Noon - 10:30 PM </h5></td>
+                                <td style={{textAlign: "right"}}><h5>11:00 AM - 10:30 PM </h5></td>
                             </tr>
                             <tr>
                                 <td><h5><strong>Tuesday:</strong></h5></td>
-                                <td style={{textAlign: "right"}}><h5>12:00 Noon - 10:30 PM </h5></td>
+                                <td style={{textAlign: "right"}}><h5>11:00 AM - 10:30 PM </h5></td>
                             </tr>
                             <tr>
                                 <td><h5><strong>Wednesday:</strong></h5></td>
-                                <td style={{textAlign: "right"}}><h5>12:00 Noon - 10:30 PM </h5></td>
+                                <td style={{textAlign: "right"}}><h5>11:00 AM - 10:30 PM </h5></td>
                             </tr>
                             <tr>
                                 <td><h5><strong>Thursday:</strong></h5></td>
-                                <td style={{textAlign: "right"}}><h5>12:00 Noon - 10:30 PM </h5></td>
+                                <td style={{textAlign: "right"}}><h5>11:00 AM - 10:30 PM </h5></td>
                             </tr>
                             <tr>
                                 <td><h5><strong>Friday:</strong></h5></td>
-                                <td style={{textAlign: "right"}}><h5>12:00 Noon - 10:30 PM </h5></td>
+                                <td style={{textAlign: "right"}}><h5>11:00 AM - 11:00 PM </h5></td>
                             </tr>
                             <tr>
                                 <td><h5><strong>Saturday:</strong></h5></td>
-                                <td style={{textAlign: "right"}}><h5>12:00 Noon - 10:30 PM </h5></td>
+                                <td style={{textAlign: "right"}}><h5>11:00 AM - 11:00 PM </h5></td>
                             </tr>
                             </tbody>
                         </table>
@@ -86,6 +87,10 @@ const ContactPage = (props) => {
 
                     <Col xs={2}></Col>
                 </Row>
+
+                    <Button onClick={
+                        API.timeAPI.get()
+                    }></Button>
                 </div>
             </main>
         </div>

@@ -31,6 +31,58 @@ const dayHours = {0: {"open" : "12:00", "close": "22:30"},
 }
 
 
+// /**
+//  * Return
+//  */
+const compareTime = (time1, time2) => {
+    const hour1 = parseInt(time1.split(":")[0])
+    const min1 = parseInt(time1.split(":")[1])
+
+    const hour2 = parseInt(time2.split(":")[0])
+    const min2 = parseInt(time2.split(":")[1])
+
+    if (time1 == time2) {
+        return 0
+    }
+
+    if (hour1 < hour2){
+        return -1
+    }
+    else if (hour1 > hour2){
+        let hours = hour1 - hour2
+        let mins = min1 - min2;
+
+        if (mins < 0){
+            hours -=1;
+            mins += 60
+        }
+
+        return (hours * 60) + mins;
+    }
+    else{
+        if (min1 < min2){
+            return -1
+        }
+        else{
+            return min1 - min2
+        }
+    }
+}
+
+const appropriateTime = (current, timeWanted) => {
+    if (compareTime(timeWanted, current) === -1){
+        return false
+    }
+    else {
+        if (compareTime(timeWanted, current) >= 15){
+            return true;
+        }
+
+        return false
+    }
+}
+
+
 const isBetweenHours = (start, end, current) => {
 
     const startHour = parseInt(start.split(":")[0])
@@ -85,6 +137,41 @@ const addToTimes = (current, end, want) => {
     }
     return true
 
+}
+
+const addTime = (time, timeToAdd) =>  {
+
+    let timeHour = parseInt(time.split(":")[0])
+    let timeMin = parseInt(time.split(":")[1])
+
+    while (timeToAdd > 0){
+
+        if (timeToAdd + timeMin >= 60){
+            timeHour += 1;
+            timeToAdd -= (60 - timeMin);
+            timeMin = 0;
+        }
+        else{
+            timeMin += timeToAdd;
+            timeToAdd = 0
+        }
+    }
+
+    return timeHour.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) + ":" + timeMin.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
+
+}
+
+const formatTime = (time) => {
+
+    let timeHour = parseInt(time.split(":")[0])
+    let timeMin = parseInt(time.split(":")[1])
+
+    if (timeHour < 12) {
+        return time + " AM"
+    }
+    else{
+        return (timeHour - 12) + ":" + timeMin.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) + " PM"
+    }
 }
 
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -338,40 +425,16 @@ const API = {
 
             const todaysHour = dayHours[(date.getDay())]
 
-            if (isBetweenHours(todaysHour.open, todaysHour.close, currentTime)){
 
-                let current = date.getHours()
+            let start = todaysHour.open;
 
-                while (current <= parseInt(todaysHour.close.split(":")[0])){
-                    // console.log(current + ":00")
-                    // console.log(current + ":30")
-
-                    if (addToTimes(currentTime, todaysHour.close, current + ":00")){
-                        if (current > 12){
-                            hours.push((current - 12) + ":00 PM")
-                        }
-                        else{
-                            hours.push(current + ":00 AM")
-                        }
-
-                    }
-                    if (addToTimes(currentTime, todaysHour.close, current + ":30")){
-                        if (current > 12){
-                            hours.push((current - 12) + ":30 PM")
-                        }
-                        else{
-                            hours.push(current + ":30 AM")
-                        }
-
-
-                    }
-
-                    current++
+            while (compareTime(start, todaysHour.close) === -1){
+                if (appropriateTime(currentTime, start)){
+                    hours.push(formatTime(start))
                 }
+                start = addTime(start, 15)
             }
 
-
-            // console.log(hours)
 
             return hours;
         }
