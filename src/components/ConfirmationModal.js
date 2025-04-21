@@ -44,23 +44,6 @@ const ConfirmationModal = (props) => {
                 <div style={{border: "1px solid", textAlign: "left", padding: "0 3% 0 3%"}}>
                     <h4>Summary</h4>
 
-                    {/*<Row>*/}
-                    {/*    <Col>*/}
-                    {/*        <Row>*/}
-                    {/*            <p><strong>Order Number:</strong> {props.order.phoneNumber}</p>*/}
-                    {/*        </Row>*/}
-                    {/*        <Row>*/}
-                    {/*            <p>Order for {props.order.orderType}</p>*/}
-                    {/*        </Row>*/}
-                    {/*        <Row>*/}
-                    {/*            <p>Order Time: {props.order.orderTime}</p>*/}
-                    {/*        </Row>*/}
-                    {/*    </Col>*/}
-                    {/*    <Col>*/}
-                    {/*        {props.order.orderType === "Delivery" &&*/}
-                    {/*            <p>Address: {props.order.address} </p>}*/}
-                    {/*    </Col>*/}
-                    {/*</Row>*/}
                     <table style={{width: "80%"}}>
                         <tbody>
                         <tr>

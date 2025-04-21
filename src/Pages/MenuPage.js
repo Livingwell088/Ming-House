@@ -69,16 +69,16 @@ const MenuPage = (props) => {
     //     return a.id - b.id;
     // });
 
-    const categories = ["Appetizer", "Soup", "Chow Mein", "Fried Rice", "Lo Mein", "Mei Fun",
+    const categories = ["Lunch Special", "American Dishes", "Appetizer", "Soup", "Chow Mein", "Fried Rice", "Lo Mein", "Mei Fun",
         "Pork", "Poultry", "Beef", "Seafood", "Egg Foo Young", "Sweet And Sour", "Vegetable",
         "Moo Shu", "Special Combination Plates", "Chefs Specialties", "All Day Special", "Special Healthy Diet",
-        "Other", "Lunch Special", "American Dishes"]
+        "Other"]
 
 
-    const types = ["All", "Appetizer", "Soup", "Chow Mein", "Fried Rice", "Lo Mein", "Mei Fun",
+    const types = ["All", "Lunch Special", "American Dishes", "Appetizer", "Soup", "Chow Mein", "Fried Rice", "Lo Mein", "Mei Fun",
         "Pork", "Poultry", "Beef", "Seafood", "Egg Foo Young", "Sweet And Sour", "Vegetable",
         "Moo Shu", "Special Combination Plates", "Chefs Specialties", "All Day Special", "Special Healthy Diet",
-        "Other", "Lunch Special", "American Dishes"]
+        "Other"]
 
     // console.log(menu)
     return (

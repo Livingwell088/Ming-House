@@ -323,7 +323,7 @@ const API = {
 
 
             let order = {
-                orderName: orderName,
+                orderName: date.getMonth().toString() + date.getDate().toString() + date.getFullYear().toString(),
                 orderPrice: orderPrice,
                 orderType: orderType,
                 user: user,

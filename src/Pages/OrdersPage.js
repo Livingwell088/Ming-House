@@ -14,7 +14,7 @@ const OrdersPage = (props) => {
         const test = () => {
             API.orderAPI.getOrderByUser(window.sessionStorage.getItem("username"))
                 .then(r => {
-                    setOrders(r.data)
+                    setOrders(r.data.reverse())
                     console.log(r.data)
                 })
                 .catch(error => console.log(error))
