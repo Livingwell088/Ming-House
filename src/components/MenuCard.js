@@ -56,7 +56,7 @@ const MenuCard = (props) => {
             }
                     </Col>
                     <Button className={"addButton square-md"} onClick={handleShow} rounded>+</Button>
-                    <MenuPopup show={showPopup} onClose={handleClose} id={props.id} item={props.menu} quantity={1} do={"Add"}/>
+                    <MenuPopup show={showPopup} onClose={handleClose} id={props.id} name={props.name} item={props.menu} quantity={1} do={"Add"}/>
 
                 {/*    id={props.id} name={props.name} number={props.number} size={props.size} price={props.price} item={props.menu}*/}
                 </Row>

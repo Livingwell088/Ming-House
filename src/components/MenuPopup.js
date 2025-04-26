@@ -74,10 +74,13 @@ const MenuPopup = (props) => {
 
     const onChange = (event) => setInstructions(event.target.value);
 
+    // console.log(props)
 
     let sizes = []
     for (let i = 0; i < props.item.length; i++){
-        sizes.push(i)
+        if (props.item[i].name === props.name){
+            sizes.push(i)
+        }
     }
 
     useEffect(() => {
@@ -108,7 +111,7 @@ const MenuPopup = (props) => {
             >
 
                 <Modal.Header closeButton={true}>
-                    <Modal.Title>{props.item[0].name}</Modal.Title>
+                    <Modal.Title>{props.name}</Modal.Title>
                 </Modal.Header>
 
                 <Modal.Body style={{margin: "auto"}}>
@@ -178,6 +181,7 @@ const MenuPopup = (props) => {
                                     }
                                 }
                                 else{
+                                    // console.log(sizes)
                                     return <Form.Check
                                         id={current}
                                         name={"options"}
@@ -223,7 +227,7 @@ const MenuPopup = (props) => {
                             if (props.do === "Edit") {
                                 id = props.id;
                             }
-                            addToCart(props.item[0].name, total * count, count, props.item[sizeChosen], instructions, props.do, id)
+                            addToCart(props.name, total * count, count, props.item[sizeChosen], instructions, props.do, id)
                         }}>Add ${API.priceAPI.price(total * count)}</Button>
 
                 </Modal.Footer>

@@ -156,7 +156,7 @@ const CartItem = (props) => {
         </Row>
 
 
-        <MenuPopup show={showPopup} onClose={handleClose} id={props.id} item={props.full} quantity={props.order.quantity} do={"Edit"} update={update} size={(props.item.price)} instructions={props.order.specialInstruction}/>
+        <MenuPopup show={showPopup} onClose={handleClose} id={props.id} name={props.name} item={props.full} quantity={props.order.quantity} do={"Edit"} update={update} size={(props.item.price)} instructions={props.order.specialInstruction}/>
 
     </div>
 

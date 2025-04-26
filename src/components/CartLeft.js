@@ -6,6 +6,7 @@ const CartLeft = (props) => {
 
     return <>
         {props.cart.map((item, index) => {
+            // console.log(item)
 
             return <CartItem id={item.id} name={item.orderName} price={item.orderPrice} item={item.item} order={item} updateCart={props.updateCart} full={props.fullMenu[index]}></CartItem>
         })}

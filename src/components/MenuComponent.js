@@ -74,26 +74,108 @@ const MenuComponent = (props) => {
 
                                     Object.keys(props.menu).map((item, i) => {
 
-                                        if (current === props.menu[item][0].category){
+                                        if (current === props.menu[item][0].category) {
+                                            // console.log(props.menu[item])
                                             // console.log(Object.keys(props.menu[item]).length)
-                                            if (Object.keys(props.menu[item]).length === 1){
+                                            if (Object.keys(props.menu[item]).length === 1) {
                                                 let current = props.menu[item][0]
-                                                return <Col className={"col-6"}><MenuCard id={current.id} number={current.number} name={current.name} size={[current.size]} price={[current.price]} menu={[current]}/></Col>
+                                                return <Col className={"col-6"}><MenuCard id={current.id}
+                                                                                          number={current.number}
+                                                                                          name={current.name}
+                                                                                          size={[current.size]}
+                                                                                          price={[current.price]}
+                                                                                          menu={[current]}/></Col>
 
-                                            }
-                                            else{
-                                                let sizes = []
-                                                let prices = []
-                                                let items = []
-                                                for (let n = 0; n < Object.keys(props.menu[item]).length; n++){
-                                                    let current = props.menu[item][n]
-                                                    sizes.push(current.size)
-                                                    prices.push(current.price)
-                                                    items.push(current)
+                                            } else {
+
+                                                let names = []
+
+                                                for (let n = 0; n < Object.keys(props.menu[item]).length; n++) {
+                                                    if (!names.includes(props.menu[item][n].name)) {
+                                                        names.push(props.menu[item][n].name)
+                                                    }
                                                 }
+                                                // console.log(names)
 
-                                                return <Col className={"col-6"}><MenuCard id={items[0].id} number={items[0].number} name={items[0].name} size={sizes} price={prices} menu={items}/></Col>
+                                                if (names.length === 1) {
+                                                    let sizes = []
+                                                    let prices = []
+                                                    let items = []
+                                                    for (let n = 0; n < Object.keys(props.menu[item]).length; n++) {
+                                                        let current = props.menu[item][n]
+                                                        sizes.push(current.size)
+                                                        prices.push(current.price)
+                                                        items.push(current)
+                                                    }
 
+                                                    return <Col className={"col-6"}><MenuCard id={items[0].id}
+                                                                                              number={items[0].number}
+                                                                                              name={items[0].name}
+                                                                                              size={sizes}
+                                                                                              price={prices}
+                                                                                              menu={items}/></Col>
+
+                                                } else {
+
+                                                    let components = []
+
+                                                    for (let x = 0; x < names.length; x++){
+                                                        let sizes = []
+                                                        let prices = []
+                                                        let items = []
+                                                        for (let n = 0; n < Object.keys(props.menu[item]).length; n++) {
+                                                            let current = props.menu[item][n]
+                                                            if (current.name === names[x]) {
+                                                                sizes.push(current.size)
+                                                                prices.push(current.price)
+                                                                items.push(current)
+                                                            }
+
+                                                        }
+
+                                                        components.push(<Col className={"col-6"}><MenuCard id={items[0].id}
+                                                                             number={items[0].number}
+                                                                             name={names[x]}
+                                                                             size={sizes}
+                                                                             price={prices}
+                                                                            menu={items}/></Col>)
+
+                                                    }
+
+                                                    return components;
+
+                                                    // console.log(names)
+                                                    // return <Col className={"col-6"}>{
+                                                    //     names.map((test, x) => {
+                                                    //
+                                                    //         let sizes = []
+                                                    //         let prices = []
+                                                    //         let items = []
+                                                    //         for (let n = 0; n < Object.keys(props.menu[item]).length; n++) {
+                                                    //             let current = props.menu[item][n]
+                                                    //             if (current.name === test) {
+                                                    //                 sizes.push(current.size)
+                                                    //                 prices.push(current.price)
+                                                    //                 items.push(current)
+                                                    //             }
+                                                    //
+                                                    //         }
+                                                    //
+                                                    //         return <MenuCard id={items[0].id}
+                                                    //                                                   number={items[0].number}
+                                                    //                                                   name={test}
+                                                    //                                                   size={sizes}
+                                                    //                                                   price={prices}
+                                                    //                                                   menu={items}/>
+
+                                                    //
+                                                    //     })
+                                                    // }</Col>
+
+
+
+
+                                                }
                                             }
                                         }
 
