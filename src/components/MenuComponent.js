@@ -8,6 +8,7 @@ import '../styles/fonts.css';
 import "../styles/menuComponent.css"
 import MenuCard from "./MenuCard";
 import {useEffect, useState} from "react";
+import API from "../api";
 
 
 
@@ -28,6 +29,23 @@ const MenuComponent = (props) => {
         }
 
     }
+
+    useEffect(() => {
+        const date = new Date();
+        const currentTime = date.getHours()
+            + ':' + date.getMinutes()
+
+        const noLunch = (cat) => {
+            return !cat.includes("Lunch Special")
+        }
+
+        if (API.timeAPI.compare(currentTime, "14:59") > 0){
+
+            const test = categories.filter(noLunch)
+            setCategories(test)
+            setTypes(types.filter(noLunch))
+        }
+    }, [categories, types]);
 
 
 

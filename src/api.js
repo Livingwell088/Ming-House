@@ -437,6 +437,9 @@ const API = {
 
 
             return hours;
+        },
+        compare: (time1, time2) => {
+            return compareTime(time1, time2)
         }
     }
 }
