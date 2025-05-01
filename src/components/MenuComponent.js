@@ -1,196 +1,198 @@
+
 import * as React from 'react';
 import APIService from '../test'
 import MenuServiceFetch from "../Services/MenuServiceFetch";
 import {Grid} from "@mui/material";
 import {Col, Row} from "react-bootstrap";
-
+import '../styles/fonts.css';
 import "../styles/menuComponent.css"
+import MenuCard from "./MenuCard";
+import {useEffect, useState} from "react";
+import API from "../api";
 
 
-export default class MenuComponent extends React.Component {
 
 
+const MenuComponent = (props) => {
 
-    constructor(props) {
-        super(props);
+    const [menu, setMenu] = useState(props.menu);
+    const [categories, setCategories] = useState(props.categories);
+    const [types, setTypes] = useState(props.types)
 
-        this.state = {
-            menu: [],
-            categories: [],
-            types: []
-        }
-    }
 
-    t = (type) => {
-        if (type == "All"){
-            let current = this.state.types.slice(1)
-            this.setState({categories: current});
+    const test = (type) => {
+        if (type === "All"){
+            setCategories(props.categories)
         }
         else{
-            this.setState({categories: [type]});
-
+            setCategories([type])
         }
-        // window.location.reload()
-      }
-    async componentDidMount() {
-        const res = await fetch('/menu/getMenu');
-        const body = await res.json();
-
-        // this.setState({menu: body})
-        // MenuServiceFetch.getMenu().then((res) => {
-        //     this.setState({menu: res})
-        // });
-
-        let categories = new Set()
-
-        // console.log(menu.category)
-        for (let i = 0; i < body.length; i++){
-            categories.add(body[i].category)
-        }
-        categories = Array.from(categories)
-
-        let menus = Array.from(body)
-
-        let newMenu = []
-        let newMenuId = []
-        for (let i = 0; i < menus.length; i++){
-            if (newMenuId.includes(menus[i].number)){
-                for (let n = 0; n < newMenu.length; n++){
-                    if (newMenu[n].number == menus[i].number){
-                        newMenu[n].size = newMenu[n].size.concat(",", menus[i].size)
-                        newMenu[n].price = newMenu[n].price.concat(",", menus[i].price)
-                    }
-                }
-            }
-            else{
-                newMenu.push(menus[i])
-                newMenuId.push(menus[i].number)
-            }
-
-        }
-        this.setState({menu: newMenu})
-
-
-        let types = {}
-        for (let i = 0; i < categories.length; i++){
-            types[categories[i]] = menus.filter((item) => item.category === categories[i])
-
-        }
-
-
-        categories = ["Appetizer", "Soup", "Chow Mein", "Fried Rice", "Lo Mein", "Mei Fun",
-        "Pork", "Poultry", "Beef", "Seafood", "Egg Foo Young", "Sweet And Sour", "Vegetable",
-        "Moo Shu", "Special Combination Plates", "Chefs Specialties", "All Day Special", "Special Healthy Diet",
-        "Other", "Lunch Special", "American Dishes"]
-
-        // console.log(this.state.menu)
-        this.setState({categories: categories})
-
-        categories = ["All", "Appetizer", "Soup", "Chow Mein", "Fried Rice", "Lo Mein", "Mei Fun",
-        "Pork", "Poultry", "Beef", "Seafood", "Egg Foo Young", "Sweet And Sour", "Vegetable",
-        "Moo Shu", "Special Combination Plates", "Chefs Specialties", "All Day Special", "Special Healthy Diet",
-        "Other", "Lunch Special", "American Dishes"]
-        this.setState({types: categories})
-
-        // this.setState({types: types})
-        // console.log(types)
-
 
     }
 
-    render() {
-        const {menu, categories, types} = this.state
+    useEffect(() => {
+        const date = new Date();
+        const currentTime = date.getHours()
+            + ':' + date.getMinutes()
+
+        const noLunch = (cat) => {
+            return !cat.includes("Lunch Special")
+        }
+
+        if (API.timeAPI.compare(currentTime, "14:59") > 0){
+
+            const test = categories.filter(noLunch)
+            setCategories(test)
+            setTypes(types.filter(noLunch))
+        }
+    }, [categories, types]);
 
 
-        // console.log(types)
-        return (
-            <div>
-                <Row>
-                    <h2 className="">Menu</h2>
-                <Col xs={3}>
-                    <ul id={"foodTypes"}>
+
+    // console.log(props.menu)
+
+    return (
+        <div>
+            <Row id={"menuRow"}>
+                <Col xs={1}></Col>
+                <Col xs={2}>
+                    <ul key={"p"} id={"foodTypes"} >
                         {
-                            this.state.types.map(current =>
-                            <li onClick={() => this.t(current)}>{current}</li>
+                            types.map(current =>
+                                <li key={current} id={current} onClick={() => test(current)}>{current}</li>
+                            // <li onClick={() => this.t(current)}>{current}</li>
                             )
                         }
                     </ul>
                 </Col>
-                    <Col>
+                <Col xs={9}>
+                    {
+                        categories.map(current =>
+                            <Row>
+                                <h3 className={"headers trade-winds-regular"} style={{color: "rgb(238, 121, 89)"}}>{current}</h3>
+                                {
 
-                        {
-                            this.state.categories.map(current =>
+                                    Object.keys(props.menu).map((item, i) => {
 
-                                <table className="table table-striped" id={"menuTable"}>
-                                <thead>
-                                <tr>
-                                    <th colSpan={6}>{current}</th>
-                                    {/*<th></th>*/}
-                                    {/*<th></th>*/}
-                                    {/*<th></th>*/}
-                                    {/*<th></th>*/}
-                                    {/*<th></th>*/}
-                                </tr>
-                                </thead>
-                                    <tbody>
-                                    {
-                                        menu.filter((type) => type.category === current).map(item =>
-                                        {
-                                            let sizes = item.size.split(",")
-                                            for (let i = 0; i < sizes.length; i++){
-                                                if (sizes[i] === ""){
-                                                    continue
+                                        if (current === props.menu[item][0].category) {
+                                            // console.log(props.menu[item])
+                                            // console.log(Object.keys(props.menu[item]).length)
+                                            if (Object.keys(props.menu[item]).length === 1) {
+                                                let current = props.menu[item][0]
+                                                return <Col className={"col-6"}><MenuCard id={current.id}
+                                                                                          number={current.number}
+                                                                                          name={current.name}
+                                                                                          size={[current.size]}
+                                                                                          price={[current.price]}
+                                                                                          menu={[current]}/></Col>
+
+                                            } else {
+
+                                                let names = []
+
+                                                for (let n = 0; n < Object.keys(props.menu[item]).length; n++) {
+                                                    if (!names.includes(props.menu[item][n].name)) {
+                                                        names.push(props.menu[item][n].name)
+                                                    }
                                                 }
-                                                if (sizes[i][0] !== "("){
-                                                    sizes[i] = "(" + sizes[i] + ")"
+                                                // console.log(names)
+
+                                                if (names.length === 1) {
+                                                    let sizes = []
+                                                    let prices = []
+                                                    let items = []
+                                                    for (let n = 0; n < Object.keys(props.menu[item]).length; n++) {
+                                                        let current = props.menu[item][n]
+                                                        sizes.push(current.size)
+                                                        prices.push(current.price)
+                                                        items.push(current)
+                                                    }
+
+                                                    return <Col className={"col-6"}><MenuCard id={items[0].id}
+                                                                                              number={items[0].number}
+                                                                                              name={items[0].name}
+                                                                                              size={sizes}
+                                                                                              price={prices}
+                                                                                              menu={items}/></Col>
+
+                                                } else {
+
+                                                    let components = []
+
+                                                    for (let x = 0; x < names.length; x++){
+                                                        let sizes = []
+                                                        let prices = []
+                                                        let items = []
+                                                        for (let n = 0; n < Object.keys(props.menu[item]).length; n++) {
+                                                            let current = props.menu[item][n]
+                                                            if (current.name === names[x]) {
+                                                                sizes.push(current.size)
+                                                                prices.push(current.price)
+                                                                items.push(current)
+                                                            }
+
+                                                        }
+
+                                                        components.push(<Col className={"col-6"}><MenuCard id={items[0].id}
+                                                                             number={items[0].number}
+                                                                             name={names[x]}
+                                                                             size={sizes}
+                                                                             price={prices}
+                                                                            menu={items}/></Col>)
+
+                                                    }
+
+                                                    return components;
+
+                                                    // console.log(names)
+                                                    // return <Col className={"col-6"}>{
+                                                    //     names.map((test, x) => {
+                                                    //
+                                                    //         let sizes = []
+                                                    //         let prices = []
+                                                    //         let items = []
+                                                    //         for (let n = 0; n < Object.keys(props.menu[item]).length; n++) {
+                                                    //             let current = props.menu[item][n]
+                                                    //             if (current.name === test) {
+                                                    //                 sizes.push(current.size)
+                                                    //                 prices.push(current.price)
+                                                    //                 items.push(current)
+                                                    //             }
+                                                    //
+                                                    //         }
+                                                    //
+                                                    //         return <MenuCard id={items[0].id}
+                                                    //                                                   number={items[0].number}
+                                                    //                                                   name={test}
+                                                    //                                                   size={sizes}
+                                                    //                                                   price={prices}
+                                                    //                                                   menu={items}/>
+
+                                                    //
+                                                    //     })
+                                                    // }</Col>
+
+
+
+
                                                 }
                                             }
-                                            if (sizes.length < 2){
-                                                return <tr id={item.number}>
-                                                    <td>{item.number}</td>
-                                                    <td>{item.name}</td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td className={"size"}>{sizes[0]}</td>
-                                                    <td>{"$" + item.price.split(",")[0]}</td>
+                                        }
 
-                                                </tr>
-                                            }
+                                    })
+                                }
+                            </Row>
+                        )
+                    }
 
-                                            else if (sizes.length === 2){
-                                                return <tr id={item.number}>
-                                                    <td>{item.number}</td>
-                                                    <td>{item.name}</td>
-                                                    <td className={"size"}>{sizes[0]}</td>
-                                                    <td>{"$" + item.price.split(",")[0]}</td>
-                                                    <td className={"size"}>{sizes[1]}</td>
-                                                    <td>{"$" + item.price.split(",")[1]}</td>
+                </Col>
+            </Row>
 
-                                                </tr>
-                                            }
-                                            else{
-                                                console.log(item)
-                                            }
-
-                                            }
-
-                                        )
+        </div>
+    )
 
 
-                                    }
-                                </tbody>
-
-                                </table>
-                            )
-                        }
-
-                    </Col>
-                </Row>
-
-            </div>
-        )
-    }
 
 }
 
-
+export default  MenuComponent;

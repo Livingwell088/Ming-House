@@ -2,6 +2,7 @@
     list-style-type: none;
     text-align: left;
     color: rgb(238, 121, 89);
+    padding-top: 5vh;
 }
 
 #menuTable{
@@ -12,5 +13,12 @@
     text-align: right;
 }
 
+.headers{
+    padding-top: 5vh;
+    text-align: left;
+}
 
+.menuRow{
+    padding: 0;
+}
 

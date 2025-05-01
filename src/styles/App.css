@@ -1,7 +1,11 @@
+
+
 .App {
   text-align: center;
-  /*background-color: #fae3bf;*/
-  background: linear-gradient(to bottom, #fae7c8, #f8d7a4);
+  /*background-color: #3c342c;*/
+  /*background: linear-gradient(to right, #fae7c8, #f8d7a4);*/
+  background-color: transparent;
+
   height: 100%;
   min-height: 100vh;
   background-attachment: fixed;
@@ -81,3 +85,9 @@
 .button{
   width: 100%;
 }
+
+
+h1 {
+  font-size: 150px;
+}
+
