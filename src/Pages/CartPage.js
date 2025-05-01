@@ -33,6 +33,8 @@ const CartPage = (props) => {
     const [errorHeading, setErrorHeading] = useState("")
     const [errorContent, setErrorContent] = useState("")
 
+
+
     const onChangeOrderType = (type) => {
         window.sessionStorage.setItem("orderType", type);
         setOrderType(type);

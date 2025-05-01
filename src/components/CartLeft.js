@@ -5,6 +5,7 @@ const CartLeft = (props) => {
 
 
     return <>
+        {/*{console.log(props.cart)}*/}
         {props.cart.map((item, index) => {
             // console.log(item)
 
