@@ -1,0 +1,16 @@
+#foodTypes{
+    list-style-type: none;
+    text-align: left;
+    color: rgb(238, 121, 89);
+}
+
+#menuTable{
+    text-align: left;
+}
+
+.size{
+    text-align: right;
+}
+
+
+
